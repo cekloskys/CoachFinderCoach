@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "userID": "9b09b087-cf40-41f4-a375-8dc75843a8d1",
+    "status": "NEW",
+    "createdAt": "2022-04-16T18:56:21.890Z",
+    "updatedAt": "2022-04-16T18:56:21.890Z",
+    "coachId": "1",
+    "packageId": "1",
+    "User": {
+      "id": "1",
+      "name": "Susan Ceklosky",
+      "address": "Douglassville, PA"
+    },
+    "startDate": "2023-01-31",
+    "startTime": "18:56:21.890Z",
+  },
+  {
+    "id": "2",
+    "userID": "9b09b087-cf40-41f4-a375-8dc75843a8d1",
+    "status": "NEW",
+    "createdAt": "2022-04-16T18:53:32.261Z",
+    "updatedAt": "2022-04-16T18:53:32.261Z",
+    "coachId": "2",
+    "packageId": "3",
+    "User": {
+      "id": "1",
+      "name": "Tom Austin",
+      "address": "Philadelphia, PA"
+    },
+    "startDate": "2023-01-31",
+    "startTime": "18:56:21.890Z",
+  },
+  {
+    "id": "3",
+    "userID": "9b09b087-cf40-41f4-a375-8dc75843a8d1",
+    "status": "NEW",
+    "createdAt": "2022-04-16T18:56:49.713Z",
+    "updatedAt": "2022-04-16T18:56:49.713Z",
+    "coachId": "3",
+    "packageId": "2",
+    "User": {
+      "id": "1",
+      "name": "Bryce Fadako",
+      "address": "Philadelphia, PA"
+    },
+    "startDate": "2023-01-31",
+    "startTime": "18:56:21.890Z",
+  }
+]
