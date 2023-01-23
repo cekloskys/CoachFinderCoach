@@ -6,56 +6,54 @@ import { useNavigation } from '@react-navigation/native';
 const CredentialsScreen = () => {
 
   const navigation = useNavigation();
-  const [description, setDescription] = useState('');
+  // const [description, setDescription] = useState('');
+  const [college, setCollege] = useState('');
+  const [experience, setExperience] = useState('');
+  const [accreditations, setAccreditations] = useState('');
+  const [age, setAge] = useState('');
+  const [specialties, setSpecialties] = useState('');
+  // const [Credentials, setCredentials] = useState('');
 
     return (
         <View style={styles.page}>
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={college}
+            onChangeText={value => setCollege(value)}
+            style={styles.college}
             clearButtonMode={'while-editing'}
             placeholder={'College'}
             placeholderTextColor={'grey'}
           />
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={experience}
+            onChangeText={value => setExperience(value)}
+            style={styles.experience}
             clearButtonMode={'while-editing'}
             placeholder={'Experience'}
             placeholderTextColor={'grey'}
           />
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={accreditations}
+            onChangeText={value => setAccreditations(value)}
+            style={styles.accreditations}
             clearButtonMode={'while-editing'}
             placeholder={'Accreditations'}
             placeholderTextColor={'grey'}
           />
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={age}
+            onChangeText={value => setAge(value)}
+            style={styles.age}
             clearButtonMode={'while-editing'}
             placeholder={'Age preference'}
             placeholderTextColor={'grey'}
           />
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={specialties}
+            onChangeText={value => setSpecialties(value)}
+            style={styles.specialties}
             clearButtonMode={'while-editing'}
             placeholder={'Specialties'}
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
-            clearButtonMode={'while-editing'}
-            placeholder={'Credentials'}
             placeholderTextColor={'grey'}
           />
         <View style={styles.bottom}>

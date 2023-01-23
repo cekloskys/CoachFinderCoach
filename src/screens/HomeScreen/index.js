@@ -17,6 +17,15 @@ const HomeScreen = () => {
     'Ice Hockey',
     'Basketball',
     'Soccer',
+    'Field Hockey',
+    'Track and Field',
+    'Cross Country',
+    'Softball',
+    'Baseball',
+    'Football',
+    'Volleyball',
+    'Tennis',
+    'Golf',
   ];
 
     return (
@@ -42,7 +51,7 @@ const HomeScreen = () => {
           <TextInput
             value={phonenumber}
             onChangeText={value => setPhonenumber(value)}
-            style={styles.description}
+            style={styles.phonenumber}
             clearButtonMode={'while-editing'}
             placeholder={'Phone Number'}
             placeholderTextColor={'grey'}
@@ -50,7 +59,7 @@ const HomeScreen = () => {
           <TextInput
             value={dob}
             onChangeText={value => setDob(value)}
-            style={styles.description}
+            style={styles.dob}
             clearButtonMode={'while-editing'}
             placeholder={'Date of birth'}
             placeholderTextColor={'grey'}
@@ -58,7 +67,7 @@ const HomeScreen = () => {
           <TextInput
             value={gender}
             onChangeText={value => setGender(value)}
-            style={styles.description}
+            style={styles.gender}
             clearButtonMode={'while-editing'}
             placeholder={'Gender'}
             placeholderTextColor={'grey'}

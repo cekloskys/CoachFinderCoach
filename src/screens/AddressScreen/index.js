@@ -6,14 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 const AddressScreen = () => {
 
   const navigation = useNavigation();
-  const [description, setDescription] = useState('');
+  // const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
 
     return (
         <View style={styles.page}>
           <TextInput
-            value={description}
-            onChangeText={value => setDescription(value)}
-            style={styles.description}
+            value={address}
+            onChangeText={value => setAddress(value)}
+            style={styles.address}
             clearButtonMode={'while-editing'}
             placeholder={'Address'}
             placeholderTextColor={'grey'}
