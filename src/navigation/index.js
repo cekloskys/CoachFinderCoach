@@ -65,7 +65,7 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen name="Biography" component={BiographyScreen} />
             <HomeStack.Screen name="Availability" component={AvailabilityScreen} />
         </HomeStack.Navigator>   
-    );
+    ); 
 };
 
 const OrdersStack = createStackNavigator();

@@ -9,6 +9,15 @@ const AddressScreen = () => {
   // const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
 
+  const onAddressAdd = () => {
+    if (!address){
+      alert('Please input an address.');
+      return;
+    }
+
+    navigation.navigate('Credentials');
+  }
+
     return (
         <View style={styles.page}>
           <TextInput
@@ -20,7 +29,7 @@ const AddressScreen = () => {
             placeholderTextColor={'grey'}
           />
         <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('Credentials')}>
+        <Pressable style={styles.button} onPress={onAddressAdd}>
             <Text style={styles.buttonText}>Next</Text>
         </Pressable>
     </View>

@@ -4,6 +4,8 @@ import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 
+// const database = require
+
 const HomeScreen = () => {
 
   const navigation = useNavigation();
@@ -11,6 +13,7 @@ const HomeScreen = () => {
   const [phonenumber, setPhonenumber] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('');
+  const [sport, setSport] = useState('');
   
   const sports = [
     'Lacrosse',
@@ -26,13 +29,41 @@ const HomeScreen = () => {
     'Volleyball',
     'Tennis',
     'Golf',
-  ];
+    'Swimming',
+    'Diving',
+    'Gymnastics',
+    'Boxing',
+    'Wresting',
+    'Bowling',
+  ]; 
+
+  const onSelectSport = () => { 
+    if (!sport){
+      alert('Please select a sport.');
+      return;
+    }
+    if (!phonenumber){
+      alert('Please enter a phone number');
+      return;
+    }
+    if (!dob){
+      alert('Please enter a date of birth in format MM-DD-YYYY.');
+      return;
+    }
+    if (!gender){
+      alert('Please enter a gender.');
+      return;
+    }
+
+    // alert(sport + ' Added!');
+    navigation.navigate('Address');
+  }
 
     return (
         <View style={styles.page}>
           <SelectDropdown
           data={sports}
-          defaultButtonText={'Sport'}
+          defaultButtonText={'Select Sport'}
           onSelect={(selectedItem, index) => {
             setSport(selectedItem);
           }}
@@ -73,7 +104,7 @@ const HomeScreen = () => {
             placeholderTextColor={'grey'}
           />
           <View style={styles.bottom}>
-              <Pressable style={styles.button} onPress={() => navigation.navigate('Address')}>
+              <Pressable style={styles.button} onPress={onSelectSport}>
                   <Text style={styles.buttonText}>Next</Text>
               </Pressable>
           </View>

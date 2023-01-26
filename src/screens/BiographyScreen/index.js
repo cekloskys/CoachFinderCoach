@@ -7,13 +7,47 @@ const BiographyScreen = () => {
 
   const navigation = useNavigation();
   // const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
   const [highlights, setHighlights] = useState('');
   const [sessionplan, setSessionplan] = useState('');
   const [coachexperience, setCoachexperience] = useState('');
   const [athleticbackground, setAthleticbackground] = useState('');
 
+  const onAddBiography = () => {
+    if (!name){
+      alert('Please enter your first and last name.')
+      return;
+    }
+    if (!highlights){
+      alert('Please enter athletic highlights.');
+      return;
+    }
+    if (!sessionplan){
+      alert('Please enter a session plan.');
+      return;
+    }
+    if (!coachexperience){
+      alert('Please enter coaching experience.');
+      return;
+    }
+    if (!athleticbackground){
+      alert('Please enter athletic background.');
+      return;
+    }
+
+    navigation.navigate('Availability');
+  }
+
     return (
         <View style={styles.page}>
+          <TextInput
+            value={name}
+            onChangeText={value => setName(value)}
+            style={styles.name}
+            clearButtonMode={'while-editing'}
+            placeholder={'First and Last Name'}
+            placeholderTextColor={'grey'}
+          />
           <TextInput
             value={highlights}
             onChangeText={value => setHighlights(value)}
@@ -47,7 +81,7 @@ const BiographyScreen = () => {
             placeholderTextColor={'grey'}
           />
           <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('Availability')}>
+        <Pressable style={styles.button} onPress={onAddBiography}>
             <Text style={styles.buttonText}>Next</Text>
         </Pressable>
     </View>

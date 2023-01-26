@@ -14,6 +14,30 @@ const CredentialsScreen = () => {
   const [specialties, setSpecialties] = useState('');
   // const [Credentials, setCredentials] = useState('');
 
+  const onAddCredentials = () => {
+    if (!college){
+      alert('Please enter a school.');
+      return;
+    }
+    if (!experience){
+      alert('Please enter your experience.');
+      return;
+    }
+    if (!accreditations){
+      alert('Please enter accreditations.');
+      return;
+    }
+    if (!age){
+      alert('Please enter an age range.');
+      return;
+    }
+    if (!specialties){
+      alert('Please enter specialties.')
+    }
+
+    navigation.navigate('Biography');
+  }
+
     return (
         <View style={styles.page}>
           <TextInput
@@ -57,7 +81,7 @@ const CredentialsScreen = () => {
             placeholderTextColor={'grey'}
           />
         <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('Biography')}>
+        <Pressable style={styles.button} onPress={onAddCredentials}>
             <Text style={styles.buttonText}>Next</Text>
         </Pressable>
     </View>
