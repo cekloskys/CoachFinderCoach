@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Pressable, } from 'react-native';
+import { View, Text, TextInput, Pressable, Button, SafeAreaView, styleSheet, } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-number-input';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 // const database = require
 
@@ -19,6 +19,12 @@ const HomeScreen = () => {
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [timePicker, setTimePicker] = useState(false);
+  const [time, setTime] = useState(new Date(Date.now()));
+
   // const phoneInput = useRef<PhoneInput>(null);
 
   const sports = [
@@ -47,6 +53,24 @@ const HomeScreen = () => {
     'Male',
     'Female',
   ]
+
+  const showDatePicker = () => {
+    setDatePicker(true);
+  };
+
+  const showTimePicker = () => {
+    setTimePicker(true);
+  };
+
+  const onDateSelected = (event, value) => {
+    setDate(value);
+    setDatePicker(false);
+  };
+
+  const onTimeSelected = (event, value) => {
+    setTime(value);
+    setTimePicker(false);
+  };
 
   const onSelectSport = () => {
     if (!sport) {
@@ -100,7 +124,20 @@ const HomeScreen = () => {
         containerStyle={styles.dropdownBtnStyle}
         textContainerStyle={styles.dropdownBtnTxtStyle}
       />
-        
+      {datePicker && (
+        <DateTimePicker
+          value={date}
+          mode={'date'}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          is24Hour={true}
+          onChange={onDateSelected}
+        />
+      )}
+      {!datePicker && (
+        <View style={{ margin: 10 }}>
+          <Button title="Show Date Picker" color="lightgrey" onPress={showDatePicker} />
+        </View>
+      )}
       <SelectDropdown
         data={genders}
         defaultButtonText={'Select Gender'}

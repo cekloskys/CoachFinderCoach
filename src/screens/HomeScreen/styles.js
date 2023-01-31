@@ -47,6 +47,19 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
+  MainContainer: {
+    flex: 1,
+    padding: 6,
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  text: {
+    fontSize: 25,
+    color: 'red',
+    padding: 3,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
   dob: {
     fontsize: 16,
     marginBottom: 15,

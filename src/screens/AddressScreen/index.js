@@ -14,7 +14,7 @@ const AddressScreen = () => {
   const navigation = useNavigation();
   // const [description, setDescription] = useState('');
   const usStates = new UsaStates();
-  const statesNames = usStates.arrayOf('names');
+  const statesNames = usStates.arrayOf('names'); 
 
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable } from 'react-native';
 import styles from './styles';
+import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 
 const CredentialsScreen = () => {
@@ -14,8 +15,22 @@ const CredentialsScreen = () => {
   const [specialties, setSpecialties] = useState('');
   // const [Credentials, setCredentials] = useState('');
 
+  const experiences = [
+    '1-3',
+    '3-5',
+    '5-8',
+    '8-10',
+    '10+',
+  ];
+
+  const preference = [
+    'Elementary School',
+    'Middle School',
+    'High School',
+  ]
+
   const onAddCredentials = () => {
-    if (!college){
+    /* if (!college){
       alert('Please enter a school.');
       return;
     }
@@ -34,59 +49,85 @@ const CredentialsScreen = () => {
     if (!specialties){
       alert('Please enter specialties.')
     }
-
+    */
     navigation.navigate('Biography');
   }
 
-    return (
-        <View style={styles.page}>
-          <TextInput
-            value={college}
-            onChangeText={value => setCollege(value)}
-            style={styles.college}
-            clearButtonMode={'while-editing'}
-            placeholder={'College'}
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            value={experience}
-            onChangeText={value => setExperience(value)}
-            style={styles.experience}
-            clearButtonMode={'while-editing'}
-            placeholder={'Experience'}
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            value={accreditations}
-            onChangeText={value => setAccreditations(value)}
-            style={styles.accreditations}
-            clearButtonMode={'while-editing'}
-            placeholder={'Accreditations'}
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            value={age}
-            onChangeText={value => setAge(value)}
-            style={styles.age}
-            clearButtonMode={'while-editing'}
-            placeholder={'Age preference'}
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            value={specialties}
-            onChangeText={value => setSpecialties(value)}
-            style={styles.specialties}
-            clearButtonMode={'while-editing'}
-            placeholder={'Specialties'}
-            placeholderTextColor={'grey'}
-          />
-        <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={onAddCredentials}>
-            <Text style={styles.buttonText}>Next</Text>
-        </Pressable>
-    </View>
+  return (
+    <View style={styles.page}>
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder='Enter College'
+          value={college}
+          onChangeText={(text) => {
+            setCollege(text);
+          }}
+        />
+      </View>
+      <SelectDropdown
+        data={experiences}
+        defaultButtonText={'Years Experience'}
+        onSelect={(selectedItem, index) => {
+          setExperience(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder='Accreditations'
+          value={accreditations}
+          onChangeText={(text) => {
+            setAccreditations(text);
+          }}
+        />
         </View>
-      );
+      <SelectDropdown
+        data={preference}
+        defaultButtonText={'Age Preference'}
+        onSelect={(selectedItem, index) => {
+          setAge(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder='Specialties'
+          value={specialties}
+          onChangeText={(text) => {
+            setSpecialties(text);
+          }}
+        />
+        </View>
+      <View style={styles.bottom}>
+        <Pressable style={styles.button} onPress={onAddCredentials}>
+          <Text style={styles.buttonText}>Next</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
 export default CredentialsScreen;
