@@ -24,9 +24,8 @@ const CredentialsScreen = () => {
   ];
 
   const preference = [
-    'Elementary School',
-    'Middle School',
-    'High School',
+    'Kids', 
+    'Teenagers',
   ]
 
   const onAddCredentials = () => {

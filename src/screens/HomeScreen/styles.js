@@ -74,6 +74,16 @@ const styles = StyleSheet.create({
     color: 'black',
     borderColor: 'black',
   },
+  input: {
+    height: 50,
+    backgroundColor: 'white',
+    padding: 5,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 10,
+    fontSize: 18,
+  },
 });
 
 export default styles;

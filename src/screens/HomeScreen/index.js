@@ -135,9 +135,17 @@ const HomeScreen = () => {
       )}
       {!datePicker && (
         <View style={{ margin: 10 }}>
-          <Button title="Show Date Picker" color="lightgrey" onPress={showDatePicker} />
+          <Pressable style={styles.button} onPress={showDatePicker}>
+          <Text style={styles.buttonText}>Select Date</Text>
+        </Pressable>
         </View>
       )}
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          value={date.toLocaleDateString()}
+        />
+      </View>
       <SelectDropdown
         data={genders}
         defaultButtonText={'Select Gender'}
