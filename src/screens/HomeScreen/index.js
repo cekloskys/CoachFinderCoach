@@ -25,7 +25,7 @@ const HomeScreen = () => {
   const [timePicker, setTimePicker] = useState(false);
   const [time, setTime] = useState(new Date(Date.now()));
 
-  // const phoneInput = useRef<PhoneInput>(null);
+  const phoneInput = useRef(null);
 
   const sports = [
     'Lacrosse',
@@ -77,9 +77,9 @@ const HomeScreen = () => {
       alert('Please select a sport.');
       return;
     }
-    if (!phonenumber) {
-      alert('Please enter a phone number');
-      return;
+    if (!phoneInput.current?.isValidNumber(phonenumber)) { 
+      alert('Invalid phone number.'); 
+      return; 
     }
     if (!dob) {
       alert('Please enter a date of birth in format MM-DD-YYYY.');
@@ -115,6 +115,7 @@ const HomeScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <PhoneInput
+        ref={phoneInput}
         defaultValue={phonenumber}
         defaultCode='US'
         onChangeText={text => setPhonenumber(text)}
@@ -136,8 +137,8 @@ const HomeScreen = () => {
       {!datePicker && (
         <View style={{ margin: 10 }}>
           <Pressable style={styles.button} onPress={showDatePicker}>
-          <Text style={styles.buttonText}>Select Date</Text>
-        </Pressable>
+            <Text style={styles.buttonText}>Select Date of Birth</Text>
+          </Pressable>
         </View>
       )}
       <View style={styles.row}>
@@ -165,7 +166,7 @@ const HomeScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={() => {
+      <Pressable style={styles.button} onPress={() => {
           navigation.navigate('Address')
         }}>
           <Text style={styles.buttonText}>Next</Text>

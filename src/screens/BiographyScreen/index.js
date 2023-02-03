@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
+import NumericInput from 'react-native-numeric-input'
 
 const BiographyScreen = () => {
 
@@ -17,10 +18,10 @@ const BiographyScreen = () => {
   const coachexperiences = [
     '1-3',
     '3-5',
-    '5-8', 
+    '5-8',
     '8-10',
     '10+',
-  ]; 
+  ];
 
   const onAddBiography = () => {
     /*
@@ -49,7 +50,7 @@ const BiographyScreen = () => {
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -63,6 +64,8 @@ const BiographyScreen = () => {
       <View style={styles.row}>
         <TextInput
           style={styles.input}
+          multiline={true}
+          numberOfLines={4}
           placeholder='Athletic Highlights'
           value={highlights}
           onChangeText={(text) => {
@@ -80,24 +83,16 @@ const BiographyScreen = () => {
           }}
         />
       </View>
-      <SelectDropdown
-        data={coachexperiences}
-        defaultButtonText={'Coaching Experience'}
-        onSelect={(selectedItem, index) => {
-          setCoachexperience(selectedItem);
-        }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-        buttonStyle={styles.dropdownBtnStyle}
-        buttonTextStyle={styles.dropdownBtnTxtStyle}
-        dropdownStyle={styles.dropdownDropdownStyle}
-        rowStyle={styles.dropdownRowStyle}
-        rowTextStyle={styles.dropdownRowTxtStyle}
-      />
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.input}>Coaching Experience</Text>
+        <NumericInput
+          value={0}
+          onChange={(text) => {
+            setCoachexperience(text)
+          }}
+          rounded
+          minValue={0} />
+      </View>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -113,7 +108,7 @@ const BiographyScreen = () => {
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

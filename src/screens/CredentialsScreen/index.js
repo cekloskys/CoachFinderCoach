@@ -3,6 +3,8 @@ import { View, Text, TextInput, Pressable } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
+import NumericInput from 'react-native-numeric-input'
+
 
 const CredentialsScreen = () => {
 
@@ -24,8 +26,42 @@ const CredentialsScreen = () => {
   ];
 
   const preference = [
-    'Kids', 
+    'Kids',
     'Teenagers',
+  ]
+
+  const special = [
+    'Footwork',
+    'Shooting',
+    'Skating',
+    'Offense',
+    'Defense',
+    'Agility',
+    'Dribbling',
+    'Passing',
+    'Catching',
+    'Pitching',
+    'Infield',
+    'Outfield',
+    'Javelin',
+    'Hurdles',
+    'Distance',
+    'Sprint',
+    'Quarterback',
+    'Offensive Line',
+    'Defensive Line',
+    'Safety',
+    'Cornerback',
+    'Tight End',
+    'Wide Receiver',
+    'Libero',
+    'Setter',
+    'Serving',
+    'Swing',
+    'Putting',
+    'Freestyle',
+    'Backstroke',
+    'Butterfly',
   ]
 
   const onAddCredentials = () => {
@@ -64,24 +100,18 @@ const CredentialsScreen = () => {
           }}
         />
       </View>
-      <SelectDropdown
-        data={experiences}
-        defaultButtonText={'Years Experience'}
-        onSelect={(selectedItem, index) => {
-          setExperience(selectedItem);
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={styles.text}>Years Experience</Text>
+      <View style={{ marginLeft: 'auto'}}>
+      <NumericInput
+        value={0}
+        onChange={(text) => {
+          setExperience(text)
         }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-        buttonStyle={styles.dropdownBtnStyle}
-        buttonTextStyle={styles.dropdownBtnTxtStyle}
-        dropdownStyle={styles.dropdownDropdownStyle}
-        rowStyle={styles.dropdownRowStyle}
-        rowTextStyle={styles.dropdownRowTxtStyle}
-      />
+        rounded
+        minValue={0} />
+        </View>
+        </View>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -91,7 +121,7 @@ const CredentialsScreen = () => {
             setAccreditations(text);
           }}
         />
-        </View>
+      </View>
       <SelectDropdown
         data={preference}
         defaultButtonText={'Age Preference'}
@@ -110,16 +140,24 @@ const CredentialsScreen = () => {
         rowStyle={styles.dropdownRowStyle}
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          placeholder='Specialties'
-          value={specialties}
-          onChangeText={(text) => {
-            setSpecialties(text);
-          }}
-        />
-        </View>
+      <SelectDropdown
+        data={special}
+        defaultButtonText={'Specialties'}
+        onSelect={(selectedItem, index) => {
+          setSpecialties(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddCredentials}>
           <Text style={styles.buttonText}>Next</Text>
