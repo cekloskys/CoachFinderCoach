@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
@@ -89,7 +89,7 @@ const CredentialsScreen = () => {
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -114,7 +114,9 @@ const CredentialsScreen = () => {
         </View>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
+          style={styles.multilineinput}
+          multiline={true}
+          numberOfLines={4}
           placeholder='Accreditations'
           value={accreditations}
           onChangeText={(text) => {
@@ -163,7 +165,7 @@ const CredentialsScreen = () => {
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

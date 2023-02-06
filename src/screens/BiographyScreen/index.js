@@ -54,7 +54,7 @@ const BiographyScreen = () => {
       <View style={styles.row}>
         <TextInput
           style={styles.input}
-          placeholder='First and Last Name'
+          placeholder='Full Name'
           value={name}
           onChangeText={(text) => {
             setName(text);
@@ -63,7 +63,7 @@ const BiographyScreen = () => {
       </View>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
+          style={styles.multilineinput}
           multiline={true}
           numberOfLines={4}
           placeholder='Athletic Highlights'
@@ -75,7 +75,8 @@ const BiographyScreen = () => {
       </View>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
+          style={styles.multilineinput}
+          multiline={true}
           placeholder='Session Plan'
           value={sessionplan}
           onChangeText={(text) => {
@@ -83,19 +84,22 @@ const BiographyScreen = () => {
           }}
         />
       </View>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.input}>Coaching Experience</Text>
-        <NumericInput
-          value={0}
-          onChange={(text) => {
-            setCoachexperience(text)
-          }}
-          rounded
-          minValue={0} />
-      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={styles.text}>Coaching Experience</Text>
+      <View style={{ marginLeft: 'auto'}}>
+      <NumericInput
+        value={0}
+        onChange={(text) => {
+          setExperience(text)
+        }}
+        rounded
+        minValue={0} />
+        </View>
+        </View>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
+          style={styles.multilineinput}
+          multiline={true}
           placeholder='Athletic Background'
           value={athleticbackground}
           onChangeText={(text) => {

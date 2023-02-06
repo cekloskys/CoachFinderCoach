@@ -89,6 +89,16 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
   },
+  multilineinput: {
+    height: 120,
+    backgroundColor: 'white',
+    padding: 5,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 10,
+    fontSize: 18,
+  },
 });
 
 export default styles;

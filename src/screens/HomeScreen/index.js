@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Pressable, Button, SafeAreaView, styleSheet, } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,7 @@ const HomeScreen = () => {
   const [date, setDate] = useState(new Date());
   const [timePicker, setTimePicker] = useState(false);
   const [time, setTime] = useState(new Date(Date.now()));
+  const [name, setName] = useState('');
 
   const phoneInput = useRef(null);
 
@@ -95,7 +96,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <SelectDropdown
         data={sports}
         defaultButtonText={'Select Sport'}
@@ -114,6 +115,14 @@ const HomeScreen = () => {
         rowStyle={styles.dropdownRowStyle}
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
+        <TextInput
+          style={styles.input}
+          placeholder='Full Name'
+          value={name}
+          onChangeText={(text) => {
+            setName(text);
+          }}
+        />
       <PhoneInput
         ref={phoneInput}
         defaultValue={phonenumber}
@@ -172,7 +181,7 @@ const HomeScreen = () => {
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
-    </View>
+      </ScrollView>
   );
 }
 
