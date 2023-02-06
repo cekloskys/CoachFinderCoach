@@ -101,7 +101,7 @@ const CredentialsScreen = () => {
         />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={styles.text}>Years Experience</Text>
+      <Text style={styles.text}>Playing Experience</Text>
       <View style={{ marginLeft: 'auto'}}>
       <NumericInput
         value={0}

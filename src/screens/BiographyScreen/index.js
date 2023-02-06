@@ -53,16 +53,6 @@ const BiographyScreen = () => {
     <ScrollView style={styles.page}>
       <View style={styles.row}>
         <TextInput
-          style={styles.input}
-          placeholder='Full Name'
-          value={name}
-          onChangeText={(text) => {
-            setName(text);
-          }}
-        />
-      </View>
-      <View style={styles.row}>
-        <TextInput
           style={styles.multilineinput}
           multiline={true}
           numberOfLines={4}
@@ -90,7 +80,7 @@ const BiographyScreen = () => {
       <NumericInput
         value={0}
         onChange={(text) => {
-          setExperience(text)
+          setCoachexperience(text)
         }}
         rounded
         minValue={0} />
