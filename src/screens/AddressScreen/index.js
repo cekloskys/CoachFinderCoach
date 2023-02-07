@@ -22,11 +22,23 @@ const AddressScreen = () => {
   const [state, setState] = useState('');
 
   const onAddressAdd = () => {
-    // if (!address) {
-      // alert('Please input an address.');
-      // return;
-    // }
-
+     /* if (!address){
+       alert('Please enter an address.');
+       return;
+     }
+     if (!city){
+       alert('Please enter a city.');
+       return;
+     }
+     if (!state){
+       alert('Please enter a state.');
+       return;
+     }
+     if (!zip){
+       alert('Please enter a zipcode.');
+       return;
+     }
+     */
     navigation.navigate('Credentials');
   }
 

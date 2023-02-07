@@ -17,12 +17,9 @@ const CredentialsScreen = () => {
   const [specialties, setSpecialties] = useState('');
   // const [Credentials, setCredentials] = useState('');
 
-  const experiences = [
-    '1-3',
-    '3-5',
-    '5-8',
-    '8-10',
-    '10+',
+  const accredit = [
+    'Qualified private coach',
+    'Passed coach course',
   ];
 
   const preference = [
@@ -65,12 +62,13 @@ const CredentialsScreen = () => {
   ]
 
   const onAddCredentials = () => {
-    /* if (!college){
+    /* 
+    if (!college){
       alert('Please enter a school.');
       return;
     }
     if (!experience){
-      alert('Please enter your experience.');
+      alert('Please enter your playing experience.');
       return;
     }
     if (!accreditations){
@@ -78,13 +76,15 @@ const CredentialsScreen = () => {
       return;
     }
     if (!age){
-      alert('Please enter an age range.');
+      alert('Please enter an age preference.');
       return;
     }
     if (!specialties){
       alert('Please enter specialties.')
+      return;
     }
     */
+   
     navigation.navigate('Biography');
   }
 
@@ -113,16 +113,24 @@ const CredentialsScreen = () => {
         </View>
         </View>
       <View style={styles.row}>
-        <TextInput
-          style={styles.multilineinput}
-          multiline={true}
-          numberOfLines={4}
-          placeholder='Accreditations'
-          value={accreditations}
-          onChangeText={(text) => {
-            setAccreditations(text);
-          }}
-        />
+      <SelectDropdown
+        data={accredit}
+        defaultButtonText={'Accreditations'}
+        onSelect={(selectedItem, index) => {
+          setAccreditations(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
       </View>
       <SelectDropdown
         data={preference}

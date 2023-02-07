@@ -74,23 +74,28 @@ const HomeScreen = () => {
   };
 
   const onSelectSport = () => {
+    /*
     if (!sport) {
       alert('Please select a sport.');
       return;
     }
+    if (!name) {
+      alert('Please enter your name.');
+      return;
+    }
     if (!phoneInput.current?.isValidNumber(phonenumber)) { 
-      alert('Invalid phone number.'); 
+      alert('Please enter a valid phone number.'); 
       return; 
     }
-    if (!dob) {
-      alert('Please enter a date of birth in format MM-DD-YYYY.');
+    if (!date) {
+      alert('Please select your date of birth.');
       return;
     }
     if (!gender) {
       alert('Please enter a gender.');
       return;
     }
-
+    */
     // alert(sport + ' Added!');
     navigation.navigate('Address');
   }
@@ -175,9 +180,7 @@ const HomeScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <View style={styles.bottom}>
-      <Pressable style={styles.button} onPress={() => {
-          navigation.navigate('Address')
-        }}>
+      <Pressable style={styles.button} onPress={onSelectSport}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
