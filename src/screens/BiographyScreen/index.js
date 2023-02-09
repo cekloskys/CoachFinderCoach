@@ -12,7 +12,7 @@ const BiographyScreen = () => {
   const [name, setName] = useState('');
   const [highlights, setHighlights] = useState('');
   const [sessionplan, setSessionplan] = useState('');
-  const [coachexperience, setCoachexperience] = useState('');
+  const [coachexperience, setCoachexperience] = useState(0);
   const [athleticbackground, setAthleticbackground] = useState('');
 
   const coachexperiences = [
@@ -24,12 +24,11 @@ const BiographyScreen = () => {
   ];
 
   const onAddBiography = () => {
-    /*
-    if (!name) {
-      alert('Please enter your first and last name.')
+    /* if (!name) {
+      alert('Please enter your athletic highlights.')
       return;
-    }
-    if (!highlights) {
+    } */
+    if (!highlights || highlights.trim.length < 50) {
       alert('Please enter athletic highlights.');
       return;
     }
@@ -37,15 +36,14 @@ const BiographyScreen = () => {
       alert('Please enter a session plan.');
       return;
     }
-    if (!coachexperience) {
-      alert('Please enter coaching experience.');
+    if (!coachexperience || coachexperience === '0') {
+      alert('Please enter years coaching experience.');
       return;
     }
     if (!athleticbackground) {
       alert('Please enter athletic background.');
       return;
     }
-    */
     navigation.navigate('Availability');
   }
 
@@ -56,7 +54,7 @@ const BiographyScreen = () => {
           style={styles.multilineinput}
           multiline={true}
           numberOfLines={4}
-          placeholder='Athletic Highlights'
+          placeholder='Enter Athletic Highlights'
           value={highlights}
           onChangeText={(text) => {
             setHighlights(text);
@@ -64,10 +62,15 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
+        <Text style={{textAlign: 'right', color: 'red'}}>
+          {highlights.length} characters (minimum 50 characters)
+        </Text>
+      </View>
+      <View style={styles.row}>
         <TextInput
           style={styles.multilineinput}
           multiline={true}
-          placeholder='Session Plan'
+          placeholder='Enter Session Plan'
           value={sessionplan}
           onChangeText={(text) => {
             setSessionplan(text);
@@ -75,22 +78,22 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={styles.text}>Coaching Experience</Text>
+      <Text style={styles.text}>Years Coaching</Text>
       <View style={{ marginLeft: 'auto'}}>
       <NumericInput
-        value={0}
+        value={coachexperience}
         onChange={(text) => {
           setCoachexperience(text)
         }}
         rounded
-        minValue={0} />
+        minValue={1} />
         </View>
         </View>
       <View style={styles.row}>
         <TextInput
           style={styles.multilineinput}
           multiline={true}
-          placeholder='Athletic Background'
+          placeholder='Enter Athletic Background'
           value={athleticbackground}
           onChangeText={(text) => {
             setAthleticbackground(text);

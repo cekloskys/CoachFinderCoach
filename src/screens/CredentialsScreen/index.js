@@ -11,7 +11,7 @@ const CredentialsScreen = () => {
   const navigation = useNavigation();
   // const [description, setDescription] = useState('');
   const [college, setCollege] = useState('');
-  const [experience, setExperience] = useState('');
+  const [experience, setExperience] = useState(0);
   const [accreditations, setAccreditations] = useState('');
   const [age, setAge] = useState('');
   const [specialties, setSpecialties] = useState('');
@@ -61,29 +61,27 @@ const CredentialsScreen = () => {
     'Butterfly',
   ]
 
-  const onAddCredentials = () => {
-    /* 
+  const onAddCredentials = () => { 
     if (!college){
-      alert('Please enter a school.');
+      alert('Please enter a college.');
       return;
     }
-    if (!experience){
-      alert('Please enter your playing experience.');
+    if (!experience || experience === '0'){
+      alert('Please enter years playing experience.');
       return;
     }
     if (!accreditations){
-      alert('Please enter accreditations.');
+      alert('Please select accreditations.');
       return;
     }
     if (!age){
-      alert('Please enter an age preference.');
+      alert('Please select an age preference.');
       return;
     }
     if (!specialties){
-      alert('Please enter specialties.')
+      alert('Please select specialties.')
       return;
     }
-    */
    
     navigation.navigate('Biography');
   }
@@ -101,21 +99,21 @@ const CredentialsScreen = () => {
         />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={styles.text}>Playing Experience</Text>
+      <Text style={styles.text}>Years Playing</Text>
       <View style={{ marginLeft: 'auto'}}>
       <NumericInput
-        value={0}
+        value={experience}
         onChange={(text) => {
           setExperience(text)
         }}
         rounded
-        minValue={0} />
+        minValue={1} />
         </View>
         </View>
       <View style={styles.row}>
       <SelectDropdown
         data={accredit}
-        defaultButtonText={'Accreditations'}
+        defaultButtonText={'Select Accreditations'}
         onSelect={(selectedItem, index) => {
           setAccreditations(selectedItem);
         }}
@@ -134,7 +132,7 @@ const CredentialsScreen = () => {
       </View>
       <SelectDropdown
         data={preference}
-        defaultButtonText={'Age Preference'}
+        defaultButtonText={'Select Age Preferences'}
         onSelect={(selectedItem, index) => {
           setAge(selectedItem);
         }}
@@ -152,7 +150,7 @@ const CredentialsScreen = () => {
       />
       <SelectDropdown
         data={special}
-        defaultButtonText={'Specialties'}
+        defaultButtonText={'Select Specialties'}
         onSelect={(selectedItem, index) => {
           setSpecialties(selectedItem);
         }}

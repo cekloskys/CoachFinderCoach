@@ -74,7 +74,6 @@ const HomeScreen = () => {
   };
 
   const onSelectSport = () => {
-    /*
     if (!sport) {
       alert('Please select a sport.');
       return;
@@ -87,15 +86,15 @@ const HomeScreen = () => {
       alert('Please enter a valid phone number.'); 
       return; 
     }
-    if (!date) {
+    const today = new Date(Date.now());
+    if (!date || date.toLocaleDateString() === today.toLocaleDateString()) {
       alert('Please select your date of birth.');
       return;
     }
     if (!gender) {
-      alert('Please enter a gender.');
+      alert('Please select a gender.');
       return;
     }
-    */
     // alert(sport + ' Added!');
     navigation.navigate('Address');
   }

@@ -22,7 +22,7 @@ const AddressScreen = () => {
   const [state, setState] = useState('');
 
   const onAddressAdd = () => {
-     /* if (!address){
+     if (!address){
        alert('Please enter an address.');
        return;
      }
@@ -31,14 +31,13 @@ const AddressScreen = () => {
        return;
      }
      if (!state){
-       alert('Please enter a state.');
+       alert('Please select a state.');
        return;
      }
      if (!zip){
        alert('Please enter a zipcode.');
        return;
      }
-     */
     navigation.navigate('Credentials');
   }
 
