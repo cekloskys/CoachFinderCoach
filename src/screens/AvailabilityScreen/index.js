@@ -11,6 +11,7 @@ const AvailabilityScreen = () => {
 
   const [date, setDate] = useState('');
   const [days, setDays] = useState([]);
+  const [times, setTimes] = useState([]);
 
 
   const dayOptions = [
@@ -44,14 +45,73 @@ const AvailabilityScreen = () => {
     },
   ];
 
+  const timeOptions = [
+    {
+      id: '8',
+      name: '8am',
+    },
+    {
+      id: '9',
+      name: '9am',
+    },
+    {
+      id: '10',
+      name: '10am',
+    },
+    {
+      id: '11',
+      name: '11am',
+    },
+    {
+      id: '12',
+      name: '12pm',
+    },
+    {
+      id: '13',
+      name: '1pm',
+    },
+    {
+      id: '14',
+      name: '2pm',
+    },
+    {
+      id: '15',
+      name: '3pm',
+    },
+    {
+      id: '16',
+      name: '4pm',
+    },
+    {
+      id: '17',
+      name: '5pm',
+    },
+    {
+      id: '18',
+      name: '6pm',
+    },
+    {
+      id: '19',
+      name: '7pm',
+    },
+    {
+      id: '20',
+      name: '8pm',
+    },
+  ];
+
 
 
   const onAddDates = () => {
-    if (!date) {
-      alert('Please enter a date.');
+    if (days.length == 0) {
+      alert('Please select days.');
       return;
     }
-
+    if (times.length == 0) {
+      alert('Please select times.');
+      return;
+    }
+  
   }
 
   return (
@@ -62,7 +122,7 @@ const AvailabilityScreen = () => {
           uniqueKey='id'
           onSelectedItemsChange={(text) => setDays(text)}
           selectedItems={days}
-          selectText="Pick Items"
+          selectText="Pick Days"
           searchInputPlaceholderText="Select Days"
           onChangeInput={(text) => setDays(text)}
           tagRemoveIconColor="#CCC"
@@ -88,7 +148,41 @@ const AvailabilityScreen = () => {
           submitButtonColor="#CCC"
           submitButtonText="Submit"
         />
+        <MultiSelect
+          items={timeOptions}
+          uniqueKey='id'
+          onSelectedItemsChange={(text) => setTimes(text)}
+          selectedItems={times}
+          selectText="Pick Times"
+          searchInputPlaceholderText="Select Times"
+          onChangeInput={(text) => setTimes(text)}
+          tagRemoveIconColor="#CCC"
+          tagBorderColor="#CCC"
+          tagTextColor="#CCC"
+          selectedItemTextColor="#CCC"
+          selectedItemIconColor="#CCC"
+          itemTextColor="#000"
+          searchInputStyle={{
+            color: 'black',
+
+          }}
+          styleMainWrapper={{
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: 'lightgrey',
+            backgroundColor: 'white',
+          }}
+          styleDropdownMenu={{
+            borderColor: 'white',
+
+          }}
+          submitButtonColor="#CCC"
+          submitButtonText="Submit"
+        />
       </View>
+      <Pressable style={styles.button} onPress={onAddDates}>
+          <Text style={styles.buttonText}>Next</Text>
+        </Pressable>
     </View>
   );
 }
