@@ -22,7 +22,8 @@ const AddressScreen = () => {
   const [state, setState] = useState('');
 
   const onAddressAdd = () => {
-     if (!address){
+    /*
+    if (!address){
        alert('Please enter an address.');
        return;
      }
@@ -38,6 +39,7 @@ const AddressScreen = () => {
        alert('Please enter a zipcode.');
        return;
      }
+     */
     navigation.navigate('Credentials');
   }
 

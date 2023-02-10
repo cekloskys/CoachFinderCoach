@@ -74,6 +74,7 @@ const HomeScreen = () => {
   };
 
   const onSelectSport = () => {
+    /*
     if (!sport) {
       alert('Please select a sport.');
       return;
@@ -96,6 +97,7 @@ const HomeScreen = () => {
       return;
     }
     // alert(sport + ' Added!');
+    */
     navigation.navigate('Address');
   }
 

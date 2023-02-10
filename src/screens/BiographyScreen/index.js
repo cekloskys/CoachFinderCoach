@@ -28,7 +28,8 @@ const BiographyScreen = () => {
       alert('Please enter your athletic highlights.')
       return;
     } */
-    if (!highlights || highlights.trim.length < 50) {
+    /*
+    if (!highlights || highlights.length < 50) {
       alert('Please enter athletic highlights.');
       return;
     }
@@ -44,6 +45,7 @@ const BiographyScreen = () => {
       alert('Please enter athletic background.');
       return;
     }
+    */
     navigation.navigate('Availability');
   }
 
@@ -77,6 +79,11 @@ const BiographyScreen = () => {
           }}
         />
       </View>
+      <View style={styles.row}>
+        <Text style={{textAlign: 'right', color: 'red'}}>
+          {sessionplan.length} characters (minimum 50 characters)
+        </Text>
+      </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text style={styles.text}>Years Coaching</Text>
       <View style={{ marginLeft: 'auto'}}>
@@ -100,6 +107,11 @@ const BiographyScreen = () => {
           }}
         />
       </View>
+      <View style={styles.row}>
+        <Text style={{textAlign: 'right', color: 'red'}}>
+          {athleticbackground.length} characters (minimum 50 characters)
+        </Text>
+      </View> 
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddBiography}>
           <Text style={styles.buttonText}>Next</Text>

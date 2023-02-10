@@ -62,6 +62,7 @@ const CredentialsScreen = () => {
   ]
 
   const onAddCredentials = () => { 
+    /*
     if (!college){
       alert('Please enter a college.');
       return;
@@ -82,7 +83,7 @@ const CredentialsScreen = () => {
       alert('Please select specialties.')
       return;
     }
-   
+   */
     navigation.navigate('Biography');
   }
 
