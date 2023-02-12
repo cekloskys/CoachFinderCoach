@@ -11,7 +11,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const HomeScreen = () => {
 
   const navigation = useNavigation();
-  // const [description, setDescription] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('');
@@ -74,7 +73,7 @@ const HomeScreen = () => {
   };
 
   const onSelectSport = () => {
-    /*
+
     if (!sport) {
       alert('Please select a sport.');
       return;
@@ -96,8 +95,7 @@ const HomeScreen = () => {
       alert('Please select a gender.');
       return;
     }
-    // alert(sport + ' Added!');
-    */
+
     navigation.navigate('Address');
   }
 
@@ -121,14 +119,14 @@ const HomeScreen = () => {
         rowStyle={styles.dropdownRowStyle}
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
-        <TextInput
-          style={styles.input}
-          placeholder='Full Name'
-          value={name}
-          onChangeText={(text) => {
-            setName(text);
-          }}
-        />
+      <TextInput
+        style={styles.input}
+        placeholder='Enter Full Name'
+        value={name}
+        onChangeText={(text) => {
+          setName(text);
+        }}
+      />
       <PhoneInput
         ref={phoneInput}
         defaultValue={phonenumber}
@@ -150,7 +148,7 @@ const HomeScreen = () => {
         />
       )}
       {!datePicker && (
-        <View style={{ margin: 10 }}>
+        <View>
           <Pressable style={styles.button} onPress={showDatePicker}>
             <Text style={styles.buttonText}>Select Date of Birth</Text>
           </Pressable>
@@ -181,11 +179,11 @@ const HomeScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <View style={styles.bottom}>
-      <Pressable style={styles.button} onPress={onSelectSport}>
+        <Pressable style={styles.button} onPress={onSelectSport}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
-      </ScrollView>
+    </ScrollView>
   );
 }
 

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
-import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import NumericInput from 'react-native-numeric-input'
 
 const BiographyScreen = () => {
 
   const navigation = useNavigation();
-  // const [description, setDescription] = useState('');
   const [name, setName] = useState('');
   const [highlights, setHighlights] = useState('');
   const [sessionplan, setSessionplan] = useState('');
@@ -24,33 +22,40 @@ const BiographyScreen = () => {
   ];
 
   const onAddBiography = () => {
-    /* if (!name) {
-      alert('Please enter your athletic highlights.')
-      return;
-    } */
-    /*
-    if (!highlights || highlights.length < 50) {
-      alert('Please enter athletic highlights.');
-      return;
-    }
-    if (!sessionplan) {
-      alert('Please enter a session plan.');
-      return;
-    }
     if (!coachexperience || coachexperience === '0') {
       alert('Please enter years coaching experience.');
       return;
     }
-    if (!athleticbackground) {
-      alert('Please enter athletic background.');
+    if (!highlights || highlights.length < 50) {
+      alert('Please enter athletic highlights (minimum 50 characters).');
       return;
     }
-    */
+    if (!sessionplan || sessionplan.length < 50) {
+      alert('Please enter a session plan (minimum 50 characters).');
+      return;
+    }
+    if (!athleticbackground || athleticbackground.length < 50) {
+      alert('Please enter athletic background (minimum 50 characters).');
+      return;
+    }
+    
     navigation.navigate('Availability');
   }
 
   return (
     <ScrollView style={styles.page}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={styles.text}>Years Coaching</Text>
+        <View style={{ marginLeft: 'auto' }}>
+          <NumericInput
+            value={coachexperience}
+            onChange={(text) => {
+              setCoachexperience(text)
+            }}
+            rounded
+            minValue={1} />
+        </View>
+      </View>
       <View style={styles.row}>
         <TextInput
           style={styles.multilineinput}
@@ -64,7 +69,7 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{textAlign: 'right', color: 'red'}}>
+        <Text style={{ textAlign: 'right', color: 'grey' }}>
           {highlights.length} characters (minimum 50 characters)
         </Text>
       </View>
@@ -80,22 +85,10 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{textAlign: 'right', color: 'red'}}>
+        <Text style={{ textAlign: 'right', color: 'grey'}}>
           {sessionplan.length} characters (minimum 50 characters)
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={styles.text}>Years Coaching</Text>
-      <View style={{ marginLeft: 'auto'}}>
-      <NumericInput
-        value={coachexperience}
-        onChange={(text) => {
-          setCoachexperience(text)
-        }}
-        rounded
-        minValue={1} />
-        </View>
-        </View>
       <View style={styles.row}>
         <TextInput
           style={styles.multilineinput}
@@ -108,10 +101,10 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{textAlign: 'right', color: 'red'}}>
+        <Text style={{ textAlign: 'right', color: 'grey' }}>
           {athleticbackground.length} characters (minimum 50 characters)
         </Text>
-      </View> 
+      </View>
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddBiography}>
           <Text style={styles.buttonText}>Next</Text>

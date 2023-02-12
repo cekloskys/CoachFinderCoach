@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgrey',
     backgroundColor: 'lightgrey',
-    marginVertical: 15,
+    marginVertical: 5,
   },
   dropdownBtnTxtStyle: {
     color: '#444',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 15,
+    marginVertical: 5,
   },
   buttonText: {
     fontSize: 16,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   phonenumber: {
     fontsize: 16,
-    marginVertical: 15,
+    marginVertical: 5,
     borderWidth: 1.0,
     borderColor: 'lightgrey',
     padding: 10,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgrey',
     borderRadius: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 

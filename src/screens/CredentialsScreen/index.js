@@ -9,13 +9,11 @@ import NumericInput from 'react-native-numeric-input'
 const CredentialsScreen = () => {
 
   const navigation = useNavigation();
-  // const [description, setDescription] = useState('');
   const [college, setCollege] = useState('');
   const [experience, setExperience] = useState(0);
   const [accreditations, setAccreditations] = useState('');
   const [age, setAge] = useState('');
   const [specialties, setSpecialties] = useState('');
-  // const [Credentials, setCredentials] = useState('');
 
   const accredit = [
     'Qualified private coach',
@@ -61,8 +59,8 @@ const CredentialsScreen = () => {
     'Butterfly',
   ]
 
-  const onAddCredentials = () => { 
-    /*
+  const onAddCredentials = () => {
+    
     if (!college){
       alert('Please enter a college.');
       return;
@@ -83,35 +81,32 @@ const CredentialsScreen = () => {
       alert('Please select specialties.')
       return;
     }
-   */
+   
     navigation.navigate('Biography');
   }
 
   return (
     <ScrollView style={styles.page}>
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          placeholder='Enter College'
-          value={college}
-          onChangeText={(text) => {
-            setCollege(text);
-          }}
-        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={styles.text}>Years Playing</Text>
-      <View style={{ marginLeft: 'auto'}}>
-      <NumericInput
-        value={experience}
-        onChange={(text) => {
-          setExperience(text)
+      <TextInput
+        style={styles.input}
+        placeholder='Enter College'
+        value={college}
+        onChangeText={(text) => {
+          setCollege(text);
         }}
-        rounded
-        minValue={1} />
+      />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={styles.text}>Years Playing</Text>
+        <View style={{ marginLeft: 'auto' }}>
+          <NumericInput
+            value={experience}
+            onChange={(text) => {
+              setExperience(text)
+            }}
+            rounded
+            minValue={1} />
         </View>
-        </View>
-      <View style={styles.row}>
+      </View>
       <SelectDropdown
         data={accredit}
         defaultButtonText={'Select Accreditations'}
@@ -130,7 +125,6 @@ const CredentialsScreen = () => {
         rowStyle={styles.dropdownRowStyle}
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
-      </View>
       <SelectDropdown
         data={preference}
         defaultButtonText={'Select Age Preferences'}
