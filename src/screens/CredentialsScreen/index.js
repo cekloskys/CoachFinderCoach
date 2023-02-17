@@ -4,63 +4,75 @@ import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import NumericInput from 'react-native-numeric-input'
-
+import { DataStore } from '@aws-amplify/datastore';
+import { useEffect } from 'react';
+import { Accreditation, Age, Speciality } from '../../models';
 
 const CredentialsScreen = () => {
 
   const navigation = useNavigation();
   const [college, setCollege] = useState('');
   const [experience, setExperience] = useState(0);
-  const [accreditations, setAccreditations] = useState('');
+
+  const [accreditation, setAccreditation] = useState('');
+  const [accreditations, setAccreditations] = useState([]);
+  const [displayAccreditations, setDisplayAccreditations] = useState([]);
+
   const [age, setAge] = useState('');
-  const [specialties, setSpecialties] = useState('');
+  const [ages, setAges] = useState([]);
+  const [displayAges, setDisplayAges] = useState([]);
 
-  const accredit = [
-    'Qualified private coach',
-    'Passed coach course',
-  ];
+  const [specialty, setSpecialty] = useState('');
+  const [specialties, setSpecialties] = useState([]);
+  const [displaySpecialties, setDisplaySpecialties] = useState([]);
 
-  const preference = [
-    'Kids',
-    'Teenagers',
-  ]
+  useEffect(() => {
+    DataStore.query(Accreditation).then(setAccreditations);
+  }, []);
 
-  const special = [
-    'Footwork',
-    'Shooting',
-    'Skating',
-    'Offense',
-    'Defense',
-    'Agility',
-    'Dribbling',
-    'Passing',
-    'Catching',
-    'Pitching',
-    'Infield',
-    'Outfield',
-    'Javelin',
-    'Hurdles',
-    'Distance',
-    'Sprint',
-    'Quarterback',
-    'Offensive Line',
-    'Defensive Line',
-    'Safety',
-    'Cornerback',
-    'Tight End',
-    'Wide Receiver',
-    'Libero',
-    'Setter',
-    'Serving',
-    'Swing',
-    'Putting',
-    'Freestyle',
-    'Backstroke',
-    'Butterfly',
-  ]
+  useEffect(() => {
+    if (!accreditations) {
+        return;
+    }
+    const dt = [];
+    for (let i = 0; i < accreditations.length; i++) {
+        dt.push(accreditations[i].name);
+    }
+    setDisplayAccreditations(dt);
+}, [accreditations]);
+
+useEffect(() => {
+  DataStore.query(Age).then(setAges);
+}, []);
+
+useEffect(() => {
+  if (!ages) {
+      return;
+  }
+  const dt = [];
+  for (let i = 0; i < ages.length; i++) {
+      dt.push(ages[i].name);
+  }
+  setDisplayAges(dt);
+}, [ages]);
+
+useEffect(() => {
+  DataStore.query(Speciality).then(setSpecialties);
+}, []);
+
+useEffect(() => {
+  if (!specialties) {
+      return;
+  }
+  const dt = [];
+  for (let i = 0; i < specialties.length; i++) {
+      dt.push(specialties[i].name);
+  }
+  setDisplaySpecialties(dt);
+}, [specialties]);
 
   const onAddCredentials = () => {
-    
+    /*
     if (!college){
       alert('Please enter a college.');
       return;
@@ -81,7 +93,8 @@ const CredentialsScreen = () => {
       alert('Please select specialties.')
       return;
     }
-   
+   */
+
     navigation.navigate('Biography');
   }
 
@@ -108,10 +121,10 @@ const CredentialsScreen = () => {
         </View>
       </View>
       <SelectDropdown
-        data={accredit}
+        data={displayAccreditations}
         defaultButtonText={'Select Accreditations'}
         onSelect={(selectedItem, index) => {
-          setAccreditations(selectedItem);
+          setAccreditation(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
@@ -126,7 +139,7 @@ const CredentialsScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <SelectDropdown
-        data={preference}
+        data={displayAges}
         defaultButtonText={'Select Age Preferences'}
         onSelect={(selectedItem, index) => {
           setAge(selectedItem);
@@ -144,7 +157,7 @@ const CredentialsScreen = () => {
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <SelectDropdown
-        data={special}
+        data={displaySpecialties}
         defaultButtonText={'Select Specialties'}
         onSelect={(selectedItem, index) => {
           setSpecialties(selectedItem);

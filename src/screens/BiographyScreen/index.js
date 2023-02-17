@@ -22,6 +22,7 @@ const BiographyScreen = () => {
   ];
 
   const onAddBiography = () => {
+    /*
     if (!coachexperience || coachexperience === '0') {
       alert('Please enter years coaching experience.');
       return;
@@ -38,6 +39,7 @@ const BiographyScreen = () => {
       alert('Please enter athletic background (minimum 50 characters).');
       return;
     }
+    */
     
     navigation.navigate('Availability');
   }

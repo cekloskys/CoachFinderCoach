@@ -1,0 +1,100 @@
+enum BookingStatus {
+  PENDING
+  IN_PROGRESS
+  DECLINED
+  COMPLETED
+  CANCELLED
+}
+
+type Booking @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  athleteName: String!
+  athleteAge: String!
+  startDate: String!
+  startTime: String!
+  status: BookingStatus
+  profileID: ID! @index(name: "byProfile")
+  packageID: ID! @index(name: "byPackage")
+}
+
+type Accreditation @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+}
+
+type Time @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+}
+
+type Day @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+}
+
+type Coach @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  highlights: String!
+  sessionPlan: String!
+  background: String!
+  yearsCoaching: Int!
+  yearsPlaying: Int!
+  college: String!
+  shortDesc: String!
+  image: String
+  startPrice: Float
+  Profile: Profile @hasOne
+  sportID: ID! @index(name: "bySport")
+  fullName: String!
+  email: String!
+  streetAddress: String!
+  city: String!
+  state: String!
+  zip: String!
+  phoneNbr: String
+  dob: String
+}
+
+type Profile @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  fullName: String!
+  email: String!
+  streetAddress: String!
+  city: String!
+  state: String!
+  zip: String!
+  phoneNbr: String
+  Bookings: [Booking] @hasMany(indexName: "byProfile", fields: ["id"])
+}
+
+type Age @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+}
+
+type Speciality @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+}
+
+type Position @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+}
+
+type Sport @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nam: String!
+  Coaches: [Coach] @hasMany(indexName: "bySport", fields: ["id"])
+}
+
+type Package @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  price: Float!
+  shortDesc: String!
+  longDesc: String!
+  length: Int!
+  Bookings: [Booking] @hasMany(indexName: "byPackage", fields: ["id"])
+}
+ 

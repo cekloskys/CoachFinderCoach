@@ -5,6 +5,9 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-number-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { DataStore } from '@aws-amplify/datastore';
+import { useEffect } from 'react';
+import { Sport, Position } from '../../models';
 
 // const database = require
 
@@ -14,7 +17,6 @@ const HomeScreen = () => {
   const [phonenumber, setPhonenumber] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('');
-  const [sport, setSport] = useState('');
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
@@ -27,27 +29,46 @@ const HomeScreen = () => {
 
   const phoneInput = useRef(null);
 
-  const sports = [
-    'Lacrosse',
-    'Ice Hockey',
-    'Basketball',
-    'Soccer',
-    'Field Hockey',
-    'Track and Field',
-    'Cross Country',
-    'Softball',
-    'Baseball',
-    'Football',
-    'Volleyball',
-    'Tennis',
-    'Golf',
-    'Swimming',
-    'Diving',
-    'Gymnastics',
-    'Boxing',
-    'Wresting',
-    'Bowling',
-  ];
+  const [sport, setSport] = useState('');
+  const [sports, setSports] = useState([]);
+  const [displaySports, setDisplaySports] = useState([]);
+
+  const [position, setPosition] = useState('');
+  const [positions, setPositions] = useState([]);
+  const [displayPositions, setDisplayPositions] = useState([]);
+
+  useEffect(() => {
+    DataStore.query(Sport).then(setSports);
+  }, []);
+  console.log('Sport');
+  console.log(sports);
+
+
+  useEffect(() => {
+    if (!sports) {
+        return;
+    }
+    const dt = [];
+    for (let i = 0; i < sports.length; i++) {
+        dt.push(sports[i].nam);
+    }
+    setDisplaySports(dt);
+}, [sports]);
+
+  useEffect(() => {
+    DataStore.query(Position).then(setPositions);
+  }, []);
+
+  useEffect(() => {
+    if (!positions) {
+        return;
+    }
+    const dt = [];
+    for (let i = 0; i < positions.length; i++) {
+        dt.push(positions[i].name);
+    }
+    setDisplayPositions(dt);
+}, [positions]);
 
   const genders = [
     'Male',
@@ -73,7 +94,7 @@ const HomeScreen = () => {
   };
 
   const onSelectSport = () => {
-
+    /*
     if (!sport) {
       alert('Please select a sport.');
       return;
@@ -95,6 +116,7 @@ const HomeScreen = () => {
       alert('Please select a gender.');
       return;
     }
+    */
 
     navigation.navigate('Address');
   }
@@ -102,10 +124,28 @@ const HomeScreen = () => {
   return (
     <ScrollView style={styles.page}>
       <SelectDropdown
-        data={sports}
+        data={displaySports}
         defaultButtonText={'Select Sport'}
         onSelect={(selectedItem, index) => {
           setSport(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
+      <SelectDropdown
+        data={displayPositions}
+        defaultButtonText={'Select Position'}
+        onSelect={(selectedItem, index) => {
+          setPosition(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
