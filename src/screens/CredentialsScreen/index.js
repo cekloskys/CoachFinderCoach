@@ -7,6 +7,7 @@ import NumericInput from 'react-native-numeric-input'
 import { DataStore } from '@aws-amplify/datastore';
 import { useEffect } from 'react';
 import { Accreditation, Age, Speciality } from '../../models';
+import { useRoute } from '@react-navigation/native';
 
 const CredentialsScreen = () => {
 
@@ -25,6 +26,27 @@ const CredentialsScreen = () => {
   const [specialty, setSpecialty] = useState('');
   const [specialties, setSpecialties] = useState([]);
   const [displaySpecialties, setDisplaySpecialties] = useState([]);
+
+  const route = useRoute();
+
+  const sport = route.params?.sport;
+  console.log(sport);
+  const name = route.params?.name;
+  console.log(name);
+  const phoneInput = route.params?.phoneInput;
+  console.log(phoneInput);
+  const date = route.params?.date;
+  console.log(date);
+  const gender = route.params?.gender;
+  console.log(gender);
+  const address = route.params?.address;
+  console.log(address);
+  const city = route.params?.city;
+  console.log(city);
+  const state = route.params?.state;
+  console.log(state);
+  const zip = route.params?.zip;
+  console.log(zip);
 
   useEffect(() => {
     DataStore.query(Accreditation).then(setAccreditations);
@@ -95,7 +117,13 @@ useEffect(() => {
     }
    */
 
-    navigation.navigate('Biography');
+    navigation.navigate('Biography', {
+      college: college,
+      experience: experience,
+      accreditation: accreditation,
+      age: age,
+      specialties: specialties,
+    });
   }
 
   return (

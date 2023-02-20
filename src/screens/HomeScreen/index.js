@@ -50,7 +50,7 @@ const HomeScreen = () => {
     }
     const dt = [];
     for (let i = 0; i < sports.length; i++) {
-        dt.push(sports[i].nam);
+        dt.push(sports[i].name);
     }
     setDisplaySports(dt);
 }, [sports]);
@@ -118,7 +118,13 @@ const HomeScreen = () => {
     }
     */
 
-    navigation.navigate('Address');
+    navigation.navigate('Address', {
+      sport: sport,
+      name: name,
+      phoneInput: phoneInput,
+      date: date,
+      gender: gender,
+    });
   }
 
   return (

@@ -4,7 +4,7 @@ import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import countryList from 'country-list';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import { useRoute } from '@react-navigation/native';
 const UsaStates = require('usa-states').UsaStates;
 
 const AddressScreen = () => {
@@ -17,6 +17,19 @@ const AddressScreen = () => {
   const [city, setCity] = useState('');
   const [zip, setZip] = useState('');
   const [state, setState] = useState('');
+
+  const route = useRoute();
+
+  const sport = route.params?.sport;
+  console.log(sport);
+  const name = route.params?.name;
+  console.log(name);
+  const phoneInput = route.params?.phoneInput;
+  console.log(phoneInput);
+  const date = route.params?.date;
+  console.log(date);
+  const gender = route.params?.gender;
+  console.log(gender);
 
   const onAddressAdd = () => {
     /*
@@ -38,7 +51,12 @@ const AddressScreen = () => {
      }
      */
     
-    navigation.navigate('Credentials');
+    navigation.navigate('Credentials', {
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+    });
   }
 
   return (

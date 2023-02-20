@@ -12,44 +12,36 @@ export enum BookingStatus {
 
 
 
-type EagerBooking = {
+type EagerAccreditationCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Booking, 'id'>;
+    identifier: ManagedIdentifier<AccreditationCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly athleteName: string;
-  readonly athleteAge: string;
-  readonly startDate: string;
-  readonly startTime: string;
-  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
-  readonly profileID: string;
-  readonly packageID: string;
+  readonly Accreditation?: Accreditation | null;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly accreditationCoachAccreditationId?: string | null;
 }
 
-type LazyBooking = {
+type LazyAccreditationCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Booking, 'id'>;
+    identifier: ManagedIdentifier<AccreditationCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly athleteName: string;
-  readonly athleteAge: string;
-  readonly startDate: string;
-  readonly startTime: string;
-  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
-  readonly profileID: string;
-  readonly packageID: string;
+  readonly Accreditation: AsyncItem<Accreditation | undefined>;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly accreditationCoachAccreditationId?: string | null;
 }
 
-export declare type Booking = LazyLoading extends LazyLoadingDisabled ? EagerBooking : LazyBooking
+export declare type AccreditationCoach = LazyLoading extends LazyLoadingDisabled ? EagerAccreditationCoach : LazyAccreditationCoach
 
-export declare const Booking: (new (init: ModelInit<Booking>) => Booking) & {
-  copyOf(source: Booking, mutator: (draft: MutableModel<Booking>) => MutableModel<Booking> | void): Booking;
+export declare const AccreditationCoach: (new (init: ModelInit<AccreditationCoach>) => AccreditationCoach) & {
+  copyOf(source: AccreditationCoach, mutator: (draft: MutableModel<AccreditationCoach>) => MutableModel<AccreditationCoach> | void): AccreditationCoach;
 }
 
 type EagerAccreditation = {
@@ -58,7 +50,7 @@ type EagerAccreditation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -69,7 +61,7 @@ type LazyAccreditation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -80,168 +72,96 @@ export declare const Accreditation: (new (init: ModelInit<Accreditation>) => Acc
   copyOf(source: Accreditation, mutator: (draft: MutableModel<Accreditation>) => MutableModel<Accreditation> | void): Accreditation;
 }
 
-type EagerTime = {
+type EagerSpecialityCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Time, 'id'>;
+    identifier: ManagedIdentifier<SpecialityCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly Speciality?: Speciality | null;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly specialityCoachSpecialityId?: string | null;
+}
+
+type LazySpecialityCoach = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SpecialityCoach, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly Speciality: AsyncItem<Speciality | undefined>;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly specialityCoachSpecialityId?: string | null;
+}
+
+export declare type SpecialityCoach = LazyLoading extends LazyLoadingDisabled ? EagerSpecialityCoach : LazySpecialityCoach
+
+export declare const SpecialityCoach: (new (init: ModelInit<SpecialityCoach>) => SpecialityCoach) & {
+  copyOf(source: SpecialityCoach, mutator: (draft: MutableModel<SpecialityCoach>) => MutableModel<SpecialityCoach> | void): SpecialityCoach;
+}
+
+type EagerSpeciality = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Speciality, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyTime = {
+type LazySpeciality = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Time, 'id'>;
+    identifier: ManagedIdentifier<Speciality, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type Time = LazyLoading extends LazyLoadingDisabled ? EagerTime : LazyTime
+export declare type Speciality = LazyLoading extends LazyLoadingDisabled ? EagerSpeciality : LazySpeciality
 
-export declare const Time: (new (init: ModelInit<Time>) => Time) & {
-  copyOf(source: Time, mutator: (draft: MutableModel<Time>) => MutableModel<Time> | void): Time;
+export declare const Speciality: (new (init: ModelInit<Speciality>) => Speciality) & {
+  copyOf(source: Speciality, mutator: (draft: MutableModel<Speciality>) => MutableModel<Speciality> | void): Speciality;
 }
 
-type EagerDay = {
+type EagerAgeCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Day, 'id'>;
+    identifier: ManagedIdentifier<AgeCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly Age?: Age | null;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly ageCoachAgeId?: string | null;
 }
 
-type LazyDay = {
+type LazyAgeCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Day, 'id'>;
+    identifier: ManagedIdentifier<AgeCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly Age: AsyncItem<Age | undefined>;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly ageCoachAgeId?: string | null;
 }
 
-export declare type Day = LazyLoading extends LazyLoadingDisabled ? EagerDay : LazyDay
+export declare type AgeCoach = LazyLoading extends LazyLoadingDisabled ? EagerAgeCoach : LazyAgeCoach
 
-export declare const Day: (new (init: ModelInit<Day>) => Day) & {
-  copyOf(source: Day, mutator: (draft: MutableModel<Day>) => MutableModel<Day> | void): Day;
-}
-
-type EagerCoach = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Coach, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly highlights: string;
-  readonly sessionPlan: string;
-  readonly background: string;
-  readonly yearsCoaching: number;
-  readonly yearsPlaying: number;
-  readonly college: string;
-  readonly shortDesc: string;
-  readonly image?: string | null;
-  readonly startPrice?: number | null;
-  readonly Profile?: Profile | null;
-  readonly sportID: string;
-  readonly fullName: string;
-  readonly email: string;
-  readonly streetAddress: string;
-  readonly city: string;
-  readonly state: string;
-  readonly zip: string;
-  readonly phoneNbr?: string | null;
-  readonly dob?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly coachProfileId?: string | null;
-}
-
-type LazyCoach = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Coach, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly highlights: string;
-  readonly sessionPlan: string;
-  readonly background: string;
-  readonly yearsCoaching: number;
-  readonly yearsPlaying: number;
-  readonly college: string;
-  readonly shortDesc: string;
-  readonly image?: string | null;
-  readonly startPrice?: number | null;
-  readonly Profile: AsyncItem<Profile | undefined>;
-  readonly sportID: string;
-  readonly fullName: string;
-  readonly email: string;
-  readonly streetAddress: string;
-  readonly city: string;
-  readonly state: string;
-  readonly zip: string;
-  readonly phoneNbr?: string | null;
-  readonly dob?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly coachProfileId?: string | null;
-}
-
-export declare type Coach = LazyLoading extends LazyLoadingDisabled ? EagerCoach : LazyCoach
-
-export declare const Coach: (new (init: ModelInit<Coach>) => Coach) & {
-  copyOf(source: Coach, mutator: (draft: MutableModel<Coach>) => MutableModel<Coach> | void): Coach;
-}
-
-type EagerProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Profile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly fullName: string;
-  readonly email: string;
-  readonly streetAddress: string;
-  readonly city: string;
-  readonly state: string;
-  readonly zip: string;
-  readonly phoneNbr?: string | null;
-  readonly Bookings?: (Booking | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Profile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly fullName: string;
-  readonly email: string;
-  readonly streetAddress: string;
-  readonly city: string;
-  readonly state: string;
-  readonly zip: string;
-  readonly phoneNbr?: string | null;
-  readonly Bookings: AsyncCollection<Booking>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Profile = LazyLoading extends LazyLoadingDisabled ? EagerProfile : LazyProfile
-
-export declare const Profile: (new (init: ModelInit<Profile>) => Profile) & {
-  copyOf(source: Profile, mutator: (draft: MutableModel<Profile>) => MutableModel<Profile> | void): Profile;
+export declare const AgeCoach: (new (init: ModelInit<AgeCoach>) => AgeCoach) & {
+  copyOf(source: AgeCoach, mutator: (draft: MutableModel<AgeCoach>) => MutableModel<AgeCoach> | void): AgeCoach;
 }
 
 type EagerAge = {
@@ -272,32 +192,36 @@ export declare const Age: (new (init: ModelInit<Age>) => Age) & {
   copyOf(source: Age, mutator: (draft: MutableModel<Age>) => MutableModel<Age> | void): Age;
 }
 
-type EagerSpeciality = {
+type EagerPositionCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Speciality, 'id'>;
+    identifier: ManagedIdentifier<PositionCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly Position?: Position | null;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly positionCoachPositionId?: string | null;
 }
 
-type LazySpeciality = {
+type LazyPositionCoach = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Speciality, 'id'>;
+    identifier: ManagedIdentifier<PositionCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly Position: AsyncItem<Position | undefined>;
+  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly positionCoachPositionId?: string | null;
 }
 
-export declare type Speciality = LazyLoading extends LazyLoadingDisabled ? EagerSpeciality : LazySpeciality
+export declare type PositionCoach = LazyLoading extends LazyLoadingDisabled ? EagerPositionCoach : LazyPositionCoach
 
-export declare const Speciality: (new (init: ModelInit<Speciality>) => Speciality) & {
-  copyOf(source: Speciality, mutator: (draft: MutableModel<Speciality>) => MutableModel<Speciality> | void): Speciality;
+export declare const PositionCoach: (new (init: ModelInit<PositionCoach>) => PositionCoach) & {
+  copyOf(source: PositionCoach, mutator: (draft: MutableModel<PositionCoach>) => MutableModel<PositionCoach> | void): PositionCoach;
 }
 
 type EagerPosition = {
@@ -306,7 +230,7 @@ type EagerPosition = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -317,7 +241,7 @@ type LazyPosition = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -328,47 +252,17 @@ export declare const Position: (new (init: ModelInit<Position>) => Position) & {
   copyOf(source: Position, mutator: (draft: MutableModel<Position>) => MutableModel<Position> | void): Position;
 }
 
-type EagerSport = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Sport, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nam: string;
-  readonly Coaches?: (Coach | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazySport = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Sport, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nam: string;
-  readonly Coaches: AsyncCollection<Coach>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Sport = LazyLoading extends LazyLoadingDisabled ? EagerSport : LazySport
-
-export declare const Sport: (new (init: ModelInit<Sport>) => Sport) & {
-  copyOf(source: Sport, mutator: (draft: MutableModel<Sport>) => MutableModel<Sport> | void): Sport;
-}
-
 type EagerPackage = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Package, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
-  readonly price: number;
-  readonly shortDesc: string;
-  readonly longDesc: string;
-  readonly length: number;
+  readonly name?: string | null;
+  readonly price?: number | null;
+  readonly shortDesc?: string | null;
+  readonly longDesc?: string | null;
+  readonly length?: number | null;
   readonly Bookings?: (Booking | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -380,11 +274,11 @@ type LazyPackage = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
-  readonly price: number;
-  readonly shortDesc: string;
-  readonly longDesc: string;
-  readonly length: number;
+  readonly name?: string | null;
+  readonly price?: number | null;
+  readonly shortDesc?: string | null;
+  readonly longDesc?: string | null;
+  readonly length?: number | null;
   readonly Bookings: AsyncCollection<Booking>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -394,4 +288,186 @@ export declare type Package = LazyLoading extends LazyLoadingDisabled ? EagerPac
 
 export declare const Package: (new (init: ModelInit<Package>) => Package) & {
   copyOf(source: Package, mutator: (draft: MutableModel<Package>) => MutableModel<Package> | void): Package;
+}
+
+type EagerBooking = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Booking, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly athleteName?: string | null;
+  readonly athleteAge?: string | null;
+  readonly startDate?: string | null;
+  readonly startTime?: string | null;
+  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
+  readonly packageID: string;
+  readonly profileID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyBooking = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Booking, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly athleteName?: string | null;
+  readonly athleteAge?: string | null;
+  readonly startDate?: string | null;
+  readonly startTime?: string | null;
+  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
+  readonly packageID: string;
+  readonly profileID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Booking = LazyLoading extends LazyLoadingDisabled ? EagerBooking : LazyBooking
+
+export declare const Booking: (new (init: ModelInit<Booking>) => Booking) & {
+  copyOf(source: Booking, mutator: (draft: MutableModel<Booking>) => MutableModel<Booking> | void): Booking;
+}
+
+type EagerProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Profile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly fullName?: string | null;
+  readonly email?: string | null;
+  readonly streetAddress?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly phoneNbr?: string | null;
+  readonly Bookings?: (Booking | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Profile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly fullName?: string | null;
+  readonly email?: string | null;
+  readonly streetAddress?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly phoneNbr?: string | null;
+  readonly Bookings: AsyncCollection<Booking>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Profile = LazyLoading extends LazyLoadingDisabled ? EagerProfile : LazyProfile
+
+export declare const Profile: (new (init: ModelInit<Profile>) => Profile) & {
+  copyOf(source: Profile, mutator: (draft: MutableModel<Profile>) => MutableModel<Profile> | void): Profile;
+}
+
+type EagerCoach = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Coach, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly highlights?: string | null;
+  readonly sessionPlan?: string | null;
+  readonly background?: string | null;
+  readonly yearsCoaching?: number | null;
+  readonly yearsPlaying?: number | null;
+  readonly college?: string | null;
+  readonly shortDesc?: string | null;
+  readonly image?: string | null;
+  readonly startPrice?: number | null;
+  readonly fullName?: string | null;
+  readonly email?: string | null;
+  readonly streetAddress?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly phoneNbr?: string | null;
+  readonly dob?: string | null;
+  readonly sportID: string;
+  readonly PositionCoaches?: (PositionCoach | null)[] | null;
+  readonly AgeCoaches?: (AgeCoach | null)[] | null;
+  readonly SpecialityCoaches?: (SpecialityCoach | null)[] | null;
+  readonly AccreditationCoaches?: (AccreditationCoach | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCoach = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Coach, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly highlights?: string | null;
+  readonly sessionPlan?: string | null;
+  readonly background?: string | null;
+  readonly yearsCoaching?: number | null;
+  readonly yearsPlaying?: number | null;
+  readonly college?: string | null;
+  readonly shortDesc?: string | null;
+  readonly image?: string | null;
+  readonly startPrice?: number | null;
+  readonly fullName?: string | null;
+  readonly email?: string | null;
+  readonly streetAddress?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly phoneNbr?: string | null;
+  readonly dob?: string | null;
+  readonly sportID: string;
+  readonly PositionCoaches: AsyncCollection<PositionCoach>;
+  readonly AgeCoaches: AsyncCollection<AgeCoach>;
+  readonly SpecialityCoaches: AsyncCollection<SpecialityCoach>;
+  readonly AccreditationCoaches: AsyncCollection<AccreditationCoach>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Coach = LazyLoading extends LazyLoadingDisabled ? EagerCoach : LazyCoach
+
+export declare const Coach: (new (init: ModelInit<Coach>) => Coach) & {
+  copyOf(source: Coach, mutator: (draft: MutableModel<Coach>) => MutableModel<Coach> | void): Coach;
+}
+
+type EagerSport = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Sport, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly Coaches?: (Coach | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySport = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Sport, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly Coaches: AsyncCollection<Coach>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Sport = LazyLoading extends LazyLoadingDisabled ? EagerSport : LazySport
+
+export declare const Sport: (new (init: ModelInit<Sport>) => Sport) & {
+  copyOf(source: Sport, mutator: (draft: MutableModel<Sport>) => MutableModel<Sport> | void): Sport;
 }

@@ -3,11 +3,11 @@ import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import NumericInput from 'react-native-numeric-input'
+import { useRoute } from '@react-navigation/native';
 
 const BiographyScreen = () => {
 
   const navigation = useNavigation();
-  const [name, setName] = useState('');
   const [highlights, setHighlights] = useState('');
   const [sessionplan, setSessionplan] = useState('');
   const [coachexperience, setCoachexperience] = useState(0);
@@ -20,6 +20,37 @@ const BiographyScreen = () => {
     '8-10',
     '10+',
   ];
+
+  const route = useRoute();
+
+  const sport = route.params?.sport;
+  console.log(sport);
+  const name = route.params?.name;
+  console.log(name);
+  const phoneInput = route.params?.phoneInput;
+  console.log(phoneInput);
+  const date = route.params?.date;
+  console.log(date);
+  const gender = route.params?.gender;
+  console.log(gender);
+  const address = route.params?.address;
+  console.log(address);
+  const city = route.params?.city;
+  console.log(city);
+  const state = route.params?.state;
+  console.log(state);
+  const zip = route.params?.zip;
+  console.log(zip);
+  const college = route.params?.college;
+  console.log(college);
+  const experience = route.params?.experience;
+  console.log(experience);
+  const accreditation = route.params?.accreditation;
+  console.log(accreditation);
+  const age = route.params?.age;
+  console.log(age);
+  const specialties = route.params?.specialties;
+  console.log(specialties);
 
   const onAddBiography = () => {
     /*
@@ -41,7 +72,12 @@ const BiographyScreen = () => {
     }
     */
     
-    navigation.navigate('Availability');
+    navigation.navigate('Availability', {
+      coachexperience: coachexperience,
+      highlights: highlights,
+      sessionplan: sessionplan,
+      athleticbackground: athleticbackground,
+    });
   }
 
   return (
