@@ -25,6 +25,8 @@ const BiographyScreen = () => {
 
   const sport = route.params?.sport;
   console.log(sport);
+  const position = route.params?.position;
+  console.log(position);
   const name = route.params?.name;
   console.log(name);
   const phoneInput = route.params?.phoneInput;

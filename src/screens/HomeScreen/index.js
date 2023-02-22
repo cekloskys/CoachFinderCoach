@@ -120,8 +120,9 @@ const HomeScreen = () => {
 
     navigation.navigate('Address', {
       sport: sport,
+      position: position,
       name: name,
-      phoneInput: phoneInput,
+      phoneInput: phoneInput.phonenumber,
       date: date,
       gender: gender,
     });
