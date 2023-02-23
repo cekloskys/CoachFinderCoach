@@ -79,7 +79,6 @@ type EagerSpecialityCoach = {
   };
   readonly id: string;
   readonly Speciality?: Speciality | null;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly specialityCoachSpecialityId?: string | null;
@@ -92,7 +91,6 @@ type LazySpecialityCoach = {
   };
   readonly id: string;
   readonly Speciality: AsyncItem<Speciality | undefined>;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly specialityCoachSpecialityId?: string | null;
@@ -139,7 +137,6 @@ type EagerAgeCoach = {
   };
   readonly id: string;
   readonly Age?: Age | null;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly ageCoachAgeId?: string | null;
@@ -152,7 +149,6 @@ type LazyAgeCoach = {
   };
   readonly id: string;
   readonly Age: AsyncItem<Age | undefined>;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly ageCoachAgeId?: string | null;
@@ -199,7 +195,6 @@ type EagerPositionCoach = {
   };
   readonly id: string;
   readonly Position?: Position | null;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly positionCoachPositionId?: string | null;
@@ -212,7 +207,6 @@ type LazyPositionCoach = {
   };
   readonly id: string;
   readonly Position: AsyncItem<Position | undefined>;
-  readonly coachID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly positionCoachPositionId?: string | null;
@@ -396,9 +390,6 @@ type EagerCoach = {
   readonly phoneNbr?: string | null;
   readonly dob?: string | null;
   readonly sportID: string;
-  readonly PositionCoaches?: (PositionCoach | null)[] | null;
-  readonly AgeCoaches?: (AgeCoach | null)[] | null;
-  readonly SpecialityCoaches?: (SpecialityCoach | null)[] | null;
   readonly AccreditationCoaches?: (AccreditationCoach | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -428,9 +419,6 @@ type LazyCoach = {
   readonly phoneNbr?: string | null;
   readonly dob?: string | null;
   readonly sportID: string;
-  readonly PositionCoaches: AsyncCollection<PositionCoach>;
-  readonly AgeCoaches: AsyncCollection<AgeCoach>;
-  readonly SpecialityCoaches: AsyncCollection<SpecialityCoach>;
   readonly AccreditationCoaches: AsyncCollection<AccreditationCoach>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

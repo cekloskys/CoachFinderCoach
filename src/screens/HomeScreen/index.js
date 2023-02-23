@@ -122,7 +122,8 @@ const HomeScreen = () => {
       sport: sport,
       position: position,
       name: name,
-      phoneInput: phoneInput.phonenumber,
+      //phoneInput: phoneInput.current.getValue(),
+      phoneInput: '4845474841',
       date: date,
       gender: gender,
     });

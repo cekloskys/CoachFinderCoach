@@ -7,19 +7,16 @@ type AccreditationCoach @model @auth(rules: [{allow: public}]) {
 type SpecialityCoach @model @auth(rules: [{allow: public}]) {
   id: ID!
   Speciality: Speciality @hasOne
-  coachID: ID! @index(name: "byCoach")
 }
 
 type AgeCoach @model @auth(rules: [{allow: public}]) {
   id: ID!
   Age: Age @hasOne
-  coachID: ID! @index(name: "byCoach")
 }
 
 type PositionCoach @model @auth(rules: [{allow: public}]) {
   id: ID!
   Position: Position @hasOne
-  coachID: ID! @index(name: "byCoach")
 }
 
 type Package @model @auth(rules: [{allow: public}]) {
@@ -79,9 +76,6 @@ type Coach @model @auth(rules: [{allow: public}]) {
   phoneNbr: String
   dob: String
   sportID: ID! @index(name: "bySport")
-  PositionCoaches: [PositionCoach] @hasMany(indexName: "byCoach", fields: ["id"])
-  AgeCoaches: [AgeCoach] @hasMany(indexName: "byCoach", fields: ["id"])
-  SpecialityCoaches: [SpecialityCoach] @hasMany(indexName: "byCoach", fields: ["id"])
   AccreditationCoaches: [AccreditationCoach] @hasMany(indexName: "byCoach", fields: ["id"])
 }
 

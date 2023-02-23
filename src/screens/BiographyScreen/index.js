@@ -75,6 +75,22 @@ const BiographyScreen = () => {
     */
     
     navigation.navigate('Availability', {
+      sport: sport,
+      position: position,
+      name: name,
+      //phoneInput: phoneInput.current.getValue(),
+      phoneInput: '4845474841',
+      date: date,
+      gender: gender,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+      college: college,
+      experience: experience,
+      accreditation: accreditation,
+      age: age,
+      specialties: specialties,
       coachexperience: coachexperience,
       highlights: highlights,
       sessionplan: sessionplan,
