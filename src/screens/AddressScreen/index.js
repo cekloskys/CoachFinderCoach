@@ -21,18 +21,11 @@ const AddressScreen = () => {
   const route = useRoute();
 
   const sport = route.params?.sport;
-  console.log('Sport');
-  console.log(sport);
   const position = route.params?.position;
-  console.log(position);
   const name = route.params?.name;
-  console.log(name);
   const phoneInput = route.params?.phoneInput;
-  console.log(phoneInput);
   const date = route.params?.date;
-  console.log(date);
   const gender = route.params?.gender;
-  console.log(gender);
 
   const onAddressAdd = () => {
     /*
@@ -59,7 +52,7 @@ const AddressScreen = () => {
       position: position,
       name: name,
       //phoneInput: phoneInput.current.getValue(),
-      phoneInput: '4845474841',
+      phoneInput: phoneInput,
       date: date,
       gender: gender,
       address: address,

@@ -3,8 +3,11 @@ import styles from './styles';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
+import { DataStore } from 'aws-amplify';
+import { Coach, Sport } from '../../models';
+import PhoneInput from 'react-native-phone-number-input';
 
-const Header = () => {
+const Header = ({coach}) => {
 
   const navigation = useNavigation();
 
@@ -12,6 +15,8 @@ const Header = () => {
   let selectedDays = [];
   const [times, setTimes] = useState([]);
   let selectedTimes = [];
+
+  const [sportID, setSportID] = useState('');
 
   const dayOptions = [
     {
@@ -107,7 +112,11 @@ const Header = () => {
     setTimes(times);
   };
 
-  const onPress = () => {
+  const getSportId = async() => {
+    DataStore.query(Sport, (s) => s.name.eq(coach.sport)).then(setSportID);
+  };
+
+  const onPress = async() => {
     if (days.length == 0) {
       alert('Please select the day or days you\'re available.');
       return;
@@ -116,7 +125,6 @@ const Header = () => {
         var tempDay = dayOptions.find(item => item.id === days[i]);
         selectedDays.push(tempDay);
       } 
-      console.log(selectedDays);
     }
 
     if (times.length == 0) {
@@ -127,8 +135,26 @@ const Header = () => {
         var tempTime = timeOptions.find(item => item.id === times[i]);
         selectedTimes.push(tempTime);
       } 
-      console.log(selectedTimes);
     }
+
+    await DataStore.save(new Coach({
+      highlights: coach.highlights,
+      sessionPlan: coach.sessionplan,
+      background: coach.athleticbackground,
+      yearsCoaching: coach.coachexperience,
+      yearsPlaying: coach.experience,
+      college: coach.college,
+      fullName: coach.name,
+      streetAddress: coach.address,
+      city: coach.city,
+      state: coach.state,
+      zip: coach.zip,
+      phoneNbr: coach.phoneInput,
+      dob: coach.date.toString(),
+      sportID: getSportId(),
+    })); 
+
+    alert('coach created');
   }
 
   return (
@@ -237,7 +263,7 @@ const Header = () => {
       </View>
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
       </View>
     </View>

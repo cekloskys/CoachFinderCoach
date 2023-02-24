@@ -40,9 +40,6 @@ const HomeScreen = () => {
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
   }, []);
-  console.log('Sport');
-  console.log(sports);
-
 
   useEffect(() => {
     if (!sports) {
@@ -122,8 +119,7 @@ const HomeScreen = () => {
       sport: sport,
       position: position,
       name: name,
-      //phoneInput: phoneInput.current.getValue(),
-      phoneInput: '4845474841',
+      phoneInput: phonenumber,
       date: date,
       gender: gender,
     });

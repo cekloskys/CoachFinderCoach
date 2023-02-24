@@ -15,49 +15,34 @@ const AvailabilityScreen = () => {
 
   const route = useRoute();
 
-  const sport = route.params?.sport;
-  console.log(sport);
-  const position = route.params?.position;
-  console.log(position);
-  const name = route.params?.name;
-  console.log(name);
-  const phoneInput = route.params?.phoneInput;
-  console.log(phoneInput);
-  const date = route.params?.date;
-  console.log(date);
-  const gender = route.params?.gender;
-  console.log(gender);
-  const address = route.params?.address;
-  console.log(address);
-  const city = route.params?.city;
-  console.log(city);
-  const state = route.params?.state;
-  console.log(state);
-  const zip = route.params?.zip;
-  console.log(zip);
-  const college = route.params?.college;
-  console.log(college);
-  const experience = route.params?.experience;
-  console.log(experience);
-  const accreditation = route.params?.accreditation;
-  console.log(accreditation);
-  const age = route.params?.age;
-  console.log(age);
-  const specialties = route.params?.specialties;
-  console.log(specialties);
-  const coachexperience = route.params?.coachexperience;
-  console.log(coachexperience);
-  const highlights = route.params?.highlights;
-  console.log(highlights);
-  const sessionplan = route.params?.sessionplan;
-  console.log(sessionplan);
-  const athleticbackground = route.params?.athleticbackground;
-  console.log(athleticbackground);
+  const coach = {
+    sport: route.params?.sport,
+    position: route.params?.position, 
+    name: route.params?.name, 
+    phoneInput: route.params?.phoneInput, 
+    date: route.params?.date, 
+    gender: route.params?.gender, 
+    address: route.params?.address, 
+    city: route.params?.city, 
+    state: route.params?.state, 
+    zip: route.params?.zip, 
+    college: route.params?.college, 
+    experience: route.params?.experience, 
+    accreditation: route.params?.accreditation, 
+    age: route.params?.age, 
+    specialties: route.params?.specialties, 
+    coachexperience: route.params?.coachexperience, 
+    highlights: route.params?.highlights, 
+    sessionplan: route.params?.sessionplan, 
+    athleticbackground: route.params?.athleticbackground,
+  };
+
+  console.log(coach);
 
   return (
     <View>
       <FlatList
-        ListHeaderComponent={() => <Header />}
+        ListHeaderComponent={() => <Header coach={coach}/>}
         data={data}
         renderItem={({ item, index }) => <View></View>}
         keyExtractor={(item, index) => index}
