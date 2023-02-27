@@ -40,6 +40,8 @@ const CredentialsScreen = () => {
   const state = route.params?.state;
   const zip = route.params?.zip;
 
+  const [coachexperience, setCoachexperience] = useState(0);
+
   useEffect(() => {
     DataStore.query(Accreditation).then(setAccreditations);
   }, []);
@@ -95,6 +97,10 @@ useEffect(() => {
       alert('Please enter years playing experience.');
       return;
     }
+    if (!coachexperience || coachexperience === '0') {
+      alert('Please enter years coaching experience.');
+      return;
+    }
     if (!accreditations){
       alert('Please select accreditations.');
       return;
@@ -131,14 +137,18 @@ useEffect(() => {
 
   return (
     <ScrollView style={styles.page}>
-      <TextInput
-        style={styles.input}
-        placeholder='Enter College'
-        value={college}
-        onChangeText={(text) => {
-          setCollege(text);
-        }}
-      />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={styles.text}>Years Coaching</Text>
+        <View style={{ marginLeft: 'auto' }}>
+          <NumericInput
+            value={coachexperience}
+            onChange={(text) => {
+              setCoachexperience(text)
+            }}
+            rounded
+            minValue={1} />
+        </View>
+        </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text}>Years Playing</Text>
         <View style={{ marginLeft: 'auto' }}>

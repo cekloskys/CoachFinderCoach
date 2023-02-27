@@ -12,6 +12,9 @@ const BiographyScreen = () => {
   const [sessionplan, setSessionplan] = useState('');
   const [coachexperience, setCoachexperience] = useState(0);
   const [athleticbackground, setAthleticbackground] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [college, setCollege] = useState('');
 
   const coachexperiences = [
     '1-3',
@@ -33,7 +36,7 @@ const BiographyScreen = () => {
   const city = route.params?.city;
   const state = route.params?.state;
   const zip = route.params?.zip;
-  const college = route.params?.college;
+  // const college = route.params?.college;
   const experience = route.params?.experience;
   const accreditation = route.params?.accreditation;
   const age = route.params?.age;
@@ -41,8 +44,12 @@ const BiographyScreen = () => {
 
   const onAddBiography = () => {
     /*
-    if (!coachexperience || coachexperience === '0') {
-      alert('Please enter years coaching experience.');
+    if (!college){
+      alert('Please enter a college.');
+      return;
+    }
+    if (!description || description.length < 25) {
+      alert('Please enter coach description (minimum 25 characters).');
       return;
     }
     if (!highlights || highlights.length < 50) {
@@ -85,17 +92,30 @@ const BiographyScreen = () => {
 
   return (
     <ScrollView style={styles.page}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.text}>Years Coaching</Text>
-        <View style={{ marginLeft: 'auto' }}>
-          <NumericInput
-            value={coachexperience}
-            onChange={(text) => {
-              setCoachexperience(text)
-            }}
-            rounded
-            minValue={1} />
-        </View>
+      <TextInput
+        style={styles.input}
+        placeholder='Enter College'
+        value={college}
+        onChangeText={(text) => {
+          setCollege(text);
+        }}
+      />
+      <View style={styles.row}>
+        <TextInput
+          style={styles.multilineinput}
+          multiline={true}
+          numberOfLines={2}
+          placeholder='Enter Coach Description'
+          value={description}
+          onChangeText={(text) => {
+            setDescription(text);
+          }}
+        />
+      </View>
+      <View style={styles.row}>
+        <Text style={{ textAlign: 'right', color: 'grey' }}>
+          {description.length} characters (minimum 25 characters)
+        </Text>
       </View>
       <View style={styles.row}>
         <TextInput
