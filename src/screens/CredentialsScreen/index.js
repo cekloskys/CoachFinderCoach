@@ -12,7 +12,6 @@ import { useRoute } from '@react-navigation/native';
 const CredentialsScreen = () => {
 
   const navigation = useNavigation();
-  const [college, setCollege] = useState('');
   const [experience, setExperience] = useState(0);
 
   const [accreditation, setAccreditation] = useState('');
@@ -39,6 +38,7 @@ const CredentialsScreen = () => {
   const city = route.params?.city;
   const state = route.params?.state;
   const zip = route.params?.zip;
+  const email = route.params?.email;
 
   const [coachexperience, setCoachexperience] = useState(0);
 
@@ -89,10 +89,6 @@ useEffect(() => {
 
   const onAddCredentials = () => {
     /*
-    if (!college){
-      alert('Please enter a college.');
-      return;
-    }
     if (!experience || experience === '0'){
       alert('Please enter years playing experience.');
       return;
@@ -127,7 +123,8 @@ useEffect(() => {
       city: city,
       state: state,
       zip: zip,
-      college: college,
+      email: email,
+      coachexperience: coachexperience,
       experience: experience,
       accreditation: accreditation,
       age: age,
@@ -139,7 +136,7 @@ useEffect(() => {
     <ScrollView style={styles.page}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text}>Years Coaching</Text>
-        <View style={{ marginLeft: 'auto' }}>
+        <View style={{ marginLeft: 'auto', marginBottom: 10 }}>
           <NumericInput
             value={coachexperience}
             onChange={(text) => {
@@ -151,7 +148,7 @@ useEffect(() => {
         </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text}>Years Playing</Text>
-        <View style={{ marginLeft: 'auto' }}>
+        <View style={{ marginLeft: 'auto', marginBottom: 5 }}>
           <NumericInput
             value={experience}
             onChange={(text) => {

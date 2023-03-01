@@ -99,6 +99,16 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       fontSize: 16,
     },
+    description: {
+      height: 80,
+      backgroundColor: 'white',
+      padding: 5,
+      marginVertical: 5,
+      borderWidth: 1,
+      borderColor: 'lightgrey',
+      borderRadius: 10,
+      fontSize: 16,
+    }
   });
 
   export default styles;

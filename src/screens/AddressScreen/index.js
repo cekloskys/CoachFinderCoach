@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import countryList from 'country-list';
@@ -17,6 +17,7 @@ const AddressScreen = () => {
   const [city, setCity] = useState('');
   const [zip, setZip] = useState('');
   const [state, setState] = useState('');
+  const [email, setEmail] = useState('');
 
   const route = useRoute();
 
@@ -45,6 +46,10 @@ const AddressScreen = () => {
        alert('Please enter a zipcode.');
        return;
      }
+     if (!email){
+        aler('Please enter an email.');
+        return;
+     }
      */
     
     navigation.navigate('Credentials', {
@@ -59,11 +64,12 @@ const AddressScreen = () => {
       city: city,
       state: state,
       zip: zip,
+      email: email,
     });
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <TextInput
         style={styles.input}
         placeholder='Enter Street Address'
@@ -103,12 +109,20 @@ const AddressScreen = () => {
         onChangeText={setZip}
         keyboardType={'number-pad'}
       />
+      <TextInput
+        style={styles.input}
+        placeholder='Enter Email Address'
+        value={email}
+        onChangeText={(text) => {
+          setEmail(text);
+        }}
+      />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddressAdd}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

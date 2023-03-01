@@ -41,6 +41,13 @@ const styles = StyleSheet.create({
     color: 'black',
     borderColor: 'black',
   },
+  coachexperience: {
+    fontsize: 16,
+    marginBottom: 15,
+    borderBottomWidth: 1.0,
+    color: 'black',
+    borderColor: 'black',
+  },
   accreditations: {
     fontsize: 16,
     marginBottom: 15,
@@ -87,16 +94,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#000', 
     textAlign: 'left',
-    fontSize: 16,
-  },
-  multilineinput: {
-    height: 120,
-    backgroundColor: 'white',
-    padding: 5,
-    marginVertical: 5,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 10,
     fontSize: 16,
   },
 });

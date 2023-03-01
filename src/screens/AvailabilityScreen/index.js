@@ -26,6 +26,7 @@ const AvailabilityScreen = () => {
     city: route.params?.city, 
     state: route.params?.state, 
     zip: route.params?.zip, 
+    email: route.params?.email,
     college: route.params?.college, 
     experience: route.params?.experience, 
     accreditation: route.params?.accreditation, 
@@ -35,6 +36,7 @@ const AvailabilityScreen = () => {
     highlights: route.params?.highlights, 
     sessionplan: route.params?.sessionplan, 
     athleticbackground: route.params?.athleticbackground,
+    description: route.params?.description,
   };
 
   console.log(coach);

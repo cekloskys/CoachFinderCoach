@@ -180,6 +180,13 @@ export const schema = {
                         ]
                     }
                 },
+                "coachID": {
+                    "name": "coachID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -210,6 +217,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCoach",
+                        "fields": [
+                            "coachID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -316,6 +332,13 @@ export const schema = {
                         ]
                     }
                 },
+                "coachID": {
+                    "name": "coachID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -346,6 +369,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCoach",
+                        "fields": [
+                            "coachID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -452,6 +484,13 @@ export const schema = {
                         ]
                     }
                 },
+                "coachID": {
+                    "name": "coachID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -482,6 +521,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCoach",
+                        "fields": [
+                            "coachID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -1053,6 +1101,54 @@ export const schema = {
                         ]
                     }
                 },
+                "AgeCoaches": {
+                    "name": "AgeCoaches",
+                    "isArray": true,
+                    "type": {
+                        "model": "AgeCoach"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "coachID"
+                        ]
+                    }
+                },
+                "PositionCoaches": {
+                    "name": "PositionCoaches",
+                    "isArray": true,
+                    "type": {
+                        "model": "PositionCoach"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "coachID"
+                        ]
+                    }
+                },
+                "SpecialityCoaches": {
+                    "name": "SpecialityCoaches",
+                    "isArray": true,
+                    "type": {
+                        "model": "SpecialityCoach"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "coachID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1194,5 +1290,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "038f61047015051843f41f5514f9a299"
+    "version": "f4651a073c61b66fa076c2537766b838"
 };

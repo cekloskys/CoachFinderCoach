@@ -115,9 +115,14 @@ const HomeScreen = () => {
     }
     */
 
+    const sportID = sports.find(s => s.name == sport);
+    console.log(sportID);
+    const positionID = positions.find(p => p.name == position);
+    console.log(positionID);
+
     navigation.navigate('Address', {
-      sport: sport,
-      position: position,
+      sport: sportID.id,
+      position: positionID.id,
       name: name,
       phoneInput: phonenumber,
       date: date,

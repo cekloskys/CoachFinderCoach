@@ -10,7 +10,6 @@ const BiographyScreen = () => {
   const navigation = useNavigation();
   const [highlights, setHighlights] = useState('');
   const [sessionplan, setSessionplan] = useState('');
-  const [coachexperience, setCoachexperience] = useState(0);
   const [athleticbackground, setAthleticbackground] = useState('');
   const [description, setDescription] = useState('');
 
@@ -36,7 +35,9 @@ const BiographyScreen = () => {
   const city = route.params?.city;
   const state = route.params?.state;
   const zip = route.params?.zip;
+  const email = route.params?.email;
   // const college = route.params?.college;
+  const coachexperience = route.params?.coachexperience;
   const experience = route.params?.experience;
   const accreditation = route.params?.accreditation;
   const age = route.params?.age;
@@ -78,6 +79,7 @@ const BiographyScreen = () => {
       city: city,
       state: state,
       zip: zip,
+      email: email,
       college: college,
       experience: experience,
       accreditation: accreditation,
@@ -87,6 +89,7 @@ const BiographyScreen = () => {
       highlights: highlights,
       sessionplan: sessionplan,
       athleticbackground: athleticbackground,
+      description: description,
     });
   }
 
@@ -102,7 +105,7 @@ const BiographyScreen = () => {
       />
       <View style={styles.row}>
         <TextInput
-          style={styles.multilineinput}
+          style={styles.description}
           multiline={true}
           numberOfLines={2}
           placeholder='Enter Coach Description'
