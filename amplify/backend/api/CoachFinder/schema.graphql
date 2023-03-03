@@ -1,3 +1,22 @@
+type Availability @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  day: String
+  time: String
+  coachID: ID! @index(name: "byCoach")
+}
+
+type Booking @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  athleteName: String
+  startDate: String
+  startTime: String
+  status: BookingStatus
+  packageID: ID! @index(name: "byPackage")
+  profileID: ID! @index(name: "byProfile")
+  coachID: ID! @index(name: "byCoach")
+  atheleteAge: String
+}
+
 type AccreditationCoach @model @auth(rules: [{allow: public}]) {
   id: ID!
   Accreditation: Accreditation @hasOne
@@ -83,6 +102,8 @@ type Coach @model @auth(rules: [{allow: public}]) {
   AgeCoaches: [AgeCoach] @hasMany(indexName: "byCoach", fields: ["id"])
   PositionCoaches: [PositionCoach] @hasMany(indexName: "byCoach", fields: ["id"])
   SpecialityCoaches: [SpecialityCoach] @hasMany(indexName: "byCoach", fields: ["id"])
+  Bookings: [Booking] @hasMany(indexName: "byCoach", fields: ["id"])
+  Availabilities: [Availability] @hasMany(indexName: "byCoach", fields: ["id"])
 }
 
 type Accreditation @model @auth(rules: [{allow: public}]) {
@@ -96,17 +117,6 @@ enum BookingStatus {
   DECLINED
   COMPLETED
   CANCELLED
-}
-
-type Booking @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  athleteName: String
-  athleteAge: String
-  startDate: String
-  startTime: String
-  status: BookingStatus
-  packageID: ID! @index(name: "byPackage")
-  profileID: ID! @index(name: "byProfile")
 }
 
 type Sport @model @auth(rules: [{allow: public}]) {

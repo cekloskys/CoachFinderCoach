@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import { DataStore } from 'aws-amplify';
-import { Coach, Sport, PositionCoach, Position } from '../../models';
+import { Coach, Sport, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach } from '../../models';
 import PhoneInput from 'react-native-phone-number-input';
 
 const Header = ({coach}) => {
@@ -106,6 +106,7 @@ const Header = ({coach}) => {
   ];
 
   console.log(coach.position);
+  console.log(days);
 
   const onSelectedDaysChange = (days) => {
     setDays(days);
@@ -140,7 +141,6 @@ const Header = ({coach}) => {
       } 
     }
 
-
     const result = await DataStore.save(new Coach({
       highlights: coach.highlights,
       sessionPlan: coach.sessionplan,
@@ -159,11 +159,27 @@ const Header = ({coach}) => {
       dob: coach.date.toString(),
       sportID: coach.sport,
     })); 
+    
 
     await DataStore.save(new PositionCoach({
       coachID: result.id,
       positionCoachPositionId: coach.position,
     }));
+
+    await DataStore.save(new AccreditationCoach({
+      accredidationID: result.id,
+      accreditationCoachAccreditationId: coach.accredidation,
+    }));
+
+    await DataStore.save(new AgeCoach({
+      ageID: result.id,
+      ageCoachAgeId: coach.age,
+    }));
+
+    await DataStore.save(new SpecialityCoach({
+      specialityID: result.id,
+      specialityCoachSpecialityId: coach.speciality,
+    }))
 
     console.log(result);
     alert('coach created');

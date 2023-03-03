@@ -12,6 +12,80 @@ export enum BookingStatus {
 
 
 
+type EagerAvailability = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Availability, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly day?: string | null;
+  readonly time?: string | null;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAvailability = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Availability, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly day?: string | null;
+  readonly time?: string | null;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Availability = LazyLoading extends LazyLoadingDisabled ? EagerAvailability : LazyAvailability
+
+export declare const Availability: (new (init: ModelInit<Availability>) => Availability) & {
+  copyOf(source: Availability, mutator: (draft: MutableModel<Availability>) => MutableModel<Availability> | void): Availability;
+}
+
+type EagerBooking = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Booking, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly athleteName?: string | null;
+  readonly startDate?: string | null;
+  readonly startTime?: string | null;
+  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
+  readonly packageID: string;
+  readonly profileID: string;
+  readonly coachID: string;
+  readonly atheleteAge?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyBooking = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Booking, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly athleteName?: string | null;
+  readonly startDate?: string | null;
+  readonly startTime?: string | null;
+  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
+  readonly packageID: string;
+  readonly profileID: string;
+  readonly coachID: string;
+  readonly atheleteAge?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Booking = LazyLoading extends LazyLoadingDisabled ? EagerBooking : LazyBooking
+
+export declare const Booking: (new (init: ModelInit<Booking>) => Booking) & {
+  copyOf(source: Booking, mutator: (draft: MutableModel<Booking>) => MutableModel<Booking> | void): Booking;
+}
+
 type EagerAccreditationCoach = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<AccreditationCoach, 'id'>;
@@ -290,46 +364,6 @@ export declare const Package: (new (init: ModelInit<Package>) => Package) & {
   copyOf(source: Package, mutator: (draft: MutableModel<Package>) => MutableModel<Package> | void): Package;
 }
 
-type EagerBooking = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Booking, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly athleteName?: string | null;
-  readonly athleteAge?: string | null;
-  readonly startDate?: string | null;
-  readonly startTime?: string | null;
-  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
-  readonly packageID: string;
-  readonly profileID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyBooking = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Booking, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly athleteName?: string | null;
-  readonly athleteAge?: string | null;
-  readonly startDate?: string | null;
-  readonly startTime?: string | null;
-  readonly status?: BookingStatus | keyof typeof BookingStatus | null;
-  readonly packageID: string;
-  readonly profileID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Booking = LazyLoading extends LazyLoadingDisabled ? EagerBooking : LazyBooking
-
-export declare const Booking: (new (init: ModelInit<Booking>) => Booking) & {
-  copyOf(source: Booking, mutator: (draft: MutableModel<Booking>) => MutableModel<Booking> | void): Booking;
-}
-
 type EagerProfile = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Profile, 'id'>;
@@ -400,6 +434,8 @@ type EagerCoach = {
   readonly AgeCoaches?: (AgeCoach | null)[] | null;
   readonly PositionCoaches?: (PositionCoach | null)[] | null;
   readonly SpecialityCoaches?: (SpecialityCoach | null)[] | null;
+  readonly Bookings?: (Booking | null)[] | null;
+  readonly Availabilities?: (Availability | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -432,6 +468,8 @@ type LazyCoach = {
   readonly AgeCoaches: AsyncCollection<AgeCoach>;
   readonly PositionCoaches: AsyncCollection<PositionCoach>;
   readonly SpecialityCoaches: AsyncCollection<SpecialityCoach>;
+  readonly Bookings: AsyncCollection<Booking>;
+  readonly Availabilities: AsyncCollection<Availability>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

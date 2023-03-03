@@ -111,10 +111,17 @@ useEffect(() => {
     }
    */
 
+    const accreditationID = accreditations.find(a => a.name == accreditation);
+    console.log(accreditationID);
+    const ageID = ages.find(a => a.name == age);
+    console.log(ageID);
+    const specialtyID = specialties.find(s => s.name == specialty);
+    console.log(specialtyID);
+
     navigation.navigate('Biography', {
       sport: sport,
       position: position,
-      name: name,
+      name: name, 
       //phoneInput: phoneInput.current.getValue(),
       phoneInput: phoneInput,
       date: date,
@@ -126,9 +133,9 @@ useEffect(() => {
       email: email,
       coachexperience: coachexperience,
       experience: experience,
-      accreditation: accreditation,
-      age: age,
-      specialties: specialties,
+      accreditation: accreditationID.id,
+      age: ageID.id,
+      specialties: specialtyID.id,
     });
   }
 
@@ -198,7 +205,7 @@ useEffect(() => {
         data={displaySpecialties}
         defaultButtonText={'Select Specialties'}
         onSelect={(selectedItem, index) => {
-          setSpecialties(selectedItem);
+          setSpecialty(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
