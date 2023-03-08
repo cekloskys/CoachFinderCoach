@@ -4,14 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './src/navigation';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
+import CoachContextProvider from './src/context/CoachContext';
 
-Amplify.configure({...awsconfig, Analytics: {disabled: true}});
+Amplify.configure({ ...awsconfig, Analytics: { disabled: true } });
 
 export default function App() {
   return (
     <NavigationContainer>
-      <RootNavigator />
-      <StatusBar style="auto" />
+      <CoachContextProvider>
+        <RootNavigator />
+        <StatusBar style="auto" />
+      </CoachContextProvider>
     </NavigationContainer>
   );
 }

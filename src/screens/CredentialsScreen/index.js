@@ -54,6 +54,7 @@ const CredentialsScreen = () => {
     for (let i = 0; i < accreditations.length; i++) {
         dt.push(accreditations[i].name);
     }
+    dt.sort();
     setDisplayAccreditations(dt);
 }, [accreditations]);
 
@@ -69,6 +70,7 @@ useEffect(() => {
   for (let i = 0; i < ages.length; i++) {
       dt.push(ages[i].name);
   }
+  dt.sort();
   setDisplayAges(dt);
 }, [ages]);
 
@@ -84,11 +86,11 @@ useEffect(() => {
   for (let i = 0; i < specialties.length; i++) {
       dt.push(specialties[i].name);
   }
+  dt.sort();
   setDisplaySpecialties(dt);
 }, [specialties]);
 
   const onAddCredentials = () => {
-    /*
     if (!experience || experience === '0'){
       alert('Please enter years playing experience.');
       return;
@@ -97,32 +99,27 @@ useEffect(() => {
       alert('Please enter years coaching experience.');
       return;
     }
-    if (!accreditations){
-      alert('Please select accreditations.');
+    if (!accreditation){
+      alert('Please select an accreditation.');
       return;
     }
     if (!age){
       alert('Please select an age preference.');
       return;
     }
-    if (!specialties){
-      alert('Please select specialties.')
+    if (!specialty){
+      alert('Please select a specialty.')
       return;
     }
-   */
 
     const accreditationID = accreditations.find(a => a.name == accreditation);
-    console.log(accreditationID);
     const ageID = ages.find(a => a.name == age);
-    console.log(ageID);
     const specialtyID = specialties.find(s => s.name == specialty);
-    console.log(specialtyID);
 
     navigation.navigate('Biography', {
       sport: sport,
       position: position,
       name: name, 
-      //phoneInput: phoneInput.current.getValue(),
       phoneInput: phoneInput,
       date: date,
       gender: gender,
@@ -167,7 +164,7 @@ useEffect(() => {
       </View>
       <SelectDropdown
         data={displayAccreditations}
-        defaultButtonText={'Select Accreditations'}
+        defaultButtonText={'Select Accreditation'}
         onSelect={(selectedItem, index) => {
           setAccreditation(selectedItem);
         }}
@@ -185,7 +182,7 @@ useEffect(() => {
       />
       <SelectDropdown
         data={displayAges}
-        defaultButtonText={'Select Age Preferences'}
+        defaultButtonText={'Select Age Preference'}
         onSelect={(selectedItem, index) => {
           setAge(selectedItem);
         }}
@@ -203,7 +200,7 @@ useEffect(() => {
       />
       <SelectDropdown
         data={displaySpecialties}
-        defaultButtonText={'Select Specialties'}
+        defaultButtonText={'Select Specialty'}
         onSelect={(selectedItem, index) => {
           setSpecialty(selectedItem);
         }}

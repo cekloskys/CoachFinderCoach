@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import NumericInput from 'react-native-numeric-input'
 import { useRoute } from '@react-navigation/native';
 
 const BiographyScreen = () => {
@@ -14,14 +13,6 @@ const BiographyScreen = () => {
   const [description, setDescription] = useState('');
 
   const [college, setCollege] = useState('');
-
-  const coachexperiences = [
-    '1-3',
-    '3-5',
-    '5-8',
-    '8-10',
-    '10+',
-  ];
 
   const route = useRoute();
 
@@ -36,7 +27,6 @@ const BiographyScreen = () => {
   const state = route.params?.state;
   const zip = route.params?.zip;
   const email = route.params?.email;
-  // const college = route.params?.college;
   const coachexperience = route.params?.coachexperience;
   const experience = route.params?.experience;
   const accreditation = route.params?.accreditation;
@@ -44,28 +34,26 @@ const BiographyScreen = () => {
   const specialties = route.params?.specialties;
 
   const onAddBiography = () => {
-    /*
     if (!college){
-      alert('Please enter a college.');
+      alert('Please enter your college.');
       return;
     }
     if (!description || description.length < 25) {
-      alert('Please enter coach description (minimum 25 characters).');
+      alert('Please enter your coach description (minimum 25 characters).');
       return;
     }
     if (!highlights || highlights.length < 50) {
-      alert('Please enter athletic highlights (minimum 50 characters).');
+      alert('Please enter your athletic highlights (minimum 50 characters).');
       return;
     }
     if (!sessionplan || sessionplan.length < 50) {
-      alert('Please enter a session plan (minimum 50 characters).');
+      alert('Please enter your session plan (minimum 50 characters).');
       return;
     }
     if (!athleticbackground || athleticbackground.length < 50) {
-      alert('Please enter athletic background (minimum 50 characters).');
+      alert('Please enter your athletic background (minimum 50 characters).');
       return;
     }
-    */
     
     navigation.navigate('Availability', {
       sport: sport,

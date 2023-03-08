@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import { DataStore } from 'aws-amplify';
-import { Coach, Sport, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach } from '../../models';
-import PhoneInput from 'react-native-phone-number-input';
+import { Coach, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach, Availability } from '../../models';
 
-const Header = ({coach}) => {
+const Header = ({ coach }) => {
 
   const navigation = useNavigation();
 
@@ -15,10 +14,8 @@ const Header = ({coach}) => {
   let selectedDays = [];
   const [times, setTimes] = useState([]);
   let selectedTimes = [];
-
-  const [sportID, setSportID] = useState('');
-  const [positionID, setPositionID] = useState('');
-
+  let availability = [];
+  
   const dayOptions = [
     {
       id: '1',
@@ -53,15 +50,15 @@ const Header = ({coach}) => {
   const timeOptions = [
     {
       id: '8',
-      name: '8am',
+      name: '8 AM',
     },
     {
       id: '9',
-      name: '9am',
+      name: '9 AM',
     },
     {
       id: '10',
-      name: '10am',
+      name: '10 AM',
     },
     {
       id: '11',
@@ -69,44 +66,41 @@ const Header = ({coach}) => {
     },
     {
       id: '12',
-      name: '12pm',
+      name: '12 AM',
     },
     {
       id: '13',
-      name: '1pm',
+      name: '1 PM',
     },
     {
       id: '14',
-      name: '2pm',
+      name: '2 PM',
     },
     {
       id: '15',
-      name: '3pm',
+      name: '3 PM',
     },
     {
       id: '16',
-      name: '4pm',
+      name: '4 PM',
     },
     {
       id: '17',
-      name: '5pm',
+      name: '5 PM',
     },
     {
       id: '18',
-      name: '6pm',
+      name: '6 PM',
     },
     {
       id: '19',
-      name: '7pm',
+      name: '7 PM',
     },
     {
       id: '20',
-      name: '8pm',
+      name: '8 PM',
     },
   ];
-
-  console.log(coach.position);
-  console.log(days);
 
   const onSelectedDaysChange = (days) => {
     setDays(days);
@@ -116,19 +110,15 @@ const Header = ({coach}) => {
     setTimes(times);
   };
 
-  const getSportId = async() => {
-    DataStore.query(Sport, (s) => s.name.eq(coach.sport)).then(setSportID);
-  };
-
-  const onPress = async() => {
+  const onPress = async () => {
     if (days.length == 0) {
       alert('Please select the day or days you\'re available.');
       return;
     } else {
       for (let i = 0; i < days.length; i++) {
         var tempDay = dayOptions.find(item => item.id === days[i]);
-        selectedDays.push(tempDay);
-      } 
+        selectedDays.push(tempDay.name);
+      }
     }
 
     if (times.length == 0) {
@@ -137,8 +127,17 @@ const Header = ({coach}) => {
     } else {
       for (let i = 0; i < times.length; i++) {
         var tempTime = timeOptions.find(item => item.id === times[i]);
-        selectedTimes.push(tempTime);
-      } 
+        selectedTimes.push(tempTime.name);
+      }
+    }
+
+    for (let i = 0; i < selectedDays.length; i++) {
+      for (let j = 0; j < selectedTimes.length; j++) {
+        availability.push({
+          day: selectedDays[i],
+          time: selectedTimes[j],
+        });
+      }
     }
 
     const result = await DataStore.save(new Coach({
@@ -156,33 +155,44 @@ const Header = ({coach}) => {
       email: coach.zip,
       shortDesc: coach.description,
       phoneNbr: coach.phoneInput,
-      dob: coach.date.toString(),
+      dob: coach.date,
       sportID: coach.sport,
     })); 
     
-
     await DataStore.save(new PositionCoach({
       coachID: result.id,
       positionCoachPositionId: coach.position,
     }));
 
+    console.log(coach.accreditation);
     await DataStore.save(new AccreditationCoach({
-      accredidationID: result.id,
-      accreditationCoachAccreditationId: coach.accredidation,
+      coachID: result.id,
+      accreditationCoachAccreditationId: coach.accreditation,
     }));
 
     await DataStore.save(new AgeCoach({
-      ageID: result.id,
+      coachID: result.id,
       ageCoachAgeId: coach.age,
     }));
 
     await DataStore.save(new SpecialityCoach({
-      specialityID: result.id,
-      specialityCoachSpecialityId: coach.speciality,
-    }))
+      coachID: result.id,
+      specialityCoachSpecialityId: coach.specialties,
+    })) 
 
-    console.log(result);
-    alert('coach created');
+    await Promise.all(
+      availability.map((a) =>
+        DataStore.save(
+          new Availability({
+            day: a.day,
+            time: a.time,
+            coachID: result.id,
+          })
+        )
+      )
+    );
+
+    alert('Coach created.');
   }
 
   return (
@@ -228,7 +238,7 @@ const Header = ({coach}) => {
           }}
           styleTextDropdown={{
             height: 25,
-            marginLeft: 10,         
+            marginLeft: 10,
           }}
           styleTextDropdownSelected={{
             height: 25,
@@ -279,7 +289,7 @@ const Header = ({coach}) => {
           }}
           styleTextDropdown={{
             height: 25,
-            marginLeft: 10,         
+            marginLeft: 10,
           }}
           styleTextDropdownSelected={{
             height: 25,

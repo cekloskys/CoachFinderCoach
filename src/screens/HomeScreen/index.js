@@ -9,22 +9,16 @@ import { DataStore } from '@aws-amplify/datastore';
 import { useEffect } from 'react';
 import { Sport, Position } from '../../models';
 
-// const database = require
-
 const HomeScreen = () => {
 
   const navigation = useNavigation();
   const [phonenumber, setPhonenumber] = useState('');
-  const [dob, setDob] = useState('');
   const [gender, setGender] = useState('');
   const [formattedValue, setFormattedValue] = useState("");
-  const [valid, setValid] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [timePicker, setTimePicker] = useState(false);
-  const [time, setTime] = useState(new Date(Date.now()));
+  const [selectedDate, setSelectedDate] = useState('');
   const [name, setName] = useState('');
 
   const phoneInput = useRef(null);
@@ -43,14 +37,15 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!sports) {
-        return;
+      return;
     }
     const dt = [];
     for (let i = 0; i < sports.length; i++) {
-        dt.push(sports[i].name);
+      dt.push(sports[i].name);
     }
+    dt.sort();
     setDisplaySports(dt);
-}, [sports]);
+  }, [sports]);
 
   useEffect(() => {
     DataStore.query(Position).then(setPositions);
@@ -58,14 +53,15 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!positions) {
-        return;
+      return;
     }
     const dt = [];
     for (let i = 0; i < positions.length; i++) {
-        dt.push(positions[i].name);
+      dt.push(positions[i].name);
     }
+    dt.sort();
     setDisplayPositions(dt);
-}, [positions]);
+  }, [positions]);
 
   const genders = [
     'Male',
@@ -76,33 +72,31 @@ const HomeScreen = () => {
     setDatePicker(true);
   };
 
-  const showTimePicker = () => {
-    setTimePicker(true);
-  };
-
   const onDateSelected = (event, value) => {
     setDate(value);
+    const day = value.getDate();
+    const month = value.getMonth();
+    const year = value.getFullYear();
+    setSelectedDate((month + 1) + '/' + day + '/' + year);    
     setDatePicker(false);
   };
 
-  const onTimeSelected = (event, value) => {
-    setTime(value);
-    setTimePicker(false);
-  };
-
   const onSelectSport = () => {
-    /*
     if (!sport) {
       alert('Please select a sport.');
+      return;
+    }
+    if (!position) {
+      alert('Please select a position.');
       return;
     }
     if (!name) {
       alert('Please enter your name.');
       return;
     }
-    if (!phoneInput.current?.isValidNumber(phonenumber)) { 
-      alert('Please enter a valid phone number.'); 
-      return; 
+    if (!phoneInput.current?.isValidNumber(phonenumber)) {
+      alert('Please enter a valid phone number.');
+      return;
     }
     const today = new Date(Date.now());
     if (!date || date.toLocaleDateString() === today.toLocaleDateString()) {
@@ -110,22 +104,19 @@ const HomeScreen = () => {
       return;
     }
     if (!gender) {
-      alert('Please select a gender.');
+      alert('Please select your gender.');
       return;
     }
-    */
 
     const sportID = sports.find(s => s.name == sport);
-    console.log(sportID);
     const positionID = positions.find(p => p.name == position);
-    console.log(positionID);
 
     navigation.navigate('Address', {
       sport: sportID.id,
       position: positionID.id,
       name: name,
       phoneInput: phonenumber,
-      date: date,
+      date: selectedDate,
       gender: gender,
     });
   }

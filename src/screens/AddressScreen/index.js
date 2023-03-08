@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import countryList from 'country-list';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useRoute } from '@react-navigation/native';
 const UsaStates = require('usa-states').UsaStates;
+
+const validator = require('validator');
 
 const AddressScreen = () => {
 
@@ -29,34 +30,33 @@ const AddressScreen = () => {
   const gender = route.params?.gender;
 
   const onAddressAdd = () => {
-    /*
+    
     if (!address){
-       alert('Please enter an address.');
+       alert('Please your street address.');
        return;
      }
      if (!city){
-       alert('Please enter a city.');
+       alert('Please enter your city.');
        return;
      }
      if (!state){
-       alert('Please select a state.');
+       alert('Please select your state.');
        return;
      }
      if (!zip){
-       alert('Please enter a zipcode.');
+       alert('Please enter your zipcode.');
        return;
      }
-     if (!email){
-        aler('Please enter an email.');
+     if (!email || !validator.isEmail(email)){
+        alert('Please enter your valid email address.');
         return;
      }
-     */
+    
     
     navigation.navigate('Credentials', {
       sport: sport,
       position: position,
       name: name,
-      //phoneInput: phoneInput.current.getValue(),
       phoneInput: phoneInput,
       date: date,
       gender: gender,
@@ -116,6 +116,7 @@ const AddressScreen = () => {
         onChangeText={(text) => {
           setEmail(text);
         }}
+        keyboardType={'email-address'}
       />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddressAdd}>
