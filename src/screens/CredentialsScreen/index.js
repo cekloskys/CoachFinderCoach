@@ -8,11 +8,20 @@ import { DataStore } from '@aws-amplify/datastore';
 import { useEffect } from 'react';
 import { Accreditation, Age, Speciality } from '../../models';
 import { useRoute } from '@react-navigation/native';
+import { useCoachContext } from '../../context/CoachContext';
 
 const CredentialsScreen = () => {
 
+  const { 
+    createdCoach, 
+    createdCoachAccreditation, 
+    createdCoachAge,
+    createdCoachSpeciality
+   } = useCoachContext();
+
   const navigation = useNavigation();
-  const [experience, setExperience] = useState(0);
+  const [experience, setExperience] = useState(parseInt(createdCoach?.yearsPlaying) || 0);
+  const [coachexperience, setCoachexperience] = useState(parseInt(createdCoach?.yearsCoaching) || 0);
 
   const [accreditation, setAccreditation] = useState('');
   const [accreditations, setAccreditations] = useState([]);
@@ -33,18 +42,23 @@ const CredentialsScreen = () => {
   const name = route.params?.name;
   const phoneInput = route.params?.phoneInput;
   const date = route.params?.date;
-  const gender = route.params?.gender;
+  const image = route.params?.image;
   const address = route.params?.address;
   const city = route.params?.city;
   const state = route.params?.state;
   const zip = route.params?.zip;
   const email = route.params?.email;
 
-  const [coachexperience, setCoachexperience] = useState(0);
-
   useEffect(() => {
     DataStore.query(Accreditation).then(setAccreditations);
   }, []);
+
+  useEffect(() => {
+    if (createdCoachAccreditation && accreditations.length != 0) {
+      const result = accreditations.find(a => a.id == createdCoachAccreditation.accreditationCoachAccreditationId);
+      setAccreditation(result.name);
+    }
+  }, [createdCoachAccreditation, accreditations]);
 
   useEffect(() => {
     if (!accreditations) {
@@ -63,6 +77,13 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
+  if (createdCoachAge && ages.length != 0) {
+    const result = ages.find(a => a.id == createdCoachAge.ageCoachAgeId);
+    setAge(result.name);
+  }
+}, [createdCoachAge, ages]);
+
+useEffect(() => {
   if (!ages) {
       return;
   }
@@ -77,6 +98,13 @@ useEffect(() => {
 useEffect(() => {
   DataStore.query(Speciality).then(setSpecialties);
 }, []);
+
+useEffect(() => {
+  if (createdCoachSpeciality && specialties.length != 0) {
+    const result = specialties.find(s => s.id == createdCoachSpeciality.specialityCoachSpecialityId);
+    setSpecialty(result.name);
+  }
+}, [createdCoachSpeciality, specialties]);
 
 useEffect(() => {
   if (!specialties) {
@@ -122,7 +150,7 @@ useEffect(() => {
       name: name, 
       phoneInput: phoneInput,
       date: date,
-      gender: gender,
+      image: image,
       address: address,
       city: city,
       state: state,
@@ -164,6 +192,7 @@ useEffect(() => {
       </View>
       <SelectDropdown
         data={displayAccreditations}
+        defaultValue={accreditation}
         defaultButtonText={'Select Accreditation'}
         onSelect={(selectedItem, index) => {
           setAccreditation(selectedItem);
@@ -182,6 +211,7 @@ useEffect(() => {
       />
       <SelectDropdown
         data={displayAges}
+        defaultValue={age}
         defaultButtonText={'Select Age Preference'}
         onSelect={(selectedItem, index) => {
           setAge(selectedItem);
@@ -200,6 +230,7 @@ useEffect(() => {
       />
       <SelectDropdown
         data={displaySpecialties}
+        defaultValue={specialty}
         defaultButtonText={'Select Specialty'}
         onSelect={(selectedItem, index) => {
           setSpecialty(selectedItem);

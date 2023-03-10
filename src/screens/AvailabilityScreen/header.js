@@ -1,21 +1,23 @@
 import { View, Text, Pressable } from 'react-native';
 import styles from './styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
-import { DataStore } from 'aws-amplify';
-import { Coach, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach, Availability } from '../../models';
+import { useCoachContext } from '../../context/CoachContext';
 
 const Header = ({ coach }) => {
 
+  const { createCoach, createdCoachAvailability } = useCoachContext();
+  
   const navigation = useNavigation();
 
   const [days, setDays] = useState([]);
-  let selectedDays = [];
   const [times, setTimes] = useState([]);
+  
+  let selectedDays = [];
   let selectedTimes = [];
   let availability = [];
-  
+
   const dayOptions = [
     {
       id: '1',
@@ -62,11 +64,11 @@ const Header = ({ coach }) => {
     },
     {
       id: '11',
-      name: '11am',
+      name: '11 AM',
     },
     {
       id: '12',
-      name: '12 AM',
+      name: '12 PM',
     },
     {
       id: '13',
@@ -102,6 +104,32 @@ const Header = ({ coach }) => {
     },
   ];
 
+  useEffect(() => {
+    if (createdCoachAvailability) {
+      let result = [];
+      for (let i = 0; i < createdCoachAvailability.length; i++) {
+        var tempDay = dayOptions.find(d => d.name == createdCoachAvailability[i].day);
+        if (!result.includes(tempDay.id)){
+          result.push(tempDay.id);
+        }
+      }
+      setDays(result);
+    }
+  }, [createdCoachAvailability]);
+
+  useEffect(() => {
+    if (createdCoachAvailability) {
+      let result = [];
+      for (let i = 0; i < createdCoachAvailability.length; i++) {
+        var tempTime = timeOptions.find(d => d.name == createdCoachAvailability[i].time);
+        if (!result.includes(tempTime.id)){
+          result.push(tempTime.id);
+        }   
+      }
+      setTimes(result);
+    }
+  }, [createdCoachAvailability]);
+  
   const onSelectedDaysChange = (days) => {
     setDays(days);
   };
@@ -140,59 +168,10 @@ const Header = ({ coach }) => {
       }
     }
 
-    const result = await DataStore.save(new Coach({
-      highlights: coach.highlights,
-      sessionPlan: coach.sessionplan,
-      background: coach.athleticbackground,
-      yearsCoaching: coach.coachexperience,
-      yearsPlaying: coach.experience,
-      college: coach.college,
-      fullName: coach.name,
-      streetAddress: coach.address,
-      city: coach.city,
-      state: coach.state,
-      zip: coach.zip,
-      email: coach.zip,
-      shortDesc: coach.description,
-      phoneNbr: coach.phoneInput,
-      dob: coach.date,
-      sportID: coach.sport,
-    })); 
+    createCoach(coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
     
-    await DataStore.save(new PositionCoach({
-      coachID: result.id,
-      positionCoachPositionId: coach.position,
-    }));
-
-    console.log(coach.accreditation);
-    await DataStore.save(new AccreditationCoach({
-      coachID: result.id,
-      accreditationCoachAccreditationId: coach.accreditation,
-    }));
-
-    await DataStore.save(new AgeCoach({
-      coachID: result.id,
-      ageCoachAgeId: coach.age,
-    }));
-
-    await DataStore.save(new SpecialityCoach({
-      coachID: result.id,
-      specialityCoachSpecialityId: coach.specialties,
-    })) 
-
-    await Promise.all(
-      availability.map((a) =>
-        DataStore.save(
-          new Availability({
-            day: a.day,
-            time: a.time,
-            coachID: result.id,
-          })
-        )
-      )
-    );
-
     alert('Coach created.');
+    navigation.navigate('Basic Information');
   }
 
   return (
@@ -301,7 +280,7 @@ const Header = ({ coach }) => {
       </View>
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>Save</Text>
         </Pressable>
       </View>
     </View>

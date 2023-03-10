@@ -3,16 +3,19 @@ import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import { useCoachContext } from '../../context/CoachContext';
 
 const BiographyScreen = () => {
 
-  const navigation = useNavigation();
-  const [highlights, setHighlights] = useState('');
-  const [sessionplan, setSessionplan] = useState('');
-  const [athleticbackground, setAthleticbackground] = useState('');
-  const [description, setDescription] = useState('');
+  const { createdCoach } = useCoachContext();
 
-  const [college, setCollege] = useState('');
+  const navigation = useNavigation();
+
+  const [highlights, setHighlights] = useState(createdCoach?.highlights || '');
+  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || '');
+  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || '');
+  const [description, setDescription] = useState(createdCoach?.shortDesc || '');
+  const [college, setCollege] = useState(createdCoach?.college || '');
 
   const route = useRoute();
 
@@ -21,7 +24,7 @@ const BiographyScreen = () => {
   const name = route.params?.name;
   const phoneInput = route.params?.phoneInput;
   const date = route.params?.date;
-  const gender = route.params?.gender;
+  const image = route.params?.image;
   const address = route.params?.address;
   const city = route.params?.city;
   const state = route.params?.state;
@@ -59,10 +62,9 @@ const BiographyScreen = () => {
       sport: sport,
       position: position,
       name: name,
-      //phoneInput: phoneInput.current.getValue(),
       phoneInput: phoneInput,
       date: date,
-      gender: gender,
+      image: image,
       address: address,
       city: city,
       state: state,

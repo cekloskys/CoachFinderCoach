@@ -4,21 +4,25 @@ import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useRoute } from '@react-navigation/native';
+import { useCoachContext } from '../../context/CoachContext';
+
 const UsaStates = require('usa-states').UsaStates;
 
 const validator = require('validator');
 
 const AddressScreen = () => {
 
+  const { createdCoach } = useCoachContext();
+
   const navigation = useNavigation();
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
-  const [state, setState] = useState('');
-  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState(createdCoach?.streetAddress || '');
+  const [city, setCity] = useState(createdCoach?.city || '');
+  const [zip, setZip] = useState(createdCoach?.zip || '');
+  const [state, setState] = useState(createdCoach?.state ||'');
+  const [email, setEmail] = useState(createdCoach?.email ||'');
 
   const route = useRoute();
 
@@ -27,12 +31,12 @@ const AddressScreen = () => {
   const name = route.params?.name;
   const phoneInput = route.params?.phoneInput;
   const date = route.params?.date;
-  const gender = route.params?.gender;
+  const image = route.params?.image;
 
   const onAddressAdd = () => {
     
     if (!address){
-       alert('Please your street address.');
+       alert('Please enter your street address.');
        return;
      }
      if (!city){
@@ -59,7 +63,7 @@ const AddressScreen = () => {
       name: name,
       phoneInput: phoneInput,
       date: date,
-      gender: gender,
+      image: image,
       address: address,
       city: city,
       state: state,
@@ -86,6 +90,7 @@ const AddressScreen = () => {
       />
       <SelectDropdown
         data={statesNames}
+        defaultValue={state}
         defaultButtonText={'Select State'}
         onSelect={(selectedItem, index) => {
           setState(selectedItem);

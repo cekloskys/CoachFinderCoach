@@ -21,7 +21,7 @@ const AvailabilityScreen = () => {
     name: route.params?.name, 
     phoneInput: route.params?.phoneInput, 
     date: route.params?.date, 
-    gender: route.params?.gender, 
+    image: route.params?.image, 
     address: route.params?.address, 
     city: route.params?.city, 
     state: route.params?.state, 
@@ -38,8 +38,6 @@ const AvailabilityScreen = () => {
     athleticbackground: route.params?.athleticbackground,
     description: route.params?.description,
   };
-
-  console.log(coach);
 
   return (
     <View>

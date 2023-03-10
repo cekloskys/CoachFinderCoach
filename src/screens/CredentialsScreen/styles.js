@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   dropdownBtnStyle: {
     width: '100%',
     height: 50,
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: 'lightgrey',
     backgroundColor: 'lightgrey',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   dropdownDropdownStyle: {
-    borderRadius: 10,
+    borderRadius: 5,
   },
   dropdownRowStyle: {
     backgroundColor: '#EFEFEF',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'lightgrey',
     height: 50,
-    borderRadius: 10,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderWidth: 1,
     borderColor: 'lightgrey',
-    borderRadius: 10,
+    borderRadius: 5,
     fontSize: 16,
   },
   text: {

@@ -8,32 +8,45 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { DataStore } from '@aws-amplify/datastore';
 import { useEffect } from 'react';
 import { Sport, Position } from '../../models';
+import { useCoachContext } from '../../context/CoachContext';
 
 const HomeScreen = () => {
 
-  const navigation = useNavigation();
-  const [phonenumber, setPhonenumber] = useState('');
-  const [gender, setGender] = useState('');
-  const [formattedValue, setFormattedValue] = useState("");
+  const { createdCoach, createdCoachPosition } = useCoachContext();
 
+  const navigation = useNavigation();
+
+  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || '');
+  const [image, setImage] = useState(createdCoach?.image || '');
+  const [formattedValue, setFormattedValue] = useState("");
   const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(createdCoach?.dob ? new Date(createdCoach?.dob) : new Date());
   const [selectedDate, setSelectedDate] = useState('');
-  const [name, setName] = useState('');
+  const [name, setName] = useState(createdCoach?.fullName || '');
 
   const phoneInput = useRef(null);
 
   const [sport, setSport] = useState('');
   const [sports, setSports] = useState([]);
   const [displaySports, setDisplaySports] = useState([]);
+  const [coachSport, setCoachSport] = useState('');
 
   const [position, setPosition] = useState('');
   const [positions, setPositions] = useState([]);
   const [displayPositions, setDisplayPositions] = useState([]);
+  const [coachPosition, setCoachPosition] = useState('');
 
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
   }, []);
+
+  useEffect(() => {
+    if (createdCoach && sports.length != 0) {
+      const result = sports.find(s => s.id == createdCoach.sportID);
+      setCoachSport(result.name);
+      setSport(result.name);
+    }
+  }, [createdCoach, sports]);
 
   useEffect(() => {
     if (!sports) {
@@ -52,6 +65,14 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
+    if (createdCoachPosition && positions.length != 0) {
+      const result = positions.find(p => p.id == createdCoachPosition.positionCoachPositionId);
+      setCoachPosition(result.name);
+      setPosition(result.name);
+    }
+  }, [createdCoachPosition, positions]);
+
+  useEffect(() => {
     if (!positions) {
       return;
     }
@@ -63,11 +84,6 @@ const HomeScreen = () => {
     setDisplayPositions(dt);
   }, [positions]);
 
-  const genders = [
-    'Male',
-    'Female',
-  ]
-
   const showDatePicker = () => {
     setDatePicker(true);
   };
@@ -77,7 +93,7 @@ const HomeScreen = () => {
     const day = value.getDate();
     const month = value.getMonth();
     const year = value.getFullYear();
-    setSelectedDate((month + 1) + '/' + day + '/' + year);    
+    setSelectedDate((month + 1) + '/' + day + '/' + year);
     setDatePicker(false);
   };
 
@@ -103,8 +119,8 @@ const HomeScreen = () => {
       alert('Please select your date of birth.');
       return;
     }
-    if (!gender) {
-      alert('Please select your gender.');
+    if (!image) {
+      alert('Please enter an image link of you.');
       return;
     }
 
@@ -117,7 +133,7 @@ const HomeScreen = () => {
       name: name,
       phoneInput: phonenumber,
       date: selectedDate,
-      gender: gender,
+      image: image,
     });
   }
 
@@ -125,6 +141,7 @@ const HomeScreen = () => {
     <ScrollView style={styles.page}>
       <SelectDropdown
         data={displaySports}
+        defaultValue={coachSport}
         defaultButtonText={'Select Sport'}
         onSelect={(selectedItem, index) => {
           setSport(selectedItem);
@@ -143,6 +160,7 @@ const HomeScreen = () => {
       />
       <SelectDropdown
         data={displayPositions}
+        defaultValue={coachPosition}
         defaultButtonText={'Select Position'}
         onSelect={(selectedItem, index) => {
           setPosition(selectedItem);
@@ -200,23 +218,13 @@ const HomeScreen = () => {
           value={date.toLocaleDateString()}
         />
       </View>
-      <SelectDropdown
-        data={genders}
-        defaultButtonText={'Select Gender'}
-        onSelect={(selectedItem, index) => {
-          setGender(selectedItem);
+      <TextInput
+        style={styles.input}
+        placeholder='Enter Image Link'
+        value={image}
+        onChangeText={(text) => {
+          setImage(text);
         }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-        buttonStyle={styles.dropdownBtnStyle}
-        buttonTextStyle={styles.dropdownBtnTxtStyle}
-        dropdownStyle={styles.dropdownDropdownStyle}
-        rowStyle={styles.dropdownRowStyle}
-        rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onSelectSport}>

@@ -30,24 +30,17 @@ const HomeTabs = () => {
     return (
         <Tab.Navigator barStyle={{backgroundColor: 'white'}}>
             <Tab.Screen 
-                name="Home" 
+                name="Profile" 
                 component={HomeStackNavigator} 
                 options={{
-                    tabBarIcon: ({color}) => <Foundation name="home" size={24} color={color} />,
+                    tabBarIcon: ({color}) => <FontAwesome5 name="user-alt" size={24} color={color} />,
                 }}
             />
             <Tab.Screen 
-                name="Your Bookings" 
+                name="Bookings" 
                 component={OrdersStackNavigator} 
                 options={{
                     tabBarIcon: ({color}) => <MaterialIcons name="list-alt" size={24} color={color} />,
-                }}
-            />
-            <Tab.Screen 
-                name="Profile" 
-                component={ProfileScreen} 
-                options={{
-                    tabBarIcon: ({color}) => <FontAwesome5 name="user-alt" size={24} color={color} />,
                 }}
             />
         </Tab.Navigator>
@@ -73,7 +66,7 @@ const OrdersStack = createStackNavigator();
 const OrdersStackNavigator = () => {
     return (
         <OrdersStack.Navigator>
-            <OrdersStack.Screen name="Bookings" component={BookingsScreen} />
+            <OrdersStack.Screen name="Your Bookings" component={BookingsScreen} />
             <OrdersStack.Screen name="Booking" component={BookingDetailScreen} />
         </OrdersStack.Navigator>   
     );
