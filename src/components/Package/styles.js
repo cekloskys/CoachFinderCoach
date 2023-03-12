@@ -8,11 +8,6 @@ const styles = StyleSheet.create({
             width: '100%',
             marginVertical: 10,
       },
-      image: {
-            width: '100%',
-            aspectRatio: 5 / 3,
-            marginBottom: 5,
-      },
       title: {
             fontSize: 20,
             fontWeight: '500',
@@ -39,5 +34,4 @@ const styles = StyleSheet.create({
             fontWeight: 'bold'
       },
 });
-
 export default styles;
