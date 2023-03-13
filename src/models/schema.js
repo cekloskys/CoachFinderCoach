@@ -1005,6 +1005,13 @@ export const schema = {
                         ]
                     }
                 },
+                "sub": {
+                    "name": "sub",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1279,6 +1286,13 @@ export const schema = {
                         ]
                     }
                 },
+                "sub": {
+                    "name": "sub",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1419,6 +1433,6 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "codegenVersion": "3.3.2",
-    "version": "96673697150b4faa34c10906757fdb22"
+    "codegenVersion": "3.3.5",
+    "version": "1f790fdcb5eb430cbc36ebe2a18a5075"
 };
