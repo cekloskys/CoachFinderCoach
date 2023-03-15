@@ -76,6 +76,7 @@ type Profile @model @auth(rules: [{allow: public}]) {
   zip: String
   phoneNbr: String
   Bookings: [Booking] @hasMany(indexName: "byProfile", fields: ["id"])
+  sub: String
 }
 
 type Coach @model @auth(rules: [{allow: public}]) {
@@ -104,6 +105,7 @@ type Coach @model @auth(rules: [{allow: public}]) {
   SpecialityCoaches: [SpecialityCoach] @hasMany(indexName: "byCoach", fields: ["id"])
   Bookings: [Booking] @hasMany(indexName: "byCoach", fields: ["id"])
   Availabilities: [Availability] @hasMany(indexName: "byCoach", fields: ["id"])
+  sub: String
 }
 
 type Accreditation @model @auth(rules: [{allow: public}]) {

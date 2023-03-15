@@ -30,6 +30,7 @@ const HomeScreen = () => {
     display.sort();
     setDisplaySports(display);
   }, [sports]);
+  console.log(sports);
 
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));

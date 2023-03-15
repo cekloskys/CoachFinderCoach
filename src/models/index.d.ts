@@ -378,6 +378,7 @@ type EagerProfile = {
   readonly zip?: string | null;
   readonly phoneNbr?: string | null;
   readonly Bookings?: (Booking | null)[] | null;
+  readonly sub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -396,6 +397,7 @@ type LazyProfile = {
   readonly zip?: string | null;
   readonly phoneNbr?: string | null;
   readonly Bookings: AsyncCollection<Booking>;
+  readonly sub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -436,6 +438,7 @@ type EagerCoach = {
   readonly SpecialityCoaches?: (SpecialityCoach | null)[] | null;
   readonly Bookings?: (Booking | null)[] | null;
   readonly Availabilities?: (Availability | null)[] | null;
+  readonly sub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -470,6 +473,7 @@ type LazyCoach = {
   readonly SpecialityCoaches: AsyncCollection<SpecialityCoach>;
   readonly Bookings: AsyncCollection<Booking>;
   readonly Availabilities: AsyncCollection<Availability>;
+  readonly sub?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

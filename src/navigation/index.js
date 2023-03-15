@@ -15,6 +15,7 @@ import PlayerBookingsScreen from "../screens/Player/BookingsScreen"
 import PlayerBookPackageScreen from "../screens/Player/BookPackageScreen"
 import PlayerCoachProfileScreen from "../screens/Player/CoachProfileScreen"
 import PlayerPackagesScreen from "../screens/Player/PackagesScreen"
+import PlayerAvailabilityScreen from "../screens/Player/AvailabilityScreen";
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
@@ -131,6 +132,7 @@ const HomeStackNavigator = () => {
     return (
         <HomeStack.Navigator>
             <HomeStack.Screen name="Search Coaches" component={PlayerHomeScreen} />
+            <HomeStack.Screen name="Availability" component={PlayerAvailabilityScreen} options={{headerShown: false}} />
             <HomeStack.Screen name={'Coach Profile'} component={PlayerCoachProfileScreen} options={{headerShown: false}}/>
             <HomeStack.Screen name="Packages" component={PlayerPackagesScreen} />
             <HomeStack.Screen name="Book Package" component={PlayerBookPackageScreen} />
