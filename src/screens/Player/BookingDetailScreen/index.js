@@ -30,7 +30,7 @@ const BookingDetailScreen = () => {
   return (
     <ScrollView style={styles.page}>
       <Image
-        source={{
+        source={{ 
           uri: book.Coach.image
         }}
         style={styles.image} />

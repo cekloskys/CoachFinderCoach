@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionContent: {
-    width: '100%',
+    width: '100%', 
     height: 36,
     paddingTop: 3,
     paddingLeft: 10,
