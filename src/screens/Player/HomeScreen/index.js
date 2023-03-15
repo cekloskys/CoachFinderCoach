@@ -18,6 +18,7 @@ const HomeScreen = () => {
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
   }, []);
+  console.log(sports);
   
   useEffect(() => {
     if (!sports) {

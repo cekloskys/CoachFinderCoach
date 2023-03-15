@@ -1,9 +1,9 @@
 export type AmplifyDependentResourcesAttributes = {
-  "api": {
-    "CoachFinder": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
+    "api": {
+        "CoachFinder": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
     }
-  }
 }

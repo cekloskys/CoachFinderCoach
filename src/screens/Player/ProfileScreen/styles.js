@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     dropdownBtnStyle: {
       width: '100%',
       height: 50,
-      borderRadius: 15,
+      borderRadius: 5,
       borderWidth: 1,
       borderColor: 'lightgrey',
       backgroundColor: 'lightgrey',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       textAlign: 'left',
     },
     dropdownDropdownStyle: {
-      borderRadius: 10,
+      borderRadius: 5,
     },
     dropdownRowStyle: {
       backgroundColor: '#EFEFEF',

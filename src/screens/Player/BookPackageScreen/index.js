@@ -48,7 +48,8 @@ const BookPackageScreen = () => {
       alert('Please enter athlete\'s age.');
       return
     }
-    if (!date) {
+    const today = new Date(Date.now());
+    if (!date || date.toLocaleDateString() === today.toLocaleDateString()) {
       alert('Please select a start date.');
       return
     }

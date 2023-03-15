@@ -1,10 +1,17 @@
-import { View, TextInput, Pressable, Text } from 'react-native';
+import { TextInput, Pressable, Text, ScrollView } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import { useState } from 'react';
 import styles from './styles';
 
 const validator = require('validator');
 
+const UsaStates = require('usa-states').UsaStates;
+
 const ProfileScreen = () => {
+
+  const usStates = new UsaStates();
+  const statesNames = usStates.arrayOf('names');
+
   const [fullName, setFullName] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -41,7 +48,7 @@ const ProfileScreen = () => {
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <TextInput
         value={fullName}
         onChangeText={value => setFullName(value)}
@@ -67,13 +74,24 @@ const ProfileScreen = () => {
         placeholder={"Enter City"}
         placeholderTextColor={'lightgrey'}
       />
-      <TextInput
-        value={state}
-        onChangeText={value => setState(value)}
-        style={styles.input}
-        clearButtonMode={'while-editing'}
-        placeholder={"Enter State"}
-        placeholderTextColor={'lightgrey'}
+      <SelectDropdown
+        data={statesNames}
+        defaultValue={state}
+        defaultButtonText={'Select State'}
+        onSelect={(selectedItem, index) => {
+          setState(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
       />
       <TextInput
         value={zip}
@@ -97,7 +115,7 @@ const ProfileScreen = () => {
         style={styles.button} onPress={Validation}>
         <Text style={styles.buttonText}> Submit </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
