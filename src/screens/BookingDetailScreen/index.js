@@ -3,7 +3,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify';
-import { Package } from '../../models';
+import { Package, Profile } from '../../models';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const BookingDetailScreen = () => {
@@ -14,12 +14,20 @@ const BookingDetailScreen = () => {
   const book = route.params?.book; 
 
   const [packages, setPackages] = useState({});
+  const [profiles, setProfiles] = useState({});
 
   useEffect(() => {
     if (!book) {
       return;
     }
     DataStore.query(Package, book.packageID).then(setPackages);
+  }, [book]);
+
+  useEffect(() => {
+    if (!book) {
+      return;
+    }
+    DataStore.query(Profile, book.profileID).then(setProfiles);
   }, [book]);
 
   const onPress = () => {
@@ -93,7 +101,7 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Details</Text>
           <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Coach Contact Information</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Athlete Contact Information</Text>
         <View style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -103,7 +111,7 @@ const BookingDetailScreen = () => {
           marginTop: 5,
         }}>
           <Text style={styles.subtitle}>Phone</Text>
-          <Text style={styles.subtitledetail}>{book.Coach.phoneNbr}</Text>
+          <Text style={styles.subtitledetail}>{profiles.phoneNbr}</Text>
         </View>
         <View style={{
           flexDirection: 'row',
@@ -114,7 +122,7 @@ const BookingDetailScreen = () => {
           borderBottomRightRadius: 5,
         }}>
           <Text style={styles.subtitle}>Email</Text>
-          <Text style={styles.subtitledetail}>{book.Coach.email}</Text>
+          <Text style={styles.subtitledetail}>{profiles.email}</Text>
         </View>
       </View>
     </ScrollView>

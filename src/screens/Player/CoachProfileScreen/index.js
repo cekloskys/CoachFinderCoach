@@ -90,9 +90,9 @@ const CoachProfileScreen = () => {
         ListHeaderComponent={() => <Header coach={coach} />}
         ListFooterComponent={() =>
           <Pressable
-            style={styles.button} onPress={() => navigation.navigate('Packages')}>
+          style={styles.button} onPress={() => navigation.navigate('Availability', {coach: coach})}>
             <Text style={styles.buttonText}>
-              View {coach.fullName}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s"} Packages
+              View {coach.fullName}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s"} Availability
             </Text>
           </Pressable>
         }

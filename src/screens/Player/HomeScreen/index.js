@@ -2,7 +2,7 @@ import { View, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import CoachComponent from '../../../components/Coach';
 import SelectDropdown from 'react-native-select-dropdown';
-import { DataStore } from 'aws-amplify';
+import { DataStore, Hub } from 'aws-amplify';
 import { Coach, Sport } from '../../../models';
 import styles from './styles';
 
@@ -10,16 +10,29 @@ let selectedSport = '';
 let selectedSportId = '';
 
 const HomeScreen = () => {
-  
+
   const [sports, setSports] = useState([]);
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
 
   useEffect(() => {
-    DataStore.query(Sport).then(setSports);
+    const removeListener = Hub.listen("datastore", async (capsule) => {
+      const {
+        payload: { event, data },
+      } = capsule;
+
+      if (event === "ready") {
+        DataStore.query(Sport).then(setSports);
+      }
+    });
+
+    DataStore.start();
+
+    return () => {
+      removeListener();
+    };
   }, []);
-  console.log(sports);
-  
+
   useEffect(() => {
     if (!sports) {
       return;
@@ -31,21 +44,22 @@ const HomeScreen = () => {
     display.sort();
     setDisplaySports(display);
   }, [sports]);
+  console.log(sports);
 
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
-  }; 
-  
+  };
+
   return (
     <View style={styles.page}>
       <SelectDropdown
         data={displaySports}
         defaultButtonText={'Select a Sport'}
-        onSelect={(selectedItem) => {   
+        onSelect={(selectedItem) => {
           selectedSport = selectedItem;
           for (let i = 0; i < sports.length; i++) {
-            if(sports[i].name === selectedSport){
+            if (sports[i].name === selectedSport) {
               selectedSportId = sports[i].id
             }
           }
