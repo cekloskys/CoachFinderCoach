@@ -4,7 +4,7 @@ import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-number-input';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker'; 
 import { DataStore, Hub } from 'aws-amplify';
 import { useEffect } from 'react';
 import { Sport, Position } from '../../models';
