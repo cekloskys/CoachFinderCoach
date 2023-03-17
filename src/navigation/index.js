@@ -16,6 +16,7 @@ import PlayerBookPackageScreen from "../screens/Player/BookPackageScreen"
 import PlayerCoachProfileScreen from "../screens/Player/CoachProfileScreen"
 import PlayerPackagesScreen from "../screens/Player/PackagesScreen"
 import PlayerAvailabilityScreen from "../screens/Player/AvailabilityScreen";
+import PlayerBookingReviewScreen from "../screens/Player/BookingReviewScreen";
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
@@ -147,6 +148,7 @@ const OrdersStackNavigator = () => {
         <OrdersStack.Navigator>
             <OrdersStack.Screen name="Your Bookings" component={PlayerBookingsScreen} />
             <OrdersStack.Screen name={'Booking'} component={PlayerBookingDetailScreen} options={{headerShown: false}}/>
+            <OrdersStack.Screen name="Review" component={PlayerBookingReviewScreen} />
         </OrdersStack.Navigator>   
     );
 };

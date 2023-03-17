@@ -37,6 +37,7 @@ const AvailabilityScreen = () => {
         return a.day < b.day ? -1 : 1
       }
     });
+
   }, [availability]);
 
   return (
@@ -65,8 +66,8 @@ const AvailabilityScreen = () => {
               marginRight: 10,
               marginVertical: 2,
             }}>
-              <Text style={styles.subtitle}>{item.day}</Text>
-              <Text style={styles.subtitledetail}>{item.time}</Text>
+              <Text style={styles.subtitle}>{item.days}</Text>
+              <Text style={styles.subtitledetail}>{item.times}</Text>
             </View>
           </View>
         )}

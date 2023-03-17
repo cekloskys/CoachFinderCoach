@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
@@ -122,8 +122,12 @@ const BookingDetailScreen = () => {
         }}>
           <Text style={styles.subtitle}>Email</Text>
           <Text style={styles.subtitledetail}>{book.Coach.email}</Text>
-        </View>
+        </View> 
       </View>
+      <Pressable
+                style={styles.bookbutton} onPress = {navigation.navigate('Review')} >
+                <Text style={styles.buttonText}>Leave a Review</Text>
+            </Pressable>
       <Ionicons
         name='arrow-back-circle'
         size={45}
