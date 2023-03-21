@@ -74,6 +74,7 @@ const HomeScreen = () => {
     dt.sort();
     setDisplaySports(dt);
   }, [sports]);
+ 
   
 
   useEffect(() => {

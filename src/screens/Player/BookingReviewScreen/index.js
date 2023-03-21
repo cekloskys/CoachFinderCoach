@@ -1,14 +1,21 @@
 import { View, Text, Pressable,TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Rating } from 'react-native-ratings';
 
 
+
 const BookingReviewScreen = () => {
+    const route = useRoute();
+    const book = route.params?.book;
     const [rating, setRating] = useState('');
     const [review, setReview] = useState('');
     const navigation = useNavigation();
+    console.log(book);
+    const submit = () => {
+        navigation.navigate('Your Bookings')
+    }
 
     return (
         <View style={styles.page}>
@@ -18,6 +25,7 @@ const BookingReviewScreen = () => {
                 imageSize={60}
                 showRating = {true}
                 onFinishRating={setRating}
+                
                 
             />
             
@@ -29,12 +37,13 @@ const BookingReviewScreen = () => {
                 placeholder={"Leave a Review"}
                 placeholderTextColor={'lightgrey'}
             />
-
             <Pressable
-                style={styles.bookbutton} onPress={navigation.navigate('Your Bookings')}>
+                style={styles.bookbutton} onPress={submit}>
                 <Text style={styles.buttonText}>Submit Review</Text>
             </Pressable>
         </View>
+        
+        
     );
 }
 export default BookingReviewScreen;

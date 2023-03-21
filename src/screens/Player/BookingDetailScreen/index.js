@@ -23,14 +23,20 @@ const BookingDetailScreen = () => {
     DataStore.query(Package, book.packageID).then(setPackages);
   }, [book]);
 
+  const goToReview = () => {
+    navigation.navigate('Review Booking', {book : book});
+  };
+
   const onPress = () => {
     navigation.navigate('Your Bookings');
   };
 
+
+
   return (
     <ScrollView style={styles.page}>
       <Image
-        source={{ 
+        source={{
           uri: book.Coach.image
         }}
         style={styles.image} />
@@ -47,7 +53,7 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Athlete</Text>
           <Text style={styles.subtitledetail}>{book.athleteName}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Starting Session</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Starting Session</Text>
         <View style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -70,7 +76,7 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Time</Text>
           <Text style={styles.subtitledetail}>{book.startTime}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Package Details</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Package Details</Text>
         <View style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -100,7 +106,7 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Details</Text>
           <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Coach Contact Information</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Coach Contact Information</Text>
         <View style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -122,12 +128,12 @@ const BookingDetailScreen = () => {
         }}>
           <Text style={styles.subtitle}>Email</Text>
           <Text style={styles.subtitledetail}>{book.Coach.email}</Text>
-        </View> 
+        </View>
       </View>
       <Pressable
-                style={styles.bookbutton} onPress = {navigation.navigate('Review')} >
-                <Text style={styles.buttonText}>Leave a Review</Text>
-            </Pressable>
+        style={styles.bookbutton} onPress={goToReview} >
+        <Text style={styles.buttonText}>Leave a Review</Text>
+      </Pressable>
       <Ionicons
         name='arrow-back-circle'
         size={45}
