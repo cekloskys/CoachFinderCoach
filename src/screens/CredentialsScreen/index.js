@@ -3,7 +3,7 @@ import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from 'react-native-numeric-input';
 import { DataStore } from '@aws-amplify/datastore';
 import { useEffect } from 'react';
 import { Accreditation, Age, Speciality } from '../../models';

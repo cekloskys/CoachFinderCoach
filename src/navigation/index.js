@@ -7,6 +7,8 @@ import BiographyScreen from '../screens/BiographyScreen';
 import BookingDetailScreen from '../screens/BookingDetailScreen';
 import BookingsScreen from '../screens/BookingsScreen';
 import CredentialsScreen from '../screens/CredentialsScreen';
+import PackagesScreen from "../screens/PackagesScreen";
+import BookPackageScreen from "../screens/Player/BookPackageScreen";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import PlayerHomeScreen from "../screens/Player/HomeScreen"
 import PlayerProfileScreen from "../screens/Player/ProfileScreen"
@@ -16,7 +18,8 @@ import PlayerBookPackageScreen from "../screens/Player/BookPackageScreen"
 import PlayerCoachProfileScreen from "../screens/Player/CoachProfileScreen"
 import PlayerPackagesScreen from "../screens/Player/PackagesScreen"
 import PlayerAvailabilityScreen from "../screens/Player/AvailabilityScreen";
-import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { Foundation, FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import CoachPackageScreen from "../screens/CoachPackage";
 
 const Stack = createStackNavigator();
 
@@ -55,6 +58,13 @@ const CoachHomeTabs = () => {
                 }}
             />
             <Tab.Screen 
+                name="Packages" 
+                component={CoachPackagesStackNavigator} 
+                options={{
+                    tabBarIcon: ({color}) => <AntDesign name="dropbox" size={24} color={color} />,
+                }}
+            />
+            <Tab.Screen 
                 name="Bookings" 
                 component={CoachOrdersStackNavigator} 
                 options={{
@@ -77,6 +87,17 @@ const CoachHomeStackNavigator = () => {
             <CoachHomeStack.Screen name="Availability" component={AvailabilityScreen} />
         </CoachHomeStack.Navigator>   
     ); 
+};
+
+const CoachPackagesStack = createStackNavigator();
+
+const CoachPackagesStackNavigator = () => {
+    return (
+        <CoachPackagesStack.Navigator>
+            <CoachPackagesStack.Screen name="Your Packages" component={PackagesScreen} /> 
+            <CoachPackagesStack.Screen name="Create Package" component={CoachPackageScreen} />
+        </CoachPackagesStack.Navigator>   
+    );
 };
 
 const CoachOrdersStack = createStackNavigator();
