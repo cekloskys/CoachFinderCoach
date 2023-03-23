@@ -32,6 +32,7 @@ const HomeScreen = () => {
       removeListener();
     };
   }, []);
+ 
 
   useEffect(() => {
     if (!sports) {

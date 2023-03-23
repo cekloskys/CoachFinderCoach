@@ -57,6 +57,21 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 16,
   },
+  button: {
+    borderColor: 'black',
+    padding: 15,
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginVertical: 5,
+  },bookbutton: {
+    borderColor: 'black',
+    marginTop: 5,
+    padding: 15,
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
 });
 
 export default styles;

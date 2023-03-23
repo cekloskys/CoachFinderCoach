@@ -20,6 +20,7 @@ import PlayerPackagesScreen from "../screens/Player/PackagesScreen"
 import PlayerAvailabilityScreen from "../screens/Player/AvailabilityScreen";
 import { Foundation, FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import CoachPackageScreen from "../screens/CoachPackage";
+import BookingReviewScreen from "../screens/Player/BookingReviewScreen";
 
 const Stack = createStackNavigator();
 
@@ -168,6 +169,7 @@ const OrdersStackNavigator = () => {
         <OrdersStack.Navigator>
             <OrdersStack.Screen name="Your Bookings" component={PlayerBookingsScreen} />
             <OrdersStack.Screen name={'Booking'} component={PlayerBookingDetailScreen} options={{headerShown: false}}/>
+            <OrdersStack.Screen name="Review Booking" component={BookingReviewScreen} />
         </OrdersStack.Navigator>   
     );
 };

@@ -74,6 +74,8 @@ const HomeScreen = () => {
     dt.sort();
     setDisplaySports(dt);
   }, [sports]);
+ 
+  
 
   useEffect(() => {
     DataStore.query(Position).then(setPositions);
