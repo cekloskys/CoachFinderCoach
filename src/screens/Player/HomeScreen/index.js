@@ -51,6 +51,7 @@ const HomeScreen = () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
+  console.log(sports);
 
   return (
     <View style={styles.page}>

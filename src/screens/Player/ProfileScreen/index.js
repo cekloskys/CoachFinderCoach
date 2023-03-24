@@ -4,6 +4,9 @@ import { useState } from 'react';
 import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import React, { useRef } from 'react';
+import { Profile } from '../../../models';
+import {Auth, DataStore} from 'aws-amplify';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const validator = require('validator');
 
@@ -11,19 +14,40 @@ const UsaStates = require('usa-states').UsaStates;
 
 const ProfileScreen = () => {
 
-  const [phonenumber, setPhonenumber] = useState('');
+  const [formattedValue, setFormattedValue] = useState('');
 
   const phoneInput = useRef(null);
 
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const [fullName, setFullName] = useState('');
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [email, setEmail] = useState('');
+  const {sub, dbUser, setDbUser} = useAuthContext();
+  const [fullName, setFullName] = useState(dbUser?.fullName || "");
+  const [email, setEmail] = useState(dbUser?.email || "");
+
+  const [street, setStreet] = useState(dbUser?.streetAddress || "");
+  const [city, setCity] = useState(dbUser?.city || "");
+  const [state, setState] = useState(dbUser?.state || "");
+  const [zip, setZip] = useState(dbUser?.zip || "");
+  const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
+  const [newProfile, setNewProfile] = useState();
+
+  const createNewProfile = async () => {
+    const newProfile = await DataStore.save(new Profile({
+        fullName: fullName,
+        streetAddress: street,
+        city: city,
+        state: state,
+        zip: zip,
+        email: email,
+        phoneNbr: phonenumber,  
+    })
+    );
+    setNewProfile(newProfile);
+    alert('Profile Approved')
+
+};
+
 
   const Validation = () => {
     if (!fullName) {
@@ -54,7 +78,7 @@ const ProfileScreen = () => {
       alert('Please enter a valid phone number.');
       return;
     }
-    alert('Profile saved.');
+    createNewProfile()
   }
 
   return (
@@ -129,6 +153,7 @@ const ProfileScreen = () => {
         onChangeFormattedText={(text) => {
           setFormattedValue(text);
         }}
+       
         containerStyle={styles.dropdownBtnStyle}
         textContainerStyle={styles.dropdownBtnTxtStyle}
       />
@@ -137,7 +162,7 @@ const ProfileScreen = () => {
         <Text style={styles.buttonText}> Submit </Text>
       </Pressable>
       <Pressable
-        style={styles.button} onPress={Validation}>
+        style={styles.button} onPress={() => Auth.signOut()}>
         <Text style={styles.buttonText}> Log Out </Text>
       </Pressable>
     </ScrollView>
