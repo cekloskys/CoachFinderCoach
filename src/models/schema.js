@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Availability": {
-            "name": "Availability",
+        "Rating": {
+            "name": "Rating",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,15 +10,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "day": {
-                    "name": "day",
+                "rating": {
+                    "name": "rating",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
-                "time": {
-                    "name": "time",
+                "review": {
+                    "name": "review",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -30,6 +30,24 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
+                },
+                "Booking": {
+                    "name": "Booking",
+                    "isArray": false,
+                    "type": {
+                        "model": "Booking"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "ratingBookingId"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -46,10 +64,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "ratingBookingId": {
+                    "name": "ratingBookingId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Availabilities",
+            "pluralName": "Ratings",
             "attributes": [
                 {
                     "type": "model",
@@ -219,11 +244,100 @@ export const schema = {
                 }
             ]
         },
+        "Availability": {
+            "name": "Availability",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "day": {
+                    "name": "day",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "time": {
+                    "name": "time",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "coachID": {
+                    "name": "coachID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Availabilities",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCoach",
+                        "fields": [
+                            "coachID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "AccreditationCoach": {
             "name": "AccreditationCoach",
             "fields": {
                 "id": {
                     "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "coachID": {
+                    "name": "coachID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -246,13 +360,6 @@ export const schema = {
                             "accreditationCoachAccreditationId"
                         ]
                     }
-                },
-                "coachID": {
-                    "name": "coachID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -888,6 +995,13 @@ export const schema = {
                         ]
                     }
                 },
+                "coachID": {
+                    "name": "coachID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1293,6 +1407,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "Ratings": {
+                    "name": "Ratings",
+                    "isArray": true,
+                    "type": {
+                        "model": "Rating"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "coachID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1433,6 +1563,6 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "codegenVersion": "3.3.4",
-    "version": "1f790fdcb5eb430cbc36ebe2a18a5075"
+    "codegenVersion": "3.3.2",
+    "version": "6766fd41eb42c5b21374e4fbd399a36f"
 };

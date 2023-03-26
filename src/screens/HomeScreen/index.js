@@ -54,6 +54,7 @@ const HomeScreen = () => {
     };
 
   }, []);
+  console.log(sports);
 
   useEffect(() => {
     if (createdCoach && sports.length != 0) {
