@@ -6,11 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Booking } from '../../../models';
 import {DataStore} from 'aws-amplify';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const BookPackageScreen = () => {
   const route = useRoute();
     const pack = route.params?.pack;
     console.log(pack);
+
+    const {dbUser} = useAuthContext();
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -49,7 +52,7 @@ const BookPackageScreen = () => {
     const newBooking = await DataStore.save(new Booking({
         coachID: pack.coachID,
         packageID: pack.id,
-        profileID: 'f4b65c5a-590b-41b4-be5e-79d7163c2895',
+        profileID: dbUser.id,
         athleteName: name,
         atheleteAge: age,
         startDate: date.toLocaleDateString(),
@@ -59,7 +62,6 @@ const BookPackageScreen = () => {
     alert('Booking Approved')
     navigation.navigate('Search Coaches');
   }
-
   const validation = () => {
     if (!name) {
       alert('Please enter athlete\'s name.');
@@ -71,13 +73,14 @@ const BookPackageScreen = () => {
     }
     const today = new Date(Date.now());
     if (!date || date.toLocaleDateString() === today.toLocaleDateString()) {
-      alert('Please select a start date.');
+      alert('Invalid start date.');
       return
     }
-    if (!time) {
+    if (!selectedTime) {
       alert('Please select a start time.');
       return
     }
+
 
     createNewBooking()
   }

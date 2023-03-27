@@ -75,7 +75,7 @@ const AvailabilityScreen = () => {
         ListHeaderComponent={() => <Header coach={coach} />}
         ListFooterComponent={() =>
           <Pressable
-            style={styles.button} onPress={() => navigation.navigate('Packages')}>
+            style={styles.button} onPress={() => navigation.navigate('Packages', {coach : coach})}>
             <Text style={styles.buttonText}>
               View {coach.fullName}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s"} Packages
             </Text>
