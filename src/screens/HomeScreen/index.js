@@ -4,7 +4,7 @@ import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-number-input';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker'; 
 import { DataStore, Hub } from 'aws-amplify';
 import { useEffect } from 'react';
 import { Sport, Position } from '../../models';
@@ -13,7 +13,7 @@ import { useCoachContext } from '../../context/CoachContext';
 const HomeScreen = () => {
 
   const { createdCoach, createdCoachPosition } = useCoachContext();
-
+ 
   const navigation = useNavigation();
 
   const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || '');
@@ -75,6 +75,8 @@ const HomeScreen = () => {
     dt.sort();
     setDisplaySports(dt);
   }, [sports]);
+ 
+  
 
   useEffect(() => {
     DataStore.query(Position).then(setPositions);

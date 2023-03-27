@@ -16,23 +16,9 @@ const HomeScreen = () => {
   const [coaches, setCoaches] = useState([]);
 
   useEffect(() => {
-    const removeListener = Hub.listen("datastore", async (capsule) => {
-      const {
-        payload: { event, data },
-      } = capsule;
-
-      if (event === "ready") {
-        DataStore.query(Sport).then(setSports);
-      }
-    });
-
-    DataStore.start();
-
-    return () => {
-      removeListener();
-    };
+    DataStore.query(Sport).then(setSports);
   }, []);
-
+ 
   useEffect(() => {
     if (!sports) {
       return;
@@ -50,6 +36,7 @@ const HomeScreen = () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
+  console.log(coaches);
 
   return (
     <View style={styles.page}>

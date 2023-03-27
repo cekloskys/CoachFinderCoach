@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     marginVertical: 5,
   },
-  dropdownBtnTxtStyle: {
+  dropdownBtnTxtStyle: { 
     color: '#444',
     textAlign: 'left',
-  },
+  }, 
   dropdownDropdownStyle: {
     borderRadius: 5,
   },

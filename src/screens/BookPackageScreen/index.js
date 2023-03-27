@@ -1,16 +1,10 @@
 import { View, TextInput, Pressable, Text } from 'react-native';
 import styles from './styles';
 import { useState } from 'react';
-import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Booking } from '../../../models';
-import {DataStore} from 'aws-amplify';
 
 const BookPackageScreen = () => {
-  const route = useRoute();
-    const pack = route.params?.pack;
-    console.log(pack);
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -20,7 +14,6 @@ const BookPackageScreen = () => {
   const [timePicker, setTimePicker] = useState(false);
   const [time, setTime] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
-  const [newBooking, setNewBooking] = useState();
   
   function showDatePicker() {
     setDatePicker(true);
@@ -45,20 +38,6 @@ const BookPackageScreen = () => {
     setSelectedTime(timeValue);
     setTimePicker(false);
   };
-  const createNewBooking = async () => {
-    const newBooking = await DataStore.save(new Booking({
-        coachID: pack.coachID,
-        packageID: pack.id,
-        profileID: 'f4b65c5a-590b-41b4-be5e-79d7163c2895',
-        athleteName: name,
-        atheleteAge: age,
-        startDate: date.toLocaleDateString(),
-        startTime: selectedTime
-    }));
-    setNewBooking(newBooking);
-    alert('Booking Approved')
-    navigation.navigate('Search Coaches');
-  }
 
   const validation = () => {
     if (!name) {
@@ -79,7 +58,7 @@ const BookPackageScreen = () => {
       return
     }
 
-    createNewBooking()
+    navigation.navigate('Search')
   }
 
   return (

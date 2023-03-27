@@ -2,6 +2,11 @@ import { TextInput, Pressable, Text, ScrollView } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useState } from 'react';
 import styles from './styles';
+import PhoneInput from 'react-native-phone-number-input';
+import React, { useRef } from 'react';
+import { Profile } from '../../../models';
+import {Auth, DataStore} from 'aws-amplify';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const validator = require('validator');
 
@@ -9,15 +14,42 @@ const UsaStates = require('usa-states').UsaStates;
 
 const ProfileScreen = () => {
 
+  const [formattedValue, setFormattedValue] = useState('');
+
+  const phoneInput = useRef(null);
+
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const [fullName, setFullName] = useState('');
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [email, setEmail] = useState('');
+  const {sub, dbUser, setDbUser, authUser} = useAuthContext();
+
+  const [fullName, setFullName] = useState(dbUser?.fullName || "");
+  const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email ||"");
+
+  const [street, setStreet] = useState(dbUser?.streetAddress || "");
+  const [city, setCity] = useState(dbUser?.city || "");
+  const [state, setState] = useState(dbUser?.state || "");
+  const [zip, setZip] = useState(dbUser?.zip || "");
+  const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
+  const [newProfile, setNewProfile] = useState();
+
+  const createNewProfile = async () => {
+    const newProfile = await DataStore.save(new Profile({
+        fullName: fullName,
+        streetAddress: street,
+        city: city,
+        state: state,
+        zip: zip,
+        email: email,
+        phoneNbr: phonenumber,
+        sub
+    })
+    );
+    setNewProfile(newProfile);
+    alert('Profile Approved')
+
+};
+
 
   const Validation = () => {
     if (!fullName) {
@@ -44,7 +76,11 @@ const ProfileScreen = () => {
       alert('Please enter a valid email.');
       return
     }
-    alert('Profile saved.');
+    if (!phoneInput.current?.isValidNumber(phonenumber)) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+    createNewProfile()
   }
 
   return (
@@ -106,14 +142,30 @@ const ProfileScreen = () => {
         value={email}
         onChangeText={value => setEmail(value)}
         style={styles.input}
-        clearButtonMode={'while-editing'}
+        clearButtonMode={'while-editing'} 
         placeholder={"Enter Email"}
         placeholderTextColor={'lightgrey'}
         keyboardType='email-address'
       />
+      <PhoneInput
+        ref={phoneInput}
+        defaultValue={phonenumber}
+        defaultCode='US'
+        onChangeText={text => setPhonenumber(text)}
+        onChangeFormattedText={(text) => {
+          setFormattedValue(text);
+        }}
+       
+        containerStyle={styles.dropdownBtnStyle}
+        textContainerStyle={styles.dropdownBtnTxtStyle}
+      />
       <Pressable
         style={styles.button} onPress={Validation}>
-        <Text style={styles.buttonText}> Submit </Text>
+        <Text style={styles.buttonText}>Submit</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button} onPress={() => Auth.signOut()}>
+        <Text style={styles.buttonText}>Sign Out</Text>
       </Pressable>
     </ScrollView>
   );

@@ -10,6 +10,13 @@ import { Availability } from '../../../models';
 const AvailabilityScreen = () => {
 
   const [availability, setAvailability] = useState([]);
+  const [monday, setMonday] = useState([]);
+  const [tuesday, setTuesday] = useState([]);
+  const [wednesday, setWednesday] = useState([]);
+  const [thursday, setThursday] = useState([]);
+  const [friday, setFriday] = useState([]);
+  const [saturday, setSaturday] = useState([]);
+  const [sunday, setSunday] = useState([]);
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -20,7 +27,6 @@ const AvailabilityScreen = () => {
 
   const coach = route.params?.coach;
 
-
   useEffect(() => {
     if (!coach) {
       return;
@@ -28,17 +34,41 @@ const AvailabilityScreen = () => {
     DataStore.query(Availability, (a) => a.coachID.eq(coach.id)).then(setAvailability);
   }, [coach]);
 
+  const formatAvailability = (dayStr) => {
+    let dayArr = [];
+    for(let i = 0; i < availability.length; i++ ) {
+      if (availability[i].day === dayStr) {
+        dayArr.push(availability[i]);
+      }
+    }
+    var timeStr = dayArr.map((item) => {
+      return item.time;
+    }).join(", ");
+    let timeObj = {time: timeStr};
+    let displayArr = [];
+    displayArr.push(timeObj);
+    return displayArr;
+  };
+
   useEffect(() => {
-    const times = [];
     availability.sort((a, b) => {
-      if (a.day === b.day){
+      if (a.day === b.day) {
         return a.time < b.time ? -1 : 1
       } else {
         return a.day < b.day ? -1 : 1
       }
     });
+    
+    setMonday(formatAvailability('Monday'));
+    setTuesday(formatAvailability('Tuesday'));
+    setWednesday(formatAvailability('Wednesday'));
+    setThursday(formatAvailability('Thursday'));
+    setFriday(formatAvailability('Friday'));
+    setSaturday(formatAvailability('Saturday'));
+    setSunday(formatAvailability('Sunday'));
+    
   }, [availability]);
-
+  
   return (
     <View style={styles.page}>
       <SectionList
@@ -51,24 +81,30 @@ const AvailabilityScreen = () => {
             </Text>
           </Pressable>
         }
-        sections={[{ title: 'Availability', data: availability },
+        sections={[
+          {title: 'Monday', data: monday},
+          {title: 'Tuesday', data: tuesday},
+          {title: 'Wednesday', data: wednesday},
+          {title: 'Thursday', data: thursday},
+          {title: 'Friday', data: friday},
+          {title: 'Saturday', data: saturday},
+          {title: 'Sunday', data: sunday},
         ]}
         renderItem={({ item }) => (
-          <View style={styles.sectionContent}>
-            <View style={{
+            <View style={styles.sectionContent}>
+            <View style={{width: '100%'}}>
+              <Text style={{
               flexDirection: 'row',
               color: 'grey',
               fontSize: 16,
               backgroundColor: 'white',
-              padding: 5,
+              padding: 10,
               borderRadius: 5,
               marginRight: 10,
               marginVertical: 2,
-            }}>
-              <Text style={styles.subtitle}>{item.day}</Text>
-              <Text style={styles.subtitledetail}>{item.time}</Text>
+            }}>{item.time !== "" ? item.time : "Not Available"}</Text>
             </View>
-          </View>
+          </View>  
         )}
         renderSectionHeader={({ section }) => (
           <View style={styles.completeContainer}>
