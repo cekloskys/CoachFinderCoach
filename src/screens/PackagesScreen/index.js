@@ -4,11 +4,12 @@ import { DataStore, Predicates, SortDirection } from 'aws-amplify';
 import { Package } from '../../models';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import PackageComponent from '../../components/Package';
+import CoachPackage from '../../components/CoachPackage';
+import { usePackageContext } from '../../context/PackageContext';
 
 const PackagesScreen = () => {
   const navigation = useNavigation();
-  const [packages, setPackages] = useState([]);
+  const {packages, setPackages, fetchPackages} = usePackageContext();
 
   const onPress = () => {
     //DataStore.query(User, (user) => user.sub.eq(sub)).then((users) =>
@@ -21,17 +22,20 @@ const PackagesScreen = () => {
     }
   }
 
+  const coach = '15d3a30d-0229-4ee8-9b1c-5d7a65c7d90f';
+
   useEffect(() => {
-    DataStore.query(Package, Predicates.ALL, {
+    /*DataStore.query(Package, (p) => p.coachID.eq(coach), Predicates.ALL, {
       sort: s => s.price(SortDirection.ASCENDING)
-    }).then(setPackages);
+    }).then(setPackages);*/
+    fetchPackages(coach);
   }, []);
 
   return (
     <View style={styles.page}>
       <FlatList
         data={packages}
-        renderItem={({ item, index }) => <PackageComponent pack={item} />}
+        renderItem={({ item, index }) => <CoachPackage pack={item} />}
         keyExtractor={(item, index) => index}
       />
       <View style={styles.bottom}>

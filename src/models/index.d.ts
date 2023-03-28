@@ -12,36 +12,40 @@ export enum BookingStatus {
 
 
 
-type EagerAvailability = {
+type EagerRating = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Availability, 'id'>;
+    identifier: ManagedIdentifier<Rating, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly day?: string | null;
-  readonly time?: string | null;
+  readonly rating?: number | null;
+  readonly review?: string | null;
   readonly coachID: string;
+  readonly Booking?: Booking | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly ratingBookingId?: string | null;
 }
 
-type LazyAvailability = {
+type LazyRating = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Availability, 'id'>;
+    identifier: ManagedIdentifier<Rating, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly day?: string | null;
-  readonly time?: string | null;
+  readonly rating?: number | null;
+  readonly review?: string | null;
   readonly coachID: string;
+  readonly Booking: AsyncItem<Booking | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly ratingBookingId?: string | null;
 }
 
-export declare type Availability = LazyLoading extends LazyLoadingDisabled ? EagerAvailability : LazyAvailability
+export declare type Rating = LazyLoading extends LazyLoadingDisabled ? EagerRating : LazyRating
 
-export declare const Availability: (new (init: ModelInit<Availability>) => Availability) & {
-  copyOf(source: Availability, mutator: (draft: MutableModel<Availability>) => MutableModel<Availability> | void): Availability;
+export declare const Rating: (new (init: ModelInit<Rating>) => Rating) & {
+  copyOf(source: Rating, mutator: (draft: MutableModel<Rating>) => MutableModel<Rating> | void): Rating;
 }
 
 type EagerBooking = {
@@ -86,14 +90,46 @@ export declare const Booking: (new (init: ModelInit<Booking>) => Booking) & {
   copyOf(source: Booking, mutator: (draft: MutableModel<Booking>) => MutableModel<Booking> | void): Booking;
 }
 
+type EagerAvailability = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Availability, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly day?: string | null;
+  readonly time?: string | null;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAvailability = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Availability, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly day?: string | null;
+  readonly time?: string | null;
+  readonly coachID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Availability = LazyLoading extends LazyLoadingDisabled ? EagerAvailability : LazyAvailability
+
+export declare const Availability: (new (init: ModelInit<Availability>) => Availability) & {
+  copyOf(source: Availability, mutator: (draft: MutableModel<Availability>) => MutableModel<Availability> | void): Availability;
+}
+
 type EagerAccreditationCoach = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<AccreditationCoach, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Accreditation?: Accreditation | null;
   readonly coachID: string;
+  readonly Accreditation?: Accreditation | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly accreditationCoachAccreditationId?: string | null;
@@ -105,8 +141,8 @@ type LazyAccreditationCoach = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Accreditation: AsyncItem<Accreditation | undefined>;
   readonly coachID: string;
+  readonly Accreditation: AsyncItem<Accreditation | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly accreditationCoachAccreditationId?: string | null;
@@ -338,6 +374,7 @@ type EagerPackage = {
   readonly longDesc?: string | null;
   readonly length?: number | null;
   readonly Bookings?: (Booking | null)[] | null;
+  readonly coachID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -354,6 +391,7 @@ type LazyPackage = {
   readonly longDesc?: string | null;
   readonly length?: number | null;
   readonly Bookings: AsyncCollection<Booking>;
+  readonly coachID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -439,6 +477,7 @@ type EagerCoach = {
   readonly Bookings?: (Booking | null)[] | null;
   readonly Availabilities?: (Availability | null)[] | null;
   readonly sub?: string | null;
+  readonly Ratings?: (Rating | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -474,6 +513,7 @@ type LazyCoach = {
   readonly Bookings: AsyncCollection<Booking>;
   readonly Availabilities: AsyncCollection<Availability>;
   readonly sub?: string | null;
+  readonly Ratings: AsyncCollection<Rating>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

@@ -1,3 +1,11 @@
+type Rating @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  rating: Float
+  review: String
+  coachID: ID! @index(name: "byCoach")
+  Booking: Booking @hasOne
+}
+
 type Availability @model @auth(rules: [{allow: public}]) {
   id: ID!
   day: String
@@ -19,8 +27,8 @@ type Booking @model @auth(rules: [{allow: public}]) {
 
 type AccreditationCoach @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Accreditation: Accreditation @hasOne
   coachID: ID! @index(name: "byCoach")
+  Accreditation: Accreditation @hasOne
 }
 
 type SpecialityCoach @model @auth(rules: [{allow: public}]) {
@@ -49,6 +57,7 @@ type Package @model @auth(rules: [{allow: public}]) {
   longDesc: String
   length: Int
   Bookings: [Booking] @hasMany(indexName: "byPackage", fields: ["id"])
+  coachID: String
 }
 
 type Position @model @auth(rules: [{allow: public}]) {
@@ -106,6 +115,7 @@ type Coach @model @auth(rules: [{allow: public}]) {
   Bookings: [Booking] @hasMany(indexName: "byCoach", fields: ["id"])
   Availabilities: [Availability] @hasMany(indexName: "byCoach", fields: ["id"])
   sub: String
+  Ratings: [Rating] @hasMany(indexName: "byCoach", fields: ["id"])
 }
 
 type Accreditation @model @auth(rules: [{allow: public}]) {
