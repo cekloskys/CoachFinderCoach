@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { Auth, DataStore } from "aws-amplify";
+import { Auth, DataStore, Hub } from "aws-amplify";
 import { Profile } from "../models";
 
 
@@ -23,8 +23,17 @@ const AuthContextProvider = ({ children }) => {
         if (!sub) {
             return;
         }
-        getDbUser();
+        
+        const removeListener = Hub.listen('datastore', async ({ payload }) => {
+            console.log(payload.event);
+            if (payload.event === 'syncQueriesReady') {
+                getDbUser();
+            }
+        });
 
+        DataStore.start();
+
+        return () => removeListener();
     }, [sub]);
 
     return (

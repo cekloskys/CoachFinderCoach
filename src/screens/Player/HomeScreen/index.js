@@ -17,6 +17,16 @@ const HomeScreen = () => {
 
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
+    const removeListener = Hub.listen('datastore', async ({ payload }) => {
+      console.log(payload.event);
+      if (payload.event === 'syncQueriesReady') {
+        DataStore.query(Sport).then(setSports);
+      }
+    });
+    
+    DataStore.start();
+    
+    return () => removeListener();
   }, []);
  
   useEffect(() => {
