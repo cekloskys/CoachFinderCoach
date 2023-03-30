@@ -71,7 +71,7 @@ const EditCoachPackageScreen = () => {
           setLongDesc(p.longDesc);
           setLength(p.length.toString());
 
-        alert('Package Created.');
+        alert('Package Edited.');
         navigation.navigate('Your Packages');
     }
 

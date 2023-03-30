@@ -6,7 +6,7 @@ const Package = ({ pack }) => {
   const navigation = useNavigation();
   
   const onPress = () => {
-    navigation.navigate('Book Package', { id: pack.id })
+    navigation.navigate('Book Package', {pack : pack })
   };
 
   return (

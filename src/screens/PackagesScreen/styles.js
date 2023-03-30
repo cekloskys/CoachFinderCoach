@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
+    padding: 10,
   },
   image: {
     width: '100%',
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5,
-  },
+  }, 
   buttonText: {
     fontSize: 16,
     color: '#444',

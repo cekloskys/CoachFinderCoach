@@ -8103,6 +8103,14 @@
     "color" "^3.1.2"
     "use-event-callback" "^0.1.0"
 
+"react-native-phone-number-input-formatted@^2.2.8":
+  "integrity" "sha512-kM94HunjlmqoevwOLNBxBQqOis64ryEGbOKoltuBjueK2wYqRQ+uAn76WxME3cUIfTnKpisSbcjgys7O67egyQ=="
+  "resolved" "https://registry.npmjs.org/react-native-phone-number-input-formatted/-/react-native-phone-number-input-formatted-2.2.8.tgz"
+  "version" "2.2.8"
+  dependencies:
+    "google-libphonenumber" "^3.2.10"
+    "react-native-country-picker-modal" "^2.0.0"
+
 "react-native-phone-number-input@^2.1.0":
   "integrity" "sha512-EItzeDH6QUw6Kd1uwqFgcUl1YstxULB1M3HuCMHTvHVLoPE3ddjiuHyx+EHs0+4FcZtaXLQzLuC4cC/c4XIEuA=="
   "resolved" "https://registry.npmjs.org/react-native-phone-number-input/-/react-native-phone-number-input-2.1.0.tgz"

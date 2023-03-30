@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: 'grey',
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 10,
   },
   subtitle2: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     borderRadius: 5,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
   },
   buttonText: {
     color: 'black',

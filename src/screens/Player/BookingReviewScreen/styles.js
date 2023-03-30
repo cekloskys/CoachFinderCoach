@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
   },
+  rating: {
+    backgroundColor: 'white',
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 5,
+    fontSize: 16,
+  },
 });
 
 export default styles;

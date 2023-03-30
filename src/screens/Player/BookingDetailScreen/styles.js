@@ -64,13 +64,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     marginVertical: 5,
-  },bookbutton: {
+  },
+  bookbutton: {
     borderColor: 'black',
-    marginTop: 5,
+    marginToop: 5,
+    marginHorizontal: 10,
+    marginBottom: 10,
     padding: 15,
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     borderRadius: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
   },
 });
 

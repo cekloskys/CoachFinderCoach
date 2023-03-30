@@ -4,8 +4,8 @@ import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from 'react-native-phone-number-input';
-import DateTimePicker from '@react-native-community/datetimepicker'; 
-import { DataStore, Hub } from 'aws-amplify';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Auth, DataStore, Hub } from 'aws-amplify';
 import { useEffect } from 'react';
 import { Sport, Position } from '../../models';
 import { useCoachContext } from '../../context/CoachContext';
@@ -13,7 +13,7 @@ import { useCoachContext } from '../../context/CoachContext';
 const HomeScreen = () => {
 
   const { createdCoach, createdCoachPosition } = useCoachContext();
- 
+
   const navigation = useNavigation();
 
   const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || '');
@@ -37,21 +37,16 @@ const HomeScreen = () => {
   const [coachPosition, setCoachPosition] = useState('');
 
   useEffect(() => {
-    const removeListener = Hub.listen("datastore", async (capsule) => {
-      const {
-        payload: { event, data },
-      } = capsule;
-      
-      if (event === "ready") {
+    DataStore.query(Sport).then(setSports);
+    const removeListener = Hub.listen('datastore', async ({ payload }) => {
+      if (payload.event === 'syncQueriesReady') {
         DataStore.query(Sport).then(setSports);
       }
     });
 
     DataStore.start();
 
-    return () => {
-      removeListener();
-    };
+    return () => removeListener();
 
   }, []);
 
@@ -74,8 +69,6 @@ const HomeScreen = () => {
     dt.sort();
     setDisplaySports(dt);
   }, [sports]);
- 
-  
 
   useEffect(() => {
     DataStore.query(Position).then(setPositions);
@@ -153,6 +146,11 @@ const HomeScreen = () => {
       image: image,
     });
   }
+
+  const signOut = async () => {
+    DataStore.clear();
+    Auth.signOut()
+  };
 
   return (
     <ScrollView style={styles.page}>
@@ -246,6 +244,9 @@ const HomeScreen = () => {
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onSelectSport}>
           <Text style={styles.buttonText}>Next</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={signOut}>
+          <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>
     </ScrollView>

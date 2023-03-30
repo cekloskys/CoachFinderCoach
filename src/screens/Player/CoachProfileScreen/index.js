@@ -103,12 +103,12 @@ const CoachProfileScreen = () => {
         ]}
         renderItem={({ item }) => (
           <View style={styles.sectionContent}>
-            <View style={{ width: '100%', }}>
+            <View style={{ width: '100%' }}>
               <Text style={{
                 color: 'grey',
                 fontSize: 16,
                 backgroundColor: 'white',
-                padding: 5,
+                padding: 10,
                 borderRadius: 5,
                 marginRight: 10,
                 marginVertical: 2,
