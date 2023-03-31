@@ -26,6 +26,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  rating: {
+    marginLeft: 'auto',
+    backgroundColor: 'lightgrey',
+    width: 30,
+    height: 30,
+    borderRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
 });
 
 export default styles;

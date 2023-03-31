@@ -20,34 +20,19 @@ const BookPackageScreen = () => {
   const navigation = useNavigation();
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [timePicker, setTimePicker] = useState(false);
-  const [time, setTime] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState('');
   const [newBooking, setNewBooking] = useState();
   
   function showDatePicker() {
     setDatePicker(true);
   };
 
-  function showTimePicker() {
-    setTimePicker(true);
-  };
+ 
   function onDateSelected(event, value) {
     setDate(value);
     setDatePicker(false);
   };
 
-  function onTimeSelected(event, value) {
-    const currentTime = value || time;
-    let tempTime = new Date(currentTime);
-    let hours = tempTime.getHours();
-    let minutes = tempTime.getMinutes();
-    let timeValue = "" + ((hours > 12) ? hours - 12 : hours);
-    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
-    timeValue += (hours >= 12) ? " PM" : " AM";
-    setSelectedTime(timeValue);
-    setTimePicker(false);
-  };
+
   const createNewBooking = async () => {
     const newBooking = await DataStore.save(new Booking({
         coachID: pack.coachID,
@@ -56,7 +41,6 @@ const BookPackageScreen = () => {
         athleteName: name,
         atheleteAge: age,
         startDate: date.toLocaleDateString(),
-        startTime: selectedTime
     }));
     setNewBooking(newBooking);
     alert('Booking Approved')
@@ -76,10 +60,7 @@ const BookPackageScreen = () => {
       alert('Invalid start date.');
       return
     }
-    if (!selectedTime) {
-      alert('Please select a start time.');
-      return
-    }
+   
 
 
     createNewBooking()
@@ -125,30 +106,7 @@ const BookPackageScreen = () => {
         placeholder='Date'
         value={date.toLocaleDateString()}
         editable={false}
-      />
-      {timePicker && (
-        <DateTimePicker
-          value={time}
-          mode={'time'}
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          is24Hour={false}
-          onChange={onTimeSelected}
-
-        />
-      )}
-      {!timePicker && (
-        <View>
-          <Pressable onPress={showTimePicker} style={styles.button}>
-            <Text style={styles.buttonText}>Select Start Time</Text>
-          </Pressable>
-        </View>
-      )}
-      <TextInput
-        style={styles.input}
-        placeholder='Time'
-        value={selectedTime ? selectedTime : time.toLocaleTimeString()}
-        editable={false}
-      />
+      />  
       <Pressable
         style={styles.bookbutton} onPress={validation}>
         <Text style={styles.buttonText}>Book Package</Text>
