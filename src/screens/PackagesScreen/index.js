@@ -6,17 +6,17 @@ import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import CoachPackage from '../../components/CoachPackage';
 import { usePackageContext } from '../../context/PackageContext';
-import { useAuthContext } from '../../context/AuthContext';
+import { useCoachContext } from '../../context/CoachContext';
 
 const PackagesScreen = () => {
   const navigation = useNavigation();
-  const {packages, setPackages, fetchPackages} = usePackageContext();
+
+  const { packages, setPackages, fetchPackages } = usePackageContext();
+  const { coachDBUser } = useCoachContext();
   
   const [refreshing, setRefreshing] = useState(false);
 
   const onPress = () => {
-    //DataStore.query(User, (user) => user.sub.eq(sub)).then((users) =>
-    //setDBUser(users[0]));
     if (!packages) {
       alert('You must create a package plan.')
       navigation.navigate("Profile")
@@ -25,19 +25,14 @@ const PackagesScreen = () => {
     }
   }
 
-  const coach = '15d3a30d-0229-4ee8-9b1c-5d7a65c7d90f';
-
   useEffect(() => {
-    /*DataStore.query(Package, (p) => p.coachID.eq(coach), Predicates.ALL, {
-      sort: s => s.price(SortDirection.ASCENDING)
-    }).then(setPackages);*/
-    fetchPackages(coach);
+    fetchPackages(coachDBUser.id);
   }, []);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      DataStore.query(Package, (p) => p.coachID.eq(coach), Predicates.ALL, {
+      DataStore.query(Package, (p) => p.coachID.eq(coachDBUser.id), Predicates.ALL, {
         sort: s => s.price(SortDirection.ASCENDING)
       }).then(setPackages);
       setRefreshing(false);

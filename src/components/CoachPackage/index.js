@@ -20,14 +20,6 @@ const Package = ({ pack }) => {
     await DataStore.delete(Packages, pack.id);
   }
 
-  /*
-  const onDelete = async() => {
-    await DataStore.delete(Packages, pack.id);
-    setPackages(packages.filter((r) => r.id !== pack.id));
-    alert('Package Deleted');
-   };
-   */
-
    const onDelete = () => {
     Alert.alert(
       'Please confirm',
@@ -59,10 +51,7 @@ const Package = ({ pack }) => {
       <View style={{flex: 1}}>
         <Text style={{ fontWeight: '600', fontSize: 18, }}>{pack.name} </Text>
         <Text style={{ color: 'grey', fontSize: 14, }}>
-          Price &#8226; $ {pack.price}
-        </Text>
-        <Text style={{ color: 'grey', fontSize: 14 }}>
-          {pack.longDesc}
+          Price &#8226; $ {pack.price.toFixed(2)}
         </Text>
       </View>
       <View style={{ flexDirection: 'row'}}>

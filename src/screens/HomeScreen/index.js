@@ -245,7 +245,7 @@ const HomeScreen = () => {
         <Pressable style={styles.button} onPress={onSelectSport}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
-        <Pressable style={styles.button} onPress={signOut}>
+        <Pressable style={styles.signOutButton} onPress={signOut}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>

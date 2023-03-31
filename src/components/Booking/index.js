@@ -16,12 +16,12 @@ const Booking = ({ book }) => {
         style={{width: 100, height: 100, marginRight: 10, borderRadius: 5}} />
         <View>
           <Text style={{fontWeight: '600', fontSize: 18,}}>{book.athleteName}</Text>
-          <Text style={{fontWeight: '600', fontSize: 14,}}>Starting Session</Text>
+          <Text style={{fontWeight: '600', fontSize: 14,}}>Requested Start Session</Text>
           <Text style={{ color: 'grey', fontSize: 14,}}>
-            Date &#8226; {book.startDate}
+            {book.startDate} &#8226; {book.startTime}
           </Text>
           <Text style={{ color: 'grey', fontSize: 14,}}>
-            Time &#8226; {book.startTime}
+            Status &#8226; {book.status}
           </Text>
         </View>
     </Pressable>

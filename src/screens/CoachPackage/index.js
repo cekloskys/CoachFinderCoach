@@ -1,7 +1,6 @@
-import { View, FlatList, Pressable, Text, TextInput, ScrollView } from 'react-native';
+import { View, Pressable, Text, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
-import NumericInput from 'react-native-numeric-input'
 import { useNavigation } from '@react-navigation/native';
 import { DataStore } from 'aws-amplify';
 import { Package } from '../../models';
@@ -11,7 +10,7 @@ const CoachPackageScreen = () => {
 
     const navigation = useNavigation();
 
-    const { createdCoach } = useCoachContext();
+    const { coachDBUser } = useCoachContext();
 
     const [packageName, setPackageName] = useState('');
     const [price, setPrice] = useState('');
@@ -47,20 +46,17 @@ const CoachPackageScreen = () => {
             return;
         }
 
-        const coach = '15d3a30d-0229-4ee8-9b1c-5d7a65c7d90f';
-
         const newPackage = await DataStore.save(new Package({
             name: packageName,
             price: parseFloat(price),
             shortDesc: shortDesc,
             longDesc: longDesc,
             length: parseInt(length),
-            // coachID: createdCoach.id,
-            coachID: coach,
+            coachID: coachDBUser.id,
         }));
 
         alert('Package Created.');
-        navigation.navigate('Packages');
+        navigation.navigate('Your Packages');
     }
     
 

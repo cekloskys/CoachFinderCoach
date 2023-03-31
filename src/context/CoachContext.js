@@ -1,16 +1,48 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { DataStore } from 'aws-amplify';
+import { Auth, DataStore, Hub } from 'aws-amplify';
 import { Coach, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach, Availability } from '../models';
 
 const CoachContext = createContext({});
 
 const CoachContextProvider = ({ children }) => {
+
     const [createdCoach, setCreatedCoach] = useState(null);
     const [createdCoachPosition, setCreatedCoachPosition] = useState(null);
     const [createdCoachAccreditation, setCreatedCoachAccreditation] = useState(null);
     const [createdCoachAge, setCreatedCoachAge] = useState(null);
     const [createdCoachSpeciality, setCreatedCoachSpeciality] = useState(null);
     const [createdCoachAvailability, setCreatedCoachAvailability] = useState([]);
+
+    const [coachAuthUser, setCoachAuthUser] = useState(null);
+    const [coachDBUser, setCoachDBUser] = useState(null);
+    const sub = coachAuthUser?.attributes?.sub;
+    
+    useEffect(() => {
+        Auth.currentAuthenticatedUser({ bypassCache: true }).then(setCoachAuthUser);
+    }, []);
+
+    const getCoachDbUser = () => {
+        console.log(sub);
+        DataStore.query(Coach, (coach) => coach.sub.eq(sub)).then((coaches) =>
+        setCoachDBUser(coaches[0]));
+    };
+
+    useEffect(() => {
+        if (!sub) {
+            return;
+        }
+        
+        const removeListener = Hub.listen('datastore', async ({ payload }) => {
+            console.log(payload.event);
+            if (payload.event === 'syncQueriesReady') {
+                getCoachDbUser();
+            }
+        });
+
+        DataStore.start();
+
+        return () => removeListener();
+    }, [sub]);
 
     const createCoach = async (coach, position, accreditation, age, speciality, availability) => {
         const newCoach = await DataStore.save(new Coach({
@@ -108,6 +140,7 @@ const CoachContextProvider = ({ children }) => {
             createdCoachAvailability,
             setCreatedCoachAvailability,
             createCoachAvailability,
+            coachAuthUser, coachDBUser, sub, setCoachDBUser
         }}>
             {children}
         </CoachContext.Provider>

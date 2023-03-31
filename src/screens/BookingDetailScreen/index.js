@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
@@ -30,7 +30,23 @@ const BookingDetailScreen = () => {
     DataStore.query(Profile, book.profileID).then(setProfiles);
   }, [book]);
 
-  const onPress = () => {
+  const accept = () => {
+    alert('Booking accepted.')
+    navigation.navigate('Your Bookings');
+  };
+
+  const decline = () => {
+    alert('Booking declined.')
+    navigation.navigate('Your Bookings');
+  };
+
+  const cancel = () => {
+    alert('Booking cancelled.')
+    navigation.navigate('Your Bookings');
+  };
+
+  const complete = () => {
+    alert('Booking completed.')
     navigation.navigate('Your Bookings');
   };
 
@@ -48,7 +64,7 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Athlete</Text>
           <Text style={styles.subtitledetail}>{book.athleteName}</Text>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Starting Session</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10}}>Requested Start Session</Text>
         <View style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -124,6 +140,18 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Email</Text>
           <Text style={styles.subtitledetail}>{profiles.email}</Text>
         </View>
+        <Pressable style={styles.button} onPress={accept}>
+          <Text style={styles.buttonText}>Accept</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={decline}>
+          <Text style={styles.buttonText}>Decline</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={cancel}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={complete}>
+          <Text style={styles.buttonText}>Completed</Text>
+        </Pressable>
       </View>
     </ScrollView>
       );

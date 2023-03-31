@@ -1,36 +1,23 @@
-import { View, FlatList, Pressable, Text, TextInput, ScrollView } from 'react-native';
+import { View, Pressable, Text, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
-import { useState, useEffect } from 'react';
-import NumericInput from 'react-native-numeric-input'
+import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { DataStore } from 'aws-amplify';
 import { Package } from '../../models';
-import { useCoachContext } from '../../context/CoachContext';
-import { usePackageContext } from '../../context/PackageContext';
 
 const EditCoachPackageScreen = () => {
 
     const navigation = useNavigation();
 
-    const {packages, setPackages, fetchPackages} = usePackageContext();
-
     const route = useRoute();
-
-    const { createdCoach } = useCoachContext();
 
     const pack = route.params?.pack;
 
     const [packageName, setPackageName] = useState(pack.name);
-    const [price, setPrice] = useState(pack.price.toString());
+    const [price, setPrice] = useState(pack.price.toFixed(2).toString());
     const [shortDesc, setShortDesc] = useState(pack.shortDesc);
     const [longDesc, setLongDesc] = useState(pack.longDesc);
     const [length, setLength] = useState(pack.length.toString());
-
-    // name (text input)
-    // price (number)
-    // short description (text input)
-    // long description (text input)
-    // length (number)
 
     const onCreatePackage = async () => {
         if (!packageName) {
@@ -54,8 +41,6 @@ const EditCoachPackageScreen = () => {
             return;
         }
 
-        const coach = '15d3a30d-0229-4ee8-9b1c-5d7a65c7d90f';
-
         const p = await DataStore.save(
             Package.copyOf(pack, (updated) => {
               updated.name = packageName;
@@ -66,7 +51,7 @@ const EditCoachPackageScreen = () => {
             })
           );
           setPackageName(p.name);
-          setPrice(p.price.toString());
+          setPrice(p.price.toFixed(2).toString());
           setShortDesc(p.shortDesc);
           setLongDesc(p.longDesc);
           setLength(p.length.toString());

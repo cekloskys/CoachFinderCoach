@@ -2,7 +2,6 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { Auth, DataStore, Hub } from "aws-amplify";
 import { Profile } from "../models";
 
-
 const AuthContext = createContext({});
 
 const AuthContextProvider = ({ children }) => {
