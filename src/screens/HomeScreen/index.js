@@ -129,10 +129,10 @@ const HomeScreen = () => {
       alert('Please select your date of birth.');
       return;
     }
-    if (!image) {
+    /* if (!image) {
       alert('Please enter an image link of you.');
       return;
-    }
+    } */
 
     const sportID = sports.find(s => s.name == sport);
     const positionID = positions.find(p => p.name == position);

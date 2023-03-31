@@ -105,7 +105,7 @@ const BookingDetailScreen = () => {
           padding: 10,
         }}>
           <Text style={styles.subtitle}>Price</Text>
-          <Text style={styles.subtitledetail}>$ {packages.price}</Text>
+          <Text style={styles.subtitledetail}>$ {packages.price.toFixed(2)}</Text>
         </View>
         <View style={{
           backgroundColor: 'white',

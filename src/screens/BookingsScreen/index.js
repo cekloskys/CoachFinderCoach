@@ -16,8 +16,11 @@ const BookingsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
+    if (!coachDBUser){
+      return;
+    }
     DataStore.query(Booking, (b) => b.coachID.eq(coachDBUser.id)).then(setBookings);
-  }, [])
+  }, [coachDBUser])
 
   useEffect(() => {
     if (!bookings) {

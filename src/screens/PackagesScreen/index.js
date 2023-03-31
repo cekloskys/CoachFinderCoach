@@ -17,17 +17,20 @@ const PackagesScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onPress = () => {
-    if (!packages) {
-      alert('You must create a package plan.')
-      navigation.navigate("Profile")
+    if (!coachDBUser) {
+      alert('You must create a profile before you may create a package.')
+      navigation.navigate("Basic Information")
     } else {
       navigation.navigate("Create Package")
     }
   }
 
   useEffect(() => {
+    if (!coachDBUser) {
+      return;
+    }
     fetchPackages(coachDBUser.id);
-  }, []);
+  }, [coachDBUser]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
