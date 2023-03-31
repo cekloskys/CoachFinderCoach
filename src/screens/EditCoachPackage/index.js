@@ -1,28 +1,23 @@
 import { View, Pressable, Text, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
-import { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { DataStore } from 'aws-amplify';
 import { Package } from '../../models';
-import { useCoachContext } from '../../context/CoachContext';
 
-const CoachPackageScreen = () => {
+const EditCoachPackageScreen = () => {
 
     const navigation = useNavigation();
 
-    const { coachDBUser } = useCoachContext();
+    const route = useRoute();
 
-    const [packageName, setPackageName] = useState('');
-    const [price, setPrice] = useState('');
-    const [shortDesc, setShortDesc] = useState('');
-    const [longDesc, setLongDesc] = useState('');
-    const [length, setLength] = useState('');
+    const pack = route.params?.pack;
 
-    // name (text input)
-    // price (number)
-    // short description (text input)
-    // long description (text input)
-    // length (number)
+    const [packageName, setPackageName] = useState(pack.name);
+    const [price, setPrice] = useState(pack.price.toFixed(2).toString());
+    const [shortDesc, setShortDesc] = useState(pack.shortDesc);
+    const [longDesc, setLongDesc] = useState(pack.longDesc);
+    const [length, setLength] = useState(pack.length.toString());
 
     const onCreatePackage = async () => {
         if (!packageName) {
@@ -46,19 +41,24 @@ const CoachPackageScreen = () => {
             return;
         }
 
-        const newPackage = await DataStore.save(new Package({
-            name: packageName,
-            price: parseFloat(price),
-            shortDesc: shortDesc,
-            longDesc: longDesc,
-            length: parseInt(length),
-            coachID: coachDBUser.id,
-        }));
+        const p = await DataStore.save(
+            Package.copyOf(pack, (updated) => {
+              updated.name = packageName;
+              updated.price = parseFloat(price);
+              updated.shortDesc = shortDesc;
+              updated.longDesc = longDesc;
+              updated.length = parseInt(length);
+            })
+          );
+          setPackageName(p.name);
+          setPrice(p.price.toFixed(2).toString());
+          setShortDesc(p.shortDesc);
+          setLongDesc(p.longDesc);
+          setLength(p.length.toString());
 
-        alert('Package Created.');
+        alert('Package Edited.');
         navigation.navigate('Your Packages');
     }
-    
 
     return (
         <ScrollView style={styles.page}>
@@ -120,11 +120,11 @@ const CoachPackageScreen = () => {
             />
             <View style={styles.bottom}>
                 <Pressable style={styles.button} onPress={onCreatePackage}>
-                    <Text style={styles.buttonText}>Create</Text>
+                    <Text style={styles.buttonText}>Edit</Text>
                 </Pressable>
             </View>
         </ScrollView>
     );
 }
 
-export default CoachPackageScreen;
+export default EditCoachPackageScreen;

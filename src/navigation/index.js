@@ -21,6 +21,7 @@ import PlayerAvailabilityScreen from "../screens/Player/AvailabilityScreen";
 import { Foundation, FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import CoachPackageScreen from "../screens/CoachPackage";
 import BookingReviewScreen from "../screens/Player/BookingReviewScreen";
+import EditCoachPackageScreen from "../screens/EditCoachPackage";
 
 const Stack = createStackNavigator();
 
@@ -97,6 +98,7 @@ const CoachPackagesStackNavigator = () => {
         <CoachPackagesStack.Navigator>
             <CoachPackagesStack.Screen name="Your Packages" component={PackagesScreen} /> 
             <CoachPackagesStack.Screen name="Create Package" component={CoachPackageScreen} />
+            <CoachPackagesStack.Screen name="Edit Package" component={EditCoachPackageScreen} />
         </CoachPackagesStack.Navigator>   
     );
 };

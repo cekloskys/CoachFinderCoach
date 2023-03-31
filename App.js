@@ -5,6 +5,7 @@ import RootNavigator from './src/navigation';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import CoachContextProvider from './src/context/CoachContext';
+import PackageContextProvider from './src/context/PackageContext';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import AuthContextProvider from './src/context/AuthContext';
 Amplify.configure({ ...awsconfig, Analytics: { disabled: true } });
@@ -14,8 +15,10 @@ function App() {
     <NavigationContainer>
       <AuthContextProvider>
       <CoachContextProvider>
-        <RootNavigator />
-        <StatusBar style="auto" />
+        <PackageContextProvider>
+          <RootNavigator />
+          <StatusBar style="auto" />
+        </PackageContextProvider>
       </CoachContextProvider>
       </AuthContextProvider>
     </NavigationContainer>

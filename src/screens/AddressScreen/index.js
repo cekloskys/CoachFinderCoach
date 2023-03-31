@@ -124,7 +124,7 @@ const AddressScreen = () => {
         keyboardType={'email-address'}
       />
       <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={onPress}>
+        <Pressable style={styles.button} onPress={onAddressAdd}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>

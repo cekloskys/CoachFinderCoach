@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataStore } from '@aws-amplify/datastore';
+import { DataStore, Hub } from '@aws-amplify/datastore';
 import { View} from 'react-native';
 import { useState, useEffect } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -13,6 +13,17 @@ const Header = () => {
     const [displaySports, setDisplaySports] = useState([]);
 
     useEffect(() => {
+      
+    const removeListener = Hub.listen('datastore', async ({ payload }) => {
+      console.log(payload.event);
+      if (payload.event === 'syncQueriesReady') {
+        DataStore.query(Sport).then(setSports);
+      }
+    });
+    
+    DataStore.start();
+    
+    return () => removeListener();
       DataStore.query(Sport).then(setSports);
   }, []);
 

@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { DataStore } from 'aws-amplify';
+import { Auth, DataStore, Hub } from 'aws-amplify';
 import { Coach, PositionCoach, AccreditationCoach, AgeCoach, SpecialityCoach, Availability } from '../models';
 
 const CoachContext = createContext({});
 
 const CoachContextProvider = ({ children }) => {
+
     const [createdCoach, setCreatedCoach] = useState(null);
     const [createdCoachPosition, setCreatedCoachPosition] = useState(null);
     const [createdCoachAccreditation, setCreatedCoachAccreditation] = useState(null);
@@ -12,93 +13,36 @@ const CoachContextProvider = ({ children }) => {
     const [createdCoachSpeciality, setCreatedCoachSpeciality] = useState(null);
     const [createdCoachAvailability, setCreatedCoachAvailability] = useState([]);
 
-    /* useEffect(() => {
-        const c = {
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "background": "F54yy5uftrgt4gcsssjoyghrgftgwy6iur5feyt4ftfg3dxtfr",
-            "city": "Douglassville",
-            "college": "Pitt",
-            "dob": "3/25/2023",
-            "email": "smceklosky@gmail.com",
-            "fullName": "Sue Ceklosky",
-            "highlights": "F54yy5uftrgt4gcsssjoyghrgftgwy6iur5feyt4ftfg3dxtfr",
-            "id": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "phoneNbr": "4847921047",
-            "sessionPlan": "F54yy5uftrgt4gcsssjoyghrgftgwy6iur5feyt4ftfg3dxtfr",
-            "shortDesc": "F54yy5uftrgt4gcsssjoyghrgftgwy6iur5feyt4ftfg3dxtfr",
-            "sportID": "46fa3958-086e-42ce-a016-20bf3014a803",
-            "state": "Arizona",
-            "streetAddress": "301 Woods Edge Drive",
-            "yearsCoaching": 2,
-            "yearsPlaying": 3,
-            "zip": "19518",
-            "image": "https://cdn.nba.com/manage/2021/08/michael-jordan-looks.jpg",
-        };
-        setCreatedCoach(c);
+    const [coachAuthUser, setCoachAuthUser] = useState(null);
+    const [coachDBUser, setCoachDBUser] = useState(null);
+    const sub = coachAuthUser?.attributes?.sub;
+    
+    useEffect(() => {
+        Auth.currentAuthenticatedUser({ bypassCache: true }).then(setCoachAuthUser);
     }, []);
 
-    useEffect(() => {
-        const p = {
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "coachID": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "id": "0d7a15b6-9449-4ce9-bddc-fb4cd8aa347e",
-            "positionCoachPositionId": "dff334b2-4071-49bf-b66d-1d503d95baa0"
-        };
-        setCreatedCoachPosition(p);
-    }, []);
+    const getCoachDbUser = () => {
+        console.log(sub);
+        DataStore.query(Coach, (coach) => coach.sub.eq(sub)).then((coaches) =>
+        setCoachDBUser(coaches[0]));
+    };
 
     useEffect(() => {
-        const a = {
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "accreditationCoachAccreditationId": "8908f874-8d8c-449d-9bf5-d5915a171641",
-            "coachID": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "id": "73e44508-5775-431f-a52d-d54f9fdc3cf4"
-        };
-        setCreatedCoachAccreditation(a);
-    }, []);
+        if (!sub) {
+            return;
+        }
+        
+        const removeListener = Hub.listen('datastore', async ({ payload }) => {
+            console.log(payload.event);
+            if (payload.event === 'syncQueriesReady') {
+                getCoachDbUser();
+            }
+        });
 
-    useEffect(() => {
-        const a = {
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "ageCoachAgeId": "39fbc9bf-810d-4cb2-90d0-6a0daebb01f7",
-            "coachID": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "id": "ff6b2600-bc93-444d-a0c5-eb66e5b9b422"
-        };
-        setCreatedCoachAge(a);
-    }, []);
+        DataStore.start();
 
-    useEffect(() => {
-        const s = {
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "coachID": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "id": "e9d666ab-9c25-4879-84e5-de49addf0b66",
-            "specialityCoachSpecialityId": "52ccbf53-b32c-499b-b667-fb0a1a30634d"
-        };
-        setCreatedCoachSpeciality(s);
-    }, []);
-
-    useEffect(() => {
-        const a = [{
-            "_deleted": undefined,
-            "_lastChangedAt": undefined,
-            "_version": undefined,
-            "coachID": "c0ae401a-1d31-4c0f-be62-71f44380312b",
-            "id": "e9d666ab-9c25-4879-84e5-de49addf0b66",
-            "day": "Monday",
-            "time": "5 PM",
-        }];
-        setCreatedCoachAvailability(a);
-    }, []); */
+        return () => removeListener();
+    }, [sub]);
 
     const createCoach = async (coach, position, accreditation, age, speciality, availability) => {
         const newCoach = await DataStore.save(new Coach({
@@ -196,6 +140,7 @@ const CoachContextProvider = ({ children }) => {
             createdCoachAvailability,
             setCreatedCoachAvailability,
             createCoachAvailability,
+            coachAuthUser, coachDBUser, sub, setCoachDBUser
         }}>
             {children}
         </CoachContext.Provider>

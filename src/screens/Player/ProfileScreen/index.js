@@ -5,7 +5,7 @@ import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import React, { useRef } from 'react';
 import { Profile } from '../../../models';
-import {Auth, DataStore} from 'aws-amplify';
+import { Auth, DataStore} from 'aws-amplify';
 import { useAuthContext } from '../../../context/AuthContext';
 
 const validator = require('validator');
@@ -82,6 +82,11 @@ const ProfileScreen = () => {
     }
     createNewProfile()
   }
+
+  const signOut = async () => {
+    DataStore.clear();
+    Auth.signOut()
+  };
 
   return (
     <ScrollView style={styles.page}>
@@ -164,7 +169,7 @@ const ProfileScreen = () => {
         <Text style={styles.buttonText}>Submit</Text>
       </Pressable>
       <Pressable
-        style={styles.button} onPress={() => Auth.signOut()}>
+        style={styles.button} onPress={signOut}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </Pressable>
     </ScrollView>

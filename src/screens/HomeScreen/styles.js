@@ -35,6 +35,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
   },
+  signOutButton: {
+    backgroundColor: 'lightgrey',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+    marginBottom: 25,
+  },
   buttonText: {
     fontSize: 16,
     color: '#444',

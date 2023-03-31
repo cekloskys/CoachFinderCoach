@@ -53,6 +53,18 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 16,
   },
+  button: {
+    backgroundColor: 'lightgrey',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  }, 
+  buttonText: {
+    fontSize: 16,
+    color: '#444',
+  },
 });
 
 export default styles;
