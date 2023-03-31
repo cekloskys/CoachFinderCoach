@@ -47,13 +47,7 @@ const HomeScreen = () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
-  const fetchRatings = async (coach) => {
-    const results = await DataStore.query(Rating, (r) => r.coachID.eq(coach.id));
-    console.log("r");
-    console.log({ coach, ratings: results });
-    return { coach, ratings: results }
-
-  }
+   
 
   useEffect(() => {
     if (!coaches) {

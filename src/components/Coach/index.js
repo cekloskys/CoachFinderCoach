@@ -10,19 +10,17 @@ import { DataStore } from 'aws-amplify';
 const Coach = ({ coach }) => {
   const navigation = useNavigation();
   const [ratings, setRatings] = useState([]);
-  let results = [];
-  const fetchRatings = (coach) => {
-    results = DataStore.query(Rating, (r) => r.coachID.eq(coach.id));
-    //setRatings(results);
-    //console.log(ratings);
+  const fetchRatings = async (coach) => {
+  await DataStore.query(Rating, (r) => r.coachID.eq(coach.id)).then(setRatings);
   }
   useEffect(() => {
     if(!coach){
       return;
     }
     fetchRatings(coach);
-    console.log(coach);
-    console.log(results);
+    console.log("rate");
+    console.log(ratings);
+
     
   }, [coach])
   
