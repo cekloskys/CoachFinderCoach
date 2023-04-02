@@ -13,7 +13,7 @@ const Booking = ({ book }) => {
     <Pressable style={{flexDirection: 'row', margin: 10, alignItems: 'center',}} onPress={onPress}>
         <Image
         source={require('../../../assets/logo.png')}
-        style={{width: 100, height: 100, marginRight: 10, borderRadius: 5}} />
+        style={{width: 75, height: 75, marginRight: 10, borderRadius: 5}} />
         <View>
           <Text style={{fontWeight: '600', fontSize: 18,}}>{book.athleteName}</Text>
           <Text style={{fontWeight: '600', fontSize: 14,}}>Requested Start Session</Text>
