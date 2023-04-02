@@ -19,22 +19,12 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   subtitledetail: {
-    //marginLeft: 'auto',
     fontWeight: '500',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   rating: {
     marginLeft: 'auto',
-    backgroundColor: 'lightgrey',
-    width: 30,
-    height: 30,
-    borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
-
   },
 });
 

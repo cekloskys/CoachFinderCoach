@@ -3,10 +3,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
 import { Rating as RatingComponent} from 'react-native-ratings';
-import {DataStore} from 'aws-amplify';
-import {Rating} from '../../../models';
-
-
+import { DataStore } from 'aws-amplify';
+import { Rating } from '../../../models';
 
 const BookingReviewScreen = () => {
     const route = useRoute();

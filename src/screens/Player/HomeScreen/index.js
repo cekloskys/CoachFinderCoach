@@ -14,7 +14,6 @@ const HomeScreen = () => {
   const [sports, setSports] = useState([]);
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
-  const [coachRating, setCoachRatings] = useState([]);
 
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
@@ -24,9 +23,9 @@ const HomeScreen = () => {
         DataStore.query(Sport).then(setSports);
       }
     });
-    
+
     DataStore.start();
-    
+
     return () => removeListener();
   }, []);
 
@@ -42,37 +41,10 @@ const HomeScreen = () => {
     setDisplaySports(display);
   }, [sports]);
 
-
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
-   
-
-  useEffect(() => {
-    if (!coaches) {
-      return;
-    }
-    const fetchRatings = async (coach) => {
-      const results = await DataStore.query(Rating, (r) => r.coachID.eq(coach.id));
-      return { coach, ratings: results }
-    }
-
-      let arr = [];
-      for (let i = 0; i < coaches.length; i++) {
-        arr.push(fetchRatings(coaches[i]));
-        
-      }
-      setCoachRatings(arr);
-    
-
-    
-  }, [coaches]);
-  
-
-
-
-
 
   return (
     <View style={styles.page}>
