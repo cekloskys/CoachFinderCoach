@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import CoachComponent from '../../../components/Coach';
 import SelectDropdown from 'react-native-select-dropdown';
 import { DataStore, Hub } from 'aws-amplify';
-import { Coach, Sport } from '../../../models';
+import { Coach, Sport, Rating } from '../../../models';
 import styles from './styles';
 
 let selectedSport = '';
@@ -14,6 +14,7 @@ const HomeScreen = () => {
   const [sports, setSports] = useState([]);
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
+  const [coachRating, setCoachRatings] = useState([]);
 
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
@@ -28,7 +29,7 @@ const HomeScreen = () => {
     
     return () => removeListener();
   }, []);
- 
+
   useEffect(() => {
     if (!sports) {
       return;
@@ -40,13 +41,38 @@ const HomeScreen = () => {
     display.sort();
     setDisplaySports(display);
   }, [sports]);
-  console.log(sports);
+
 
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
-  console.log(coaches);
+   
+
+  useEffect(() => {
+    if (!coaches) {
+      return;
+    }
+    const fetchRatings = async (coach) => {
+      const results = await DataStore.query(Rating, (r) => r.coachID.eq(coach.id));
+      return { coach, ratings: results }
+    }
+
+      let arr = [];
+      for (let i = 0; i < coaches.length; i++) {
+        arr.push(fetchRatings(coaches[i]));
+        
+      }
+      setCoachRatings(arr);
+    
+
+    
+  }, [coaches]);
+  
+
+
+
+
 
   return (
     <View style={styles.page}>
