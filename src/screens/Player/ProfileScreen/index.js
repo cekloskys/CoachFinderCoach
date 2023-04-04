@@ -21,7 +21,7 @@ const ProfileScreen = () => {
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const {sub, dbUser, setDbUser, authUser} = useAuthContext();
+  const {sub, dbUser, setDBUser, authUser} = useAuthContext();
 
   const [fullName, setFullName] = useState(dbUser?.fullName || "");
   const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email ||"");
@@ -49,9 +49,23 @@ const ProfileScreen = () => {
     alert('Profile Approved')
 
 };
+const updateProfile = async () => {
+  const profile = await DataStore.save(
+    Profile.copyOf(dbUser, (updated) => {
+      updated.fullName = fullName;
+      updated.email = email;
+      updated.streetAddress = street;
+      updated.city = city;
+      updated.state = state;
+      updated.zip = zip;
+      updated.phoneNbr = phonenumber;
+    })
+  );
+  setDBUser(profile);
+  alert('Profile Updated')
+};
 
-
-  const Validation = () => {
+  const Validation = async () => {
     if (!fullName) {
       alert('Please enter your fullname.');
       return
@@ -80,7 +94,12 @@ const ProfileScreen = () => {
       alert('Please enter a valid phone number.');
       return;
     }
-    createNewProfile()
+    if (dbUser) {
+      await updateProfile();
+    } else {
+      await createNewProfile();
+    }
+    
   }
 
   const signOut = async () => {
