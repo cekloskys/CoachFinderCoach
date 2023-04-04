@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   subtitledetail: {
-    //marginLeft: 'auto',
     fontWeight: '500',
   },
-  row: {
-    flexDirection: 'row',
+  rating: {
+    marginLeft: 'auto',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

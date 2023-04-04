@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import CoachComponent from '../../../components/Coach';
 import SelectDropdown from 'react-native-select-dropdown';
 import { DataStore, Hub } from 'aws-amplify';
-import { Coach, Sport } from '../../../models';
+import { Coach, Sport, Rating } from '../../../models';
 import styles from './styles';
 
 let selectedSport = '';
@@ -23,12 +23,12 @@ const HomeScreen = () => {
         DataStore.query(Sport).then(setSports);
       }
     });
-    
+
     DataStore.start();
-    
+
     return () => removeListener();
   }, []);
- 
+
   useEffect(() => {
     if (!sports) {
       return;
@@ -40,13 +40,11 @@ const HomeScreen = () => {
     display.sort();
     setDisplaySports(display);
   }, [sports]);
-  console.log(sports);
 
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results);
   };
-  console.log(coaches);
 
   return (
     <View style={styles.page}>

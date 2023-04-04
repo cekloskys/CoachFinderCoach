@@ -3,7 +3,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify';
-import { Package, Profile } from '../../models';
+import { Package, Profile, Booking } from '../../models';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const BookingDetailScreen = () => {
@@ -30,7 +30,12 @@ const BookingDetailScreen = () => {
     DataStore.query(Profile, book.profileID).then(setProfiles);
   }, [book]);
 
-  const accept = () => {
+  const accept = async () => {
+    await DataStore.save(
+      Booking.copyOf(book, (updated) => {
+        updated.status = 'IN_PROGRESS';
+      })
+    );
     alert('Booking accepted.')
     navigation.navigate('Your Bookings');
   };
@@ -105,7 +110,7 @@ const BookingDetailScreen = () => {
           padding: 10,
         }}>
           <Text style={styles.subtitle}>Price</Text>
-          <Text style={styles.subtitledetail}>$ {packages.price.toFixed(2)}</Text>
+          <Text style={styles.subtitledetail}>$ {packages?.price?.toFixed(2)}</Text>
         </View>
         <View style={{
           backgroundColor: 'white',
