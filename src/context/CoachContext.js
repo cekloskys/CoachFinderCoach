@@ -16,13 +16,17 @@ const CoachContextProvider = ({ children }) => {
     const [coachAuthUser, setCoachAuthUser] = useState(null);
     const [coachDBUser, setCoachDBUser] = useState(null);
     const sub = coachAuthUser?.attributes?.sub;
-    
+    const [coachDBPosition, setCoachDBPosition] = useState(null);
+    const [coachDBAge, setCoachDBAge] = useState(null);
+    const [coachDBAccreditation, setCoachDBAccreditation] = useState(null);
+    const [coachDBSpecialty, setCoachDBSpecialty] = useState(null);
+    const [coachDBAvailability, setCoachDBAvailability] = useState([]);
+
     useEffect(() => {
         Auth.currentAuthenticatedUser({ bypassCache: true }).then(setCoachAuthUser);
     }, []);
 
     const getCoachDbUser = () => {
-        console.log(sub);
         DataStore.query(Coach, (coach) => coach.sub.eq(sub)).then((coaches) =>
         setCoachDBUser(coaches[0]));
     };
@@ -43,6 +47,67 @@ const CoachContextProvider = ({ children }) => {
 
         return () => removeListener();
     }, [sub]);
+
+    const getCoachDBPosition = () => {
+        DataStore.query(PositionCoach, (position) => position.coachID.eq(coachDBUser.id)).then((positions) =>
+        setCoachDBPosition(positions[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBPosition();
+    },[coachDBUser]);
+
+    const getCoachDBAge = () => {
+        DataStore.query(AgeCoach, (age) => age.coachID.eq(coachDBUser.id)).then((ages) =>
+        setCoachDBAge(ages[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAge();
+    },[coachDBUser]);
+
+    const getCoachDBAccreditation = () => {
+        DataStore.query(AccreditationCoach, (accreditation) => accreditation.coachID.eq(coachDBUser.id)).then((accreditations) =>
+        setCoachDBAccreditation(accreditations[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAccreditation();
+    },[coachDBUser]);
+
+    const getCoachDBSpecialty = () => {
+        DataStore.query(SpecialityCoach, (speciality) => speciality.coachID.eq(coachDBUser.id)).then((specialties) =>
+        setCoachDBSpecialty(specialties[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBSpecialty();
+    },[coachDBUser]);
+
+    const getCoachDBAvailability = () => {
+        DataStore.query(Availability, (availability) => availability.coachID.eq(coachDBUser.id)).then((availabilities) =>
+        setCoachDBAvailability(availabilities[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAvailability();
+    },[coachDBUser]);
+
 
     const createCoach = async (coach, position, accreditation, age, speciality, availability) => {
         const newCoach = await DataStore.save(new Coach({
@@ -140,7 +205,7 @@ const CoachContextProvider = ({ children }) => {
             createdCoachAvailability,
             setCreatedCoachAvailability,
             createCoachAvailability,
-            coachAuthUser, coachDBUser, sub, setCoachDBUser
+            coachAuthUser, coachDBUser, sub, setCoachDBUser, coachDBPosition, coachDBAge, coachDBAccreditation, coachDBSpecialty, coachDBAvailability,
         }}>
             {children}
         </CoachContext.Provider>

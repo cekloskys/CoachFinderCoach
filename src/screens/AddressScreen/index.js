@@ -12,17 +12,17 @@ const validator = require('validator');
 
 const AddressScreen = () => {
 
-  const { createdCoach } = useCoachContext();
+  const { createdCoach, coachDBUser } = useCoachContext();
 
   const navigation = useNavigation();
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const [address, setAddress] = useState(createdCoach?.streetAddress || '');
-  const [city, setCity] = useState(createdCoach?.city || '');
-  const [zip, setZip] = useState(createdCoach?.zip || '');
-  const [state, setState] = useState(createdCoach?.state ||'');
-  const [email, setEmail] = useState(createdCoach?.email ||'');
+  const [address, setAddress] = useState(createdCoach?.streetAddress || coachDBUser?.streetAddress || '');
+  const [city, setCity] = useState(createdCoach?.city || coachDBUser?.city || '');
+  const [zip, setZip] = useState(createdCoach?.zip || coachDBUser?.zip || '');
+  const [state, setState] = useState(createdCoach?.state || coachDBUser?.state || '');
+  const [email, setEmail] = useState(createdCoach?.email || coachDBUser?.email || '');
 
   const route = useRoute();
 
