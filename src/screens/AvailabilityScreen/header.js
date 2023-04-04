@@ -7,7 +7,7 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const Header = ({ coach }) => {
 
-  const { createCoach, createdCoachAvailability } = useCoachContext();
+  const { createCoach, createdCoachAvailability, coachDBAvailability } = useCoachContext();
   
   const navigation = useNavigation();
 
@@ -115,8 +115,22 @@ const Header = ({ coach }) => {
       }
       setDays(result);
     }
-  }, [createdCoachAvailability]);
+    if (coachDBAvailability ) {
+      
+      let result = [];
+      for (let i = 0; i < coachDBAvailability.length; i++) {
+       
+        var tempDay = dayOptions.find(d => d.name == coachDBAvailability[i].day);
+        if (!result.includes(tempDay.id)){
+          result.push(tempDay.id);
+        }
+      }
+      setDays(result);
 
+    }
+  }, [createdCoachAvailability, coachDBAvailability]);
+  console.log(coachDBAvailability);
+  
   useEffect(() => {
     if (createdCoachAvailability) {
       let result = [];
@@ -128,7 +142,18 @@ const Header = ({ coach }) => {
       }
       setTimes(result);
     }
-  }, [createdCoachAvailability]);
+    if (coachDBAvailability ) {
+      let result = [];
+      for (let i = 0; i < coachDBAvailability.length; i++) {
+        var tempTime = timeOptions.find(d => d.name == createdCoachAvailability[i].time);
+        if (!result.includes(tempTime.id)){
+          result.push(tempTime.id);
+        }   
+      }
+      setTimes(result);
+
+    }
+  }, [createdCoachAvailability, coachDBAvailability]);
   
   const onSelectedDaysChange = (days) => {
     setDays(days);
@@ -190,7 +215,7 @@ const Header = ({ coach }) => {
           tagTextColor="#CCC"
           selectedItemTextColor="#CCC"
           selectedItemIconColor="#CCC"
-          itemTextColor="#000"
+          itemTextColor="#000" 
           fontSize={16}
           searchInputStyle={{
             color: '#CCC',

@@ -12,17 +12,17 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const HomeScreen = () => {
 
-  const { createdCoach, createdCoachPosition } = useCoachContext();
+  const { createdCoach, createdCoachPosition, coachDBUser, coachDBPosition } = useCoachContext();
 
   const navigation = useNavigation();
 
-  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || '');
-  const [image, setImage] = useState(createdCoach?.image || '');
+  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || coachDBUser?.phoneNbr || '');
+  const [image, setImage] = useState(createdCoach?.image || coachDBUser?.image || '');
   const [formattedValue, setFormattedValue] = useState("");
   const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(createdCoach?.dob ? new Date(createdCoach?.dob) : new Date());
+  const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState('');
-  const [name, setName] = useState(createdCoach?.fullName || '');
+  const [name, setName] = useState(createdCoach?.fullName || coachDBUser?.fullName || '');
 
   const phoneInput = useRef(null);
 
@@ -35,6 +35,17 @@ const HomeScreen = () => {
   const [positions, setPositions] = useState([]);
   const [displayPositions, setDisplayPositions] = useState([]);
   const [coachPosition, setCoachPosition] = useState('');
+
+  useEffect(() => {
+    if (createdCoach?.dob){
+      setDate(new Date(createdCoach?.dob));
+    }
+    if (coachDBUser?.dob){
+      setDate(new Date(coachDBUser?.dob));
+    }
+  },[createdCoach, coachDBUser]);
+
+
 
   useEffect(() => {
     DataStore.query(Sport).then(setSports);
@@ -56,7 +67,12 @@ const HomeScreen = () => {
       setCoachSport(result.name);
       setSport(result.name);
     }
-  }, [createdCoach, sports]);
+    if (coachDBUser && sports.length != 0) {
+      const result = sports.find(s => s.id == coachDBUser.sportID);
+      setCoachSport(result.name);
+      setSport(result.name);
+    }
+  }, [createdCoach, sports, coachDBUser]);
 
   useEffect(() => {
     if (!sports) {
@@ -80,7 +96,13 @@ const HomeScreen = () => {
       setCoachPosition(result.name);
       setPosition(result.name);
     }
-  }, [createdCoachPosition, positions]);
+    if (coachDBPosition && positions.length != 0) {
+      const result = positions.find(p => p.id == coachDBPosition.positionCoachPositionId);
+      setCoachPosition(result.name);
+      setPosition(result.name);
+    }
+    
+  }, [createdCoachPosition, positions, coachDBPosition]);
 
   useEffect(() => {
     if (!positions) {

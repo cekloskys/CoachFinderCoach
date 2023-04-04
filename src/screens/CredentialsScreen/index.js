@@ -16,12 +16,16 @@ const CredentialsScreen = () => {
     createdCoach, 
     createdCoachAccreditation, 
     createdCoachAge,
-    createdCoachSpeciality
+    createdCoachSpeciality,
+    coachDBUser, 
+    coachDBAccreditation, 
+    coachDBAge,
+    coachDBSpecialty
    } = useCoachContext();
 
   const navigation = useNavigation();
-  const [experience, setExperience] = useState(parseInt(createdCoach?.yearsPlaying) || 0);
-  const [coachexperience, setCoachexperience] = useState(parseInt(createdCoach?.yearsCoaching) || 0);
+  const [experience, setExperience] = useState(parseInt(createdCoach?.yearsPlaying) || coachDBUser?.yearsPlaying || 0);
+  const [coachexperience, setCoachexperience] = useState(parseInt(createdCoach?.yearsCoaching) || coachDBUser?.yearsCoaching || 0);
 
   const [accreditation, setAccreditation] = useState('');
   const [accreditations, setAccreditations] = useState([]);
@@ -56,9 +60,15 @@ const CredentialsScreen = () => {
   useEffect(() => {
     if (createdCoachAccreditation && accreditations.length != 0) {
       const result = accreditations.find(a => a.id == createdCoachAccreditation.accreditationCoachAccreditationId);
+      setDisplayAccreditations(result.name)
       setAccreditation(result.name);
     }
-  }, [createdCoachAccreditation, accreditations]);
+    if (coachDBAccreditation && accreditations.length != 0) {
+      const result = accreditations.find(a => a.id == coachDBAccreditation.accreditationCoachAccreditationId);
+      setDisplayAccreditations(result.name);
+      setAccreditation(result.name);
+    }
+  }, [createdCoachAccreditation, accreditations, coachDBAccreditation, coachDBUser]);
 
   useEffect(() => {
     if (!accreditations) {
@@ -81,7 +91,11 @@ useEffect(() => {
     const result = ages.find(a => a.id == createdCoachAge.ageCoachAgeId);
     setAge(result.name);
   }
-}, [createdCoachAge, ages]);
+  if (coachDBAge && ages.length != 0) {
+    const result = ages.find(a => a.id == coachDBAge.ageCoachAgeId);
+    setAge(result.name);
+  }
+}, [createdCoachAge, ages, coachDBAge]);
 
 useEffect(() => {
   if (!ages) {
@@ -104,14 +118,18 @@ useEffect(() => {
     const result = specialties.find(s => s.id == createdCoachSpeciality.specialityCoachSpecialityId);
     setSpecialty(result.name);
   }
-}, [createdCoachSpeciality, specialties]);
+  if (coachDBSpecialty && specialties.length != 0) {
+    const result = specialties.find(s => s.id == coachDBSpecialty.specialityCoachSpecialityId);
+    setSpecialty(result.name);
+  }
+}, [createdCoachSpeciality, specialties, coachDBSpecialty]);
 
 useEffect(() => {
   if (!specialties) {
       return;
   }
   const dt = [];
-  for (let i = 0; i < specialties.length; i++) {
+  for (let i = 0; i < specialties.length; i++) { 
       dt.push(specialties[i].name);
   }
   dt.sort();

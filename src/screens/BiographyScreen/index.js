@@ -7,15 +7,15 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const BiographyScreen = () => {
 
-  const { createdCoach } = useCoachContext();
+  const { createdCoach, coachDBUser } = useCoachContext();
 
   const navigation = useNavigation();
 
-  const [highlights, setHighlights] = useState(createdCoach?.highlights || '');
-  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || '');
-  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || '');
-  const [description, setDescription] = useState(createdCoach?.shortDesc || '');
-  const [college, setCollege] = useState(createdCoach?.college || '');
+  const [highlights, setHighlights] = useState(createdCoach?.highlights || coachDBUser?.highlights || '');
+  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || coachDBUser?.sessionPlan || '');
+  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || coachDBUser?.background || '');
+  const [description, setDescription] = useState(createdCoach?.shortDesc || coachDBUser?.shortDesc || '');
+  const [college, setCollege] = useState(createdCoach?.college || coachDBUser?.college || '');
 
   const route = useRoute();
 
@@ -109,7 +109,7 @@ const BiographyScreen = () => {
         <Text style={{ textAlign: 'right', color: 'grey' }}>
           {description.length} characters (minimum 25 characters)
         </Text>
-      </View>
+      </View> 
       <View style={styles.row}>
         <TextInput
           style={styles.multilineinput}
