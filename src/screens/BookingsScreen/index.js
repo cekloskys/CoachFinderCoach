@@ -53,6 +53,7 @@ const BookingsScreen = () => {
       console.error(error);
     }
   }, [refreshing]);
+  
 
   return (
     <View style={styles.page}>

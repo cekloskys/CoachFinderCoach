@@ -28,29 +28,50 @@ const BookingDetailScreen = () => {
       return;
     }
     DataStore.query(Profile, book.profileID).then(setProfiles);
+    
   }, [book]);
+  
 
   const accept = async () => {
+    const booking = await DataStore.query(Booking, book.id);
     await DataStore.save(
-      Booking.copyOf(book, (updated) => {
-        updated.status = 'IN_PROGRESS';
+      Booking.copyOf(booking, (updated) => {
+        updated.status = 'PENDING';
       })
     );
     alert('Booking accepted.')
     navigation.navigate('Your Bookings');
   };
 
-  const decline = () => {
+  const decline = async() => {
+    const booking = await DataStore.query(Booking, book.id);
+    await DataStore.save(
+      Booking.copyOf(booking,(updated)=>{
+        updated.status = 'DECLINED';
+      })
+    );
     alert('Booking declined.')
     navigation.navigate('Your Bookings');
   };
 
-  const cancel = () => {
+  const cancel = async () => {
+    const booking = await DataStore.query(Booking, book.id);
+    await DataStore.save(
+      Booking.copyOf(booking,(updated)=>{
+        updated.status = 'CANCELLED';
+      })
+    );
     alert('Booking cancelled.')
     navigation.navigate('Your Bookings');
   };
 
-  const complete = () => {
+  const complete = async () => {
+    const booking = await DataStore.query(Booking, book.id);
+    await DataStore.save(
+      Booking.copyOf(booking,(updated)=>{
+        updated.status = 'COMPLETED';
+      })
+    );
     alert('Booking completed.')
     navigation.navigate('Your Bookings');
   };
