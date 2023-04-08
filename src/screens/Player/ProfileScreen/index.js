@@ -5,7 +5,7 @@ import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import React, { useRef } from 'react';
 import { Profile } from '../../../models';
-import { Auth, DataStore} from 'aws-amplify';
+import { Auth, DataStore } from 'aws-amplify';
 import { useAuthContext } from '../../../context/AuthContext';
 
 const validator = require('validator');
@@ -21,10 +21,10 @@ const ProfileScreen = () => {
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const {sub, dbUser, setDbUser, authUser} = useAuthContext();
+  const { sub, dbUser, setDbUser, authUser } = useAuthContext();
 
   const [fullName, setFullName] = useState(dbUser?.fullName || "");
-  const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email ||"");
+  const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email || "");
 
   const [street, setStreet] = useState(dbUser?.streetAddress || "");
   const [city, setCity] = useState(dbUser?.city || "");
@@ -35,21 +35,20 @@ const ProfileScreen = () => {
 
   const createNewProfile = async () => {
     const newProfile = await DataStore.save(new Profile({
-        fullName: fullName,
-        streetAddress: street,
-        city: city,
-        state: state,
-        zip: zip,
-        email: email,
-        phoneNbr: phonenumber,
-        sub
+      fullName: fullName,
+      streetAddress: street,
+      city: city,
+      state: state,
+      zip: zip,
+      email: email,
+      phoneNbr: phonenumber,
+      sub
     })
     );
     setNewProfile(newProfile);
     alert('Profile Approved')
 
-};
-
+  };
 
   const Validation = () => {
     if (!fullName) {
@@ -147,7 +146,7 @@ const ProfileScreen = () => {
         value={email}
         onChangeText={value => setEmail(value)}
         style={styles.input}
-        clearButtonMode={'while-editing'} 
+        clearButtonMode={'while-editing'}
         placeholder={"Enter Email"}
         placeholderTextColor={'lightgrey'}
         keyboardType='email-address'
@@ -160,7 +159,7 @@ const ProfileScreen = () => {
         onChangeFormattedText={(text) => {
           setFormattedValue(text);
         }}
-       
+
         containerStyle={styles.dropdownBtnStyle}
         textContainerStyle={styles.dropdownBtnTxtStyle}
       />
