@@ -18,8 +18,10 @@ const AddressScreen = () => {
   const { authUser } = useAuthContext();
 
   const navigation = useNavigation();
-  const usStates = new UsaStates();
-  const statesNames = usStates.arrayOf('names');
+ // const usStates = new UsaStates();
+ // const statesNames = usStates.arrayOf('names');
+  
+  const statesNames = [ 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
 
   const [address, setAddress] = useState(createdCoach?.streetAddress || coachDBUser?.streetAddress || '');
   const [city, setCity] = useState(createdCoach?.city || coachDBUser?.city || '');
@@ -50,7 +52,7 @@ const AddressScreen = () => {
       return;
     }
     if (!state) {
-      alert('Please select your state.');
+      alert('Please select your county.');
       return;
     }
     if (!zip) {
@@ -101,7 +103,7 @@ const AddressScreen = () => {
       <SelectDropdown
         data={statesNames}
         defaultValue={state}
-        defaultButtonText={'SELECT STATE'}
+        defaultButtonText={'SELECT COUNTY'}
         onSelect={(selectedItem, index) => {
           setState(selectedItem);
         }}
