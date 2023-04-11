@@ -16,13 +16,17 @@ const CoachContextProvider = ({ children }) => {
     const [coachAuthUser, setCoachAuthUser] = useState(null);
     const [coachDBUser, setCoachDBUser] = useState(null);
     const sub = coachAuthUser?.attributes?.sub;
-    
+    const [coachDBPosition, setCoachDBPosition] = useState(null);
+    const [coachDBAge, setCoachDBAge] = useState(null);
+    const [coachDBAccreditation, setCoachDBAccreditation] = useState(null);
+    const [coachDBSpecialty, setCoachDBSpecialty] = useState(null);
+    const [coachDBAvailability, setCoachDBAvailability] = useState([]);
+
     useEffect(() => {
         Auth.currentAuthenticatedUser({ bypassCache: true }).then(setCoachAuthUser);
     }, []);
 
     const getCoachDbUser = () => {
-        console.log(sub);
         DataStore.query(Coach, (coach) => coach.sub.eq(sub)).then((coaches) =>
         setCoachDBUser(coaches[0]));
     };
@@ -33,7 +37,6 @@ const CoachContextProvider = ({ children }) => {
         }
         
         const removeListener = Hub.listen('datastore', async ({ payload }) => {
-            console.log(payload.event);
             if (payload.event === 'syncQueriesReady') {
                 getCoachDbUser();
             }
@@ -43,6 +46,66 @@ const CoachContextProvider = ({ children }) => {
 
         return () => removeListener();
     }, [sub]);
+
+    const getCoachDBPosition = () => {
+        DataStore.query(PositionCoach, (position) => position.coachID.eq(coachDBUser.id)).then((positions) =>
+        setCoachDBPosition(positions[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBPosition();
+    },[coachDBUser]);
+
+    const getCoachDBAge = () => {
+        DataStore.query(AgeCoach, (age) => age.coachID.eq(coachDBUser.id)).then((ages) =>
+        setCoachDBAge(ages[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAge();
+    },[coachDBUser]);
+
+    const getCoachDBAccreditation = () => {
+        DataStore.query(AccreditationCoach, (accreditation) => accreditation.coachID.eq(coachDBUser.id)).then((accreditations) =>
+        setCoachDBAccreditation(accreditations[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAccreditation();
+    },[coachDBUser]);
+
+    const getCoachDBSpecialty = () => {
+        DataStore.query(SpecialityCoach, (speciality) => speciality.coachID.eq(coachDBUser.id)).then((specialties) =>
+        setCoachDBSpecialty(specialties[0]));
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBSpecialty();
+    },[coachDBUser]);
+
+    const getCoachDBAvailability = () => {
+        DataStore.query(Availability, (availability) => availability.coachID.eq(coachDBUser.id)).then(setCoachDBAvailability);
+    };
+
+    useEffect(() => {
+        if (!coachDBUser){
+            return;
+        }
+        getCoachDBAvailability();
+    },[coachDBUser]);
+
 
     const createCoach = async (coach, position, accreditation, age, speciality, availability) => {
         const newCoach = await DataStore.save(new Coach({
@@ -120,6 +183,68 @@ const CoachContextProvider = ({ children }) => {
         setCreatedCoachAvailability(newCoachAvailability);
     };
 
+    const updateCoach = async (dbCoach, coach, position, accreditation, age, speciality, availability) => {
+        const updatedCoach = await DataStore.save(
+            Coach.copyOf(dbCoach, (updated) => {
+            updated.highlights = coach.highlights;
+            updated.sessionPlan = coach.sessionplan;
+            updated.background = coach.athleticbackground;
+            updated.yearsCoaching = coach.coachexperience;
+            updated.yearsPlaying = coach.experience;
+            updated.college = coach.college;
+            updated.fullName = coach.name;
+            updated.streetAddress = coach.address;
+            updated.city = coach.city;
+            updated.state = coach.state;
+            updated.zip = coach.zip;
+            updated.email = coach.email;
+            updated.shortDesc = coach.description;
+            updated.phoneNbr = coach.phoneInput;
+            updated.dob = coach.date;
+            updated.image = coach.image;
+            updated.sportID = coach.sport;
+            updated.startPrice = 100.0;
+        }));
+        setCreatedCoach(updatedCoach);
+        updateCoachPosition(coachDBPosition, position);
+        updateCoachAccreditation(coachDBAccreditation, accreditation);
+        updateCoachAge(coachDBAge, age);
+        updateCoachSpeciality(coachDBSpecialty, speciality);
+        //createCoachAvailability(availability, newCoach.id);
+    };
+
+    const updateCoachPosition = async (dbPosition, position) => {
+        const updatedCoachPosition = await DataStore.save(
+            PositionCoach.copyOf(dbPosition, (updated) => {
+            updated.positionCoachPositionId = position;
+        }));
+        setCreatedCoachPosition(updatedCoachPosition);
+    };
+
+    const updateCoachAccreditation = async (dbAccreditation, accreditation) => {
+        const updatedCoachAccreditation = await DataStore.save(
+            AccreditationCoach.copyOf(dbAccreditation, (updated) => {
+            updated.accreditationCoachAccreditationId = accreditation;
+        }));
+        setCreatedCoachAccreditation(updatedCoachAccreditation);
+    };
+
+    const updateCoachAge = async (dbAge, age) => {
+        const updatedCoachAge = await DataStore.save(
+            AccreditationCoach.copyOf(dbAge, (updated) => {
+            updated.ageCoachAgeId = age;
+        }));
+        setCreatedCoachAge(updatedCoachAge);
+    };
+
+    const updateCoachSpeciality = async (dbSpeciality, speciality) => {
+        const updatedCoachSpeciality = await DataStore.save(
+            SpecialityCoach.copyOf(dbSpeciality, (updated) => {
+            updated.specialityCoachSpecialityId = speciality;
+        }));
+        setCreatedCoachSpeciality(updatedCoachSpeciality);
+    };
+
     return (
         <CoachContext.Provider value={{
             createdCoach,
@@ -140,7 +265,8 @@ const CoachContextProvider = ({ children }) => {
             createdCoachAvailability,
             setCreatedCoachAvailability,
             createCoachAvailability,
-            coachAuthUser, coachDBUser, sub, setCoachDBUser
+            coachAuthUser, coachDBUser, sub, setCoachDBUser, coachDBPosition, coachDBAge, coachDBAccreditation, coachDBSpecialty, coachDBAvailability,
+            updateCoach,
         }}>
             {children}
         </CoachContext.Provider>

@@ -11,9 +11,6 @@ const PackagesScreen = () => {
   const route = useRoute();
   const coach = route.params?.coach;
 
-
-  
-
   useEffect(() => {
     DataStore.query(Package,(p) => p.coachID.eq(coach.id), {
       sort: s => s.price(SortDirection.ASCENDING)

@@ -1,11 +1,9 @@
 import { View, Pressable, Text, Image, Alert } from 'react-native';
-import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons, EvilIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { DataStore } from 'aws-amplify';
 import { Package as Packages } from '../../models';
 import { usePackageContext } from '../../context/PackageContext';
-import { useCallback } from 'react';
 
 const Package = ({ pack }) => {
   const navigation = useNavigation();

@@ -92,7 +92,7 @@ const BookPackageScreen = () => {
       {!datePicker && (
         <View>
           <Pressable onPress={showDatePicker} style={styles.button}>
-            <Text style={styles.buttonText}>Select Start Date</Text>
+            <Text style={styles.buttonText}>SELECT START DATE</Text>
           </Pressable>
         </View>
       )}

@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get("window");
 
-const COLORS = { primary: '#4287f5', white: '#fff' };
+const COLORS = { /*primary: '#4287f5', */ primary: '#556a8a', white: '#fff' };
 
 const slides = [
     {
@@ -42,13 +42,13 @@ const OnBoardingScreen = () => {
         return (
             <View style={{ height: height * 0.25, }}>
                 <TouchableOpacity style={[styles.btn]} onPress={() => navigation.navigate('CoachHomeTabs', { screen: 'Profile' })} >
-                    <Text style={{ fontWeight: '500', fontSize: 18, }}>
-                        Apply To Coach
+                    <Text style={{ fontSize: 14, }}>
+                        APPLY TO COACH
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.btn]} onPress={() => navigation.navigate('HomeTabs', { screen: 'Search' })} >
-                    <Text style={{ fontWeight: '500', fontSize: 18, }}>
-                        Find A Coach
+                    <Text style={{ fontSize: 14, }}>
+                        FIND A COACH
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -73,14 +73,16 @@ const OnBoardingScreen = () => {
 
 const styles = StyleSheet.create({
     title: {
-        color: COLORS.white,
+        //color: COLORS.white,
+        color: '#f5ece4',
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 10,
     },
     subtitle: {
-        color: COLORS.white,
+        //color: COLORS.white,
+        color: '#f5ece4',
         fontSize: 20,
         maxWidth: '80%',
         marginVertical: 10,
@@ -91,9 +93,11 @@ const styles = StyleSheet.create({
         margin: 5,
         height: 50,
         borderRadius: 5,
-        backgroundColor: COLORS.white,
+        //backgroundColor: COLORS.white,
+        backgroundColor: '#f5ece4',
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: 10,
     },
 });
 

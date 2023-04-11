@@ -40,7 +40,7 @@ const AvailabilityScreen = () => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <FlatList
         ListHeaderComponent={() => <Header coach={coach}/>}
         data={data}

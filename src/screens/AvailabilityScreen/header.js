@@ -7,7 +7,12 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const Header = ({ coach }) => {
 
-  const { createCoach, createdCoachAvailability } = useCoachContext();
+  const { createCoach, 
+    createdCoachAvailability, 
+    coachDBAvailability, 
+    coachDBUser, 
+    updateCoach,
+   } = useCoachContext();
   
   const navigation = useNavigation();
 
@@ -105,7 +110,7 @@ const Header = ({ coach }) => {
   ];
 
   useEffect(() => {
-    if (createdCoachAvailability) {
+    if (createdCoachAvailability.length != 0) {
       let result = [];
       for (let i = 0; i < createdCoachAvailability.length; i++) {
         var tempDay = dayOptions.find(d => d.name == createdCoachAvailability[i].day);
@@ -115,10 +120,20 @@ const Header = ({ coach }) => {
       }
       setDays(result);
     }
-  }, [createdCoachAvailability]);
-
+    if (coachDBAvailability.length != 0) {
+      let result = [];
+      for (let i = 0; i < coachDBAvailability.length; i++) {
+        var tempDay = dayOptions.find(d => d.name == coachDBAvailability[i].day);
+        if (!result.includes(tempDay.id)){
+          result.push(tempDay.id);
+        }
+      }
+      setDays(result);
+    }
+  }, [createdCoachAvailability, coachDBAvailability]);
+  
   useEffect(() => {
-    if (createdCoachAvailability) {
+    if (createdCoachAvailability.length != 0) {
       let result = [];
       for (let i = 0; i < createdCoachAvailability.length; i++) {
         var tempTime = timeOptions.find(d => d.name == createdCoachAvailability[i].time);
@@ -128,7 +143,17 @@ const Header = ({ coach }) => {
       }
       setTimes(result);
     }
-  }, [createdCoachAvailability]);
+    if (coachDBAvailability.length != 0) {
+      let result = [];
+      for (let i = 0; i < coachDBAvailability.length; i++) {
+        var tempTime = timeOptions.find(d => d.name == coachDBAvailability[i].time);
+        if (!result.includes(tempTime.id)){
+          result.push(tempTime.id);
+        }   
+      }
+      setTimes(result);
+    }
+  }, [createdCoachAvailability, coachDBAvailability]);
   
   const onSelectedDaysChange = (days) => {
     setDays(days);
@@ -168,12 +193,18 @@ const Header = ({ coach }) => {
       }
     }
 
-    createCoach(coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
+    if (coachDBAvailability) {
+      updateCoach(coachDBUser, coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
+      console.log(coach.accreditation);
+      alert('Coach updated.');
+    } else {
+      createCoach(coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
+      alert('Coach created.');
+    }
     
-    alert('Coach created.');
     navigation.navigate('Basic Information');
   }
-
+  
   return (
     <View style={styles.page}>
       <View style={styles.row}>
@@ -185,45 +216,40 @@ const Header = ({ coach }) => {
           selectText="Select Days"
           searchInputPlaceholderText="Select Days"
           onChangeInput={(text) => console.log(text)}
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
+          tagRemoveIconColor="#556a8a"
+          tagBorderColor="#556a8a"
+          tagTextColor="#556a8a"
           selectedItemTextColor="#CCC"
           selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          fontSize={16}
+          itemTextColor="#000" 
+          textColor='white'
+          fontSize={14}
           searchInputStyle={{
             color: '#CCC',
-            fontSize: 16,
+            fontSize: 14,
             height: 50,
           }}
           styleMainWrapper={{
-            borderRadius: 10,
             borderWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: '#556a8a',
             backgroundColor: 'white',
           }}
-          styleDropdownMenu={{
-            borderRadius: 10,
-          }}
-          styleInputGroup={{
-            borderRadius: 10,
-          }}
           styleDropdownMenuSubsection={{
-            borderRadius: 10,
+            backgroundColor: '#556a8a',
           }}
           styleSelectorContainer={{
-            borderRadius: 10,
           }}
           styleTextDropdown={{
             height: 25,
             marginLeft: 10,
+            fontSize: 14,
           }}
           styleTextDropdownSelected={{
             height: 25,
             marginLeft: 10,
+            fontSize: 14,
           }}
-          submitButtonColor="#CCC"
+          submitButtonColor="#556a8a"
           submitButtonText="Submit"
         />
       </View>
@@ -236,51 +262,46 @@ const Header = ({ coach }) => {
           selectText="Select Times"
           searchInputPlaceholderText="Select Times"
           onChangeInput={(text) => console.log(text)}
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
+          tagRemoveIconColor="#556a8a"
+          tagBorderColor="#556a8a"
+          tagTextColor="#556a8a"
           selectedItemTextColor="#CCC"
           selectedItemIconColor="#CCC"
           itemTextColor="#000"
-          fontSize={16}
+          textColor='white'
+          fontSize={14}
           searchInputStyle={{
             color: '#CCC',
-            fontSize: 16,
+            fontSize: 14,
             height: 50,
           }}
           styleMainWrapper={{
-            borderRadius: 10,
             borderWidth: 1,
-            borderColor: 'lightgrey',
+            borderColor: '#556a8a',
             backgroundColor: 'white',
           }}
-          styleDropdownMenu={{
-            borderRadius: 10,
-          }}
-          styleInputGroup={{
-            borderRadius: 10,
-          }}
           styleDropdownMenuSubsection={{
-            borderRadius: 10,
+            backgroundColor: '#556a8a',
           }}
           styleSelectorContainer={{
-            borderRadius: 10,
           }}
           styleTextDropdown={{
             height: 25,
             marginLeft: 10,
+            fontSize: 14,
           }}
           styleTextDropdownSelected={{
             height: 25,
             marginLeft: 10,
+            fontSize: 14,
           }}
-          submitButtonColor="#CCC"
+          submitButtonColor="#556a8a"
           submitButtonText="Submit"
         />
       </View>
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>SAVE</Text>
         </Pressable>
       </View>
     </View>

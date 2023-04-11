@@ -92,7 +92,7 @@ const CoachProfileScreen = () => {
           <Pressable
           style={styles.button} onPress={() => navigation.navigate('Availability', {coach: coach})}>
             <Text style={styles.buttonText}>
-              View {coach.fullName}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s"} Availability
+              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} AVAILABILITY
             </Text>
           </Pressable>
         }
@@ -105,9 +105,9 @@ const CoachProfileScreen = () => {
           <View style={styles.sectionContent}>
             <View style={{ width: '100%' }}>
               <Text style={{
-                color: 'grey',
-                fontSize: 16,
-                backgroundColor: 'white',
+                color: 'white',
+                fontSize: 14,
+                backgroundColor: '#909bad',
                 padding: 10,
                 borderRadius: 5,
                 marginRight: 10,
@@ -119,7 +119,7 @@ const CoachProfileScreen = () => {
         renderSectionHeader={({ section }) => (
           <View style={styles.completeContainer}>
             <View style={{ width: '100%' }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{section.title}</Text>
+              <Text style={{ fontSize: 14, fontWeight: 'bold' }}>{section.title}</Text>
             </View>
           </View>
         )}

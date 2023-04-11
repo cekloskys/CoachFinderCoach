@@ -6,7 +6,7 @@ const Booking = ({ book }) => {
   const navigation = useNavigation();
   
   const onPress = () => {
-    navigation.navigate('Booking Details', { book : book });
+    navigation.navigate('Booking', { book : book });
   };
 
 

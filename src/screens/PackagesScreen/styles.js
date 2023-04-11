@@ -3,71 +3,20 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    padding: 10,
-  },
-  image: {
-    width: '100%',
-    aspectRatio: 5/3,
-    marginBottom: 5,
-  },
-  completeContainer: {
-    width: '100%',
-    height: 36,
-    backgroundColor: 'lightgrey',
-    paddingTop: 3,
-    paddingLeft: 10,
-    flexDirection: 'row',
-    zIndex: 100,
-    flex: 1,
-  },
-  sectionContent: {
-    width: '100%',
-    height: 36,
-    paddingTop: 3,
-    paddingLeft: 10,
-    flexDirection: 'row',
-    zIndex: 100,
-    flex: 1,
-  },
-  outer: {
-    height: '100%',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: '600',
-  },
-  subtitle: {
-    color: 'grey',
-    fontSize: 16,
-    width: '100%'
-  },
-  container: {
-    margin: 10,
-  },
-  sectionContent: {
-    width: '100%',
-    height: 36,
-    paddingTop: 3,
-    paddingLeft: 10,
-    flexDirection: 'row',
-    zIndex: 100,
-    flex: 1,
-  },
-  restaurantContainer: {
-    width: '100%',
-    marginVertical: 10,
+    backgroundColor: 'white',
   },
   button: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#556a8a',
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: 10,
+    marginHorizontal: 10,
   }, 
   buttonText: {
-    fontSize: 16,
-    color: '#444',
+    fontSize: 14,
+    color: 'white',
   },
 });
 export default styles;

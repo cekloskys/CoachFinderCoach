@@ -12,16 +12,20 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const CredentialsScreen = () => {
 
-  const { 
-    createdCoach, 
-    createdCoachAccreditation, 
+  const {
+    createdCoach,
+    createdCoachAccreditation,
     createdCoachAge,
-    createdCoachSpeciality
-   } = useCoachContext();
+    createdCoachSpeciality,
+    coachDBUser,
+    coachDBAccreditation,
+    coachDBAge,
+    coachDBSpecialty
+  } = useCoachContext();
 
   const navigation = useNavigation();
-  const [experience, setExperience] = useState(parseInt(createdCoach?.yearsPlaying) || 0);
-  const [coachexperience, setCoachexperience] = useState(parseInt(createdCoach?.yearsCoaching) || 0);
+  const [experience, setExperience] = useState(parseInt(createdCoach?.yearsPlaying) || coachDBUser?.yearsPlaying || 0);
+  const [coachexperience, setCoachexperience] = useState(parseInt(createdCoach?.yearsCoaching) || coachDBUser?.yearsCoaching || 0);
 
   const [accreditation, setAccreditation] = useState('');
   const [accreditations, setAccreditations] = useState([]);
@@ -56,86 +60,100 @@ const CredentialsScreen = () => {
   useEffect(() => {
     if (createdCoachAccreditation && accreditations.length != 0) {
       const result = accreditations.find(a => a.id == createdCoachAccreditation.accreditationCoachAccreditationId);
+      setDisplayAccreditations(result.name)
       setAccreditation(result.name);
     }
-  }, [createdCoachAccreditation, accreditations]);
+    if (coachDBAccreditation && accreditations.length != 0) {
+      const result = accreditations.find(a => a.id == coachDBAccreditation.accreditationCoachAccreditationId);
+      setDisplayAccreditations(result.name);
+      setAccreditation(result.name);
+    }
+  }, [createdCoachAccreditation, accreditations, coachDBAccreditation, coachDBUser]);
 
   useEffect(() => {
     if (!accreditations) {
-        return;
+      return;
     }
     const dt = [];
     for (let i = 0; i < accreditations.length; i++) {
-        dt.push(accreditations[i].name);
+      dt.push(accreditations[i].name);
     }
     dt.sort();
     setDisplayAccreditations(dt);
-}, [accreditations]);
+  }, [accreditations]);
 
-useEffect(() => {
-  DataStore.query(Age).then(setAges);
-}, []);
+  useEffect(() => {
+    DataStore.query(Age).then(setAges);
+  }, []);
 
-useEffect(() => {
-  if (createdCoachAge && ages.length != 0) {
-    const result = ages.find(a => a.id == createdCoachAge.ageCoachAgeId);
-    setAge(result.name);
-  }
-}, [createdCoachAge, ages]);
+  useEffect(() => {
+    if (createdCoachAge && ages.length != 0) {
+      const result = ages.find(a => a.id == createdCoachAge.ageCoachAgeId);
+      setAge(result.name);
+    }
+    if (coachDBAge && ages.length != 0) {
+      const result = ages.find(a => a.id == coachDBAge.ageCoachAgeId);
+      setAge(result.name);
+    }
+  }, [createdCoachAge, ages, coachDBAge]);
 
-useEffect(() => {
-  if (!ages) {
+  useEffect(() => {
+    if (!ages) {
       return;
-  }
-  const dt = [];
-  for (let i = 0; i < ages.length; i++) {
+    }
+    const dt = [];
+    for (let i = 0; i < ages.length; i++) {
       dt.push(ages[i].name);
-  }
-  dt.sort();
-  setDisplayAges(dt);
-}, [ages]);
+    }
+    dt.sort();
+    setDisplayAges(dt);
+  }, [ages]);
 
-useEffect(() => {
-  DataStore.query(Speciality).then(setSpecialties);
-}, []);
+  useEffect(() => {
+    DataStore.query(Speciality).then(setSpecialties);
+  }, []);
 
-useEffect(() => {
-  if (createdCoachSpeciality && specialties.length != 0) {
-    const result = specialties.find(s => s.id == createdCoachSpeciality.specialityCoachSpecialityId);
-    setSpecialty(result.name);
-  }
-}, [createdCoachSpeciality, specialties]);
+  useEffect(() => {
+    if (createdCoachSpeciality && specialties.length != 0) {
+      const result = specialties.find(s => s.id == createdCoachSpeciality.specialityCoachSpecialityId);
+      setSpecialty(result.name);
+    }
+    if (coachDBSpecialty && specialties.length != 0) {
+      const result = specialties.find(s => s.id == coachDBSpecialty.specialityCoachSpecialityId);
+      setSpecialty(result.name);
+    }
+  }, [createdCoachSpeciality, specialties, coachDBSpecialty]);
 
-useEffect(() => {
-  if (!specialties) {
+  useEffect(() => {
+    if (!specialties) {
       return;
-  }
-  const dt = [];
-  for (let i = 0; i < specialties.length; i++) {
+    }
+    const dt = [];
+    for (let i = 0; i < specialties.length; i++) {
       dt.push(specialties[i].name);
-  }
-  dt.sort();
-  setDisplaySpecialties(dt);
-}, [specialties]);
+    }
+    dt.sort();
+    setDisplaySpecialties(dt);
+  }, [specialties]);
 
   const onAddCredentials = () => {
-    if (!experience || experience === '0'){
+    if (experience < 0) {
       alert('Please enter years playing experience.');
       return;
     }
-    if (!coachexperience || coachexperience === '0') {
+    if (coachexperience < 0) {
       alert('Please enter years coaching experience.');
       return;
     }
-    if (!accreditation){
+    if (!accreditation) {
       alert('Please select an accreditation.');
       return;
     }
-    if (!age){
+    if (!age) {
       alert('Please select an age preference.');
       return;
     }
-    if (!specialty){
+    if (!specialty) {
       alert('Please select a specialty.')
       return;
     }
@@ -147,7 +165,7 @@ useEffect(() => {
     navigation.navigate('Biography', {
       sport: sport,
       position: position,
-      name: name, 
+      name: name,
       phoneInput: phoneInput,
       date: date,
       image: image,
@@ -167,18 +185,6 @@ useEffect(() => {
   return (
     <ScrollView style={styles.page}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.text}>Years Coaching</Text>
-        <View style={{ marginLeft: 'auto', marginBottom: 10 }}>
-          <NumericInput
-            value={coachexperience}
-            onChange={(text) => {
-              setCoachexperience(text)
-            }}
-            rounded
-            minValue={1} />
-        </View>
-        </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text}>Years Playing</Text>
         <View style={{ marginLeft: 'auto', marginBottom: 5 }}>
           <NumericInput
@@ -187,13 +193,29 @@ useEffect(() => {
               setExperience(text)
             }}
             rounded
-            minValue={1} />
+            containerStyle={{ borderColor: '#556a8a', borderWidth: 1, }}
+            inputStyle={{ borderColor: '#556a8a', borderWidth: 1, fontSize: 14, }}
+            minValue={0} />
+        </View>
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={styles.text}>Years Coaching</Text>
+        <View style={{ marginLeft: 'auto', marginBottom: 10 }}>
+          <NumericInput
+            value={coachexperience}
+            onChange={(text) => {
+              setCoachexperience(text)
+            }}
+            rounded
+            containerStyle={{ borderColor: '#556a8a', borderWidth: 1, }}
+            inputStyle={{ borderColor: '#556a8a', borderWidth: 1, fontSize: 14, }}
+            minValue={0} />
         </View>
       </View>
       <SelectDropdown
         data={displayAccreditations}
         defaultValue={accreditation}
-        defaultButtonText={'Select Accreditation'}
+        defaultButtonText={'SELECT ACCREDITATION'}
         onSelect={(selectedItem, index) => {
           setAccreditation(selectedItem);
         }}
@@ -212,7 +234,7 @@ useEffect(() => {
       <SelectDropdown
         data={displayAges}
         defaultValue={age}
-        defaultButtonText={'Select Age Preference'}
+        defaultButtonText={'SELECT AGE PREFERENCE'}
         onSelect={(selectedItem, index) => {
           setAge(selectedItem);
         }}
@@ -231,7 +253,7 @@ useEffect(() => {
       <SelectDropdown
         data={displaySpecialties}
         defaultValue={specialty}
-        defaultButtonText={'Select Specialty'}
+        defaultButtonText={'SELECT SPECIALITY'}
         onSelect={(selectedItem, index) => {
           setSpecialty(selectedItem);
         }}
@@ -249,7 +271,7 @@ useEffect(() => {
       />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddCredentials}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>NEXT</Text>
         </Pressable>
       </View>
     </ScrollView>

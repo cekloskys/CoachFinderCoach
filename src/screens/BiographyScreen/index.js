@@ -7,15 +7,15 @@ import { useCoachContext } from '../../context/CoachContext';
 
 const BiographyScreen = () => {
 
-  const { createdCoach } = useCoachContext();
+  const { createdCoach, coachDBUser } = useCoachContext();
 
   const navigation = useNavigation();
 
-  const [highlights, setHighlights] = useState(createdCoach?.highlights || '');
-  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || '');
-  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || '');
-  const [description, setDescription] = useState(createdCoach?.shortDesc || '');
-  const [college, setCollege] = useState(createdCoach?.college || '');
+  const [highlights, setHighlights] = useState(createdCoach?.highlights || coachDBUser?.highlights || '');
+  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || coachDBUser?.sessionPlan || '');
+  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || coachDBUser?.background || '');
+  const [description, setDescription] = useState(createdCoach?.shortDesc || coachDBUser?.shortDesc || '');
+  const [college, setCollege] = useState(createdCoach?.college || coachDBUser?.college || '');
 
   const route = useRoute();
 
@@ -37,7 +37,7 @@ const BiographyScreen = () => {
   const specialties = route.params?.specialties;
 
   const onAddBiography = () => {
-    if (!college){
+    if (!college) {
       alert('Please enter your college.');
       return;
     }
@@ -57,7 +57,7 @@ const BiographyScreen = () => {
       alert('Please enter your athletic background (minimum 50 characters).');
       return;
     }
-    
+
     navigation.navigate('Availability', {
       sport: sport,
       position: position,
@@ -106,7 +106,7 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{ textAlign: 'right', color: 'grey' }}>
+        <Text style={{ textAlign: 'right', color: 'black' }}>
           {description.length} characters (minimum 25 characters)
         </Text>
       </View>
@@ -123,7 +123,7 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{ textAlign: 'right', color: 'grey' }}>
+        <Text style={{ textAlign: 'right', color: 'black' }}>
           {highlights.length} characters (minimum 50 characters)
         </Text>
       </View>
@@ -139,7 +139,7 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{ textAlign: 'right', color: 'grey'}}>
+        <Text style={{ textAlign: 'right', color: 'black' }}>
           {sessionplan.length} characters (minimum 50 characters)
         </Text>
       </View>
@@ -155,13 +155,13 @@ const BiographyScreen = () => {
         />
       </View>
       <View style={styles.row}>
-        <Text style={{ textAlign: 'right', color: 'grey' }}>
+        <Text style={{ textAlign: 'right', color: '#556a8a' }}>
           {athleticbackground.length} characters (minimum 50 characters)
         </Text>
       </View>
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onAddBiography}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>NEXT</Text>
         </Pressable>
       </View>
     </ScrollView>

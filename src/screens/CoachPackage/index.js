@@ -18,12 +18,6 @@ const CoachPackageScreen = () => {
     const [longDesc, setLongDesc] = useState('');
     const [length, setLength] = useState('');
 
-    // name (text input)
-    // price (number)
-    // short description (text input)
-    // long description (text input)
-    // length (number)
-
     const onCreatePackage = async () => {
         if (!packageName) {
             alert('Please enter a package name.')
@@ -59,7 +53,6 @@ const CoachPackageScreen = () => {
         navigation.navigate('Your Packages');
     }
     
-
     return (
         <ScrollView style={styles.page}>
             <TextInput
@@ -90,7 +83,7 @@ const CoachPackageScreen = () => {
                 maxLength={50}
             />
             <View style={styles.row}>
-                <Text style={{ textAlign: 'right', color: 'grey' }}>
+                <Text style={{ textAlign: 'right', color: 'black' }}>
                     {shortDesc.length} characters (maximum 50 characters)
                 </Text>
             </View>
@@ -105,7 +98,7 @@ const CoachPackageScreen = () => {
                 maxLength={100}
             />
             <View style={styles.row}>
-                <Text style={{ textAlign: 'right', color: 'grey' }}>
+                <Text style={{ textAlign: 'right', color: 'black' }}>
                     {longDesc .length} characters (maximum 100 characters)
                 </Text>
             </View>
@@ -120,7 +113,7 @@ const CoachPackageScreen = () => {
             />
             <View style={styles.bottom}>
                 <Pressable style={styles.button} onPress={onCreatePackage}>
-                    <Text style={styles.buttonText}>Create</Text>
+                    <Text style={styles.buttonText}>CREATE</Text>
                 </Pressable>
             </View>
         </ScrollView>

@@ -1,4 +1,4 @@
-import { View, FlatList, RefreshControl } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { useState, useEffect, useCallback } from 'react';
 import BookingComponent from '../../components/Booking';
@@ -16,25 +16,26 @@ const BookingsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    if (!coachDBUser){
+    if (!coachDBUser) {
       return;
     }
     DataStore.query(Booking, (b) => b.coachID.eq(coachDBUser.id)).then(setBookings);
   }, [coachDBUser])
 
+  const fetchCoaches = async () => {
+    const coaches = await DataStore.query(Coach);
+    setFinalBookings(
+      bookings.map(booking => ({
+        ...booking,
+        Coach: coaches.find(c => c.id == booking.coachID),
+      }))
+    );
+  };
+
   useEffect(() => {
     if (!bookings) {
       return;
     }
-    const fetchCoaches = async () => {
-      const coaches = await DataStore.query(Coach);
-      setFinalBookings(
-        bookings.map(booking => ({
-          ...booking,
-          Coach: coaches.find(c => c.id == booking.coachID),
-        }))
-      );
-    };
     fetchCoaches();
   }, [bookings]);
 
@@ -53,6 +54,12 @@ const BookingsScreen = () => {
       console.error(error);
     }
   }, [refreshing]);
+
+  if (coachDBUser && bookings.length === 0) {
+    return (
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
+    )
+  }
 
   return (
     <View style={styles.page}>

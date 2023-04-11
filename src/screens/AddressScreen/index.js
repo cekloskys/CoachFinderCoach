@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, TextInput, Pressable, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useRoute } from '@react-navigation/native';
 import { useCoachContext } from '../../context/CoachContext';
+import { useAuthContext } from '../../context/AuthContext';
+import PhoneInput from 'react-native-phone-number-input'; 
 
 const UsaStates = require('usa-states').UsaStates;
 
@@ -12,51 +14,58 @@ const validator = require('validator');
 
 const AddressScreen = () => {
 
-  const { createdCoach } = useCoachContext();
+  const { createdCoach, coachDBUser } = useCoachContext();
+  const { authUser } = useAuthContext();
 
   const navigation = useNavigation();
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const [address, setAddress] = useState(createdCoach?.streetAddress || '');
-  const [city, setCity] = useState(createdCoach?.city || '');
-  const [zip, setZip] = useState(createdCoach?.zip || '');
-  const [state, setState] = useState(createdCoach?.state ||'');
-  const [email, setEmail] = useState(createdCoach?.email ||'');
+  const [address, setAddress] = useState(createdCoach?.streetAddress || coachDBUser?.streetAddress || '');
+  const [city, setCity] = useState(createdCoach?.city || coachDBUser?.city || '');
+  const [zip, setZip] = useState(createdCoach?.zip || coachDBUser?.zip || '');
+  const [state, setState] = useState(createdCoach?.state || coachDBUser?.state || '');
+  const [email, setEmail] = useState(authUser?.attributes?.email || createdCoach?.email || coachDBUser?.email || '');
+  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || coachDBUser?.phoneNbr || '');
+  const [formattedValue, setFormattedValue] = useState("");
+
+  const phoneInput = useRef(null);
 
   const route = useRoute();
 
   const sport = route.params?.sport;
   const position = route.params?.position;
   const name = route.params?.name;
-  const phoneInput = route.params?.phoneInput;
   const date = route.params?.date;
   const image = route.params?.image;
 
   const onAddressAdd = () => {
-    
-    if (!address){
-       alert('Please enter your street address.');
-       return;
-     }
-     if (!city){
-       alert('Please enter your city.');
-       return;
-     }
-     if (!state){
-       alert('Please select your state.');
-       return;
-     }
-     if (!zip){
-       alert('Please enter your zipcode.');
-       return;
-     }
-     if (!email || !validator.isEmail(email)){
-        alert('Please enter your valid email address.');
-        return;
-     }
-    
-    
+
+    if (!address) {
+      alert('Please enter your street address.');
+      return;
+    }
+    if (!city) {
+      alert('Please enter your city.');
+      return;
+    }
+    if (!state) {
+      alert('Please select your state.');
+      return;
+    }
+    if (!zip) {
+      alert('Please enter your zipcode.');
+      return;
+    }
+    if (!email || !validator.isEmail(email)) {
+      alert('Please enter your valid email address.');
+      return;
+    }
+    if (!phoneInput.current?.isValidNumber(phonenumber)) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+
     navigation.navigate('Credentials', {
       sport: sport,
       position: position,
@@ -69,6 +78,7 @@ const AddressScreen = () => {
       state: state,
       zip: zip,
       email: email,
+      phoneInput: phonenumber,
     });
   }
 
@@ -91,7 +101,7 @@ const AddressScreen = () => {
       <SelectDropdown
         data={statesNames}
         defaultValue={state}
-        defaultButtonText={'Select State'}
+        defaultButtonText={'SELECT STATE'}
         onSelect={(selectedItem, index) => {
           setState(selectedItem);
         }}
@@ -123,11 +133,21 @@ const AddressScreen = () => {
         }}
         keyboardType={'email-address'}
       />
-      <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={onAddressAdd}>
-          <Text style={styles.buttonText}>Next</Text>
-        </Pressable>
-      </View>
+      <PhoneInput
+        ref={phoneInput}
+        value={phonenumber}
+        placeholder='Enter Phone Number'
+        defaultCode='US'
+        onChangeText={text => setPhonenumber(text)}
+        onChangeFormattedText={(text) => {
+          setFormattedValue(text);
+        }}
+        containerStyle={styles.dropdownBtnStyle}
+        textInputStyle={{ fontSize: 14 }}
+      />
+      <Pressable style={styles.button} onPress={onAddressAdd}>
+        <Text style={styles.buttonText}>NEXT</Text>
+      </Pressable>
     </ScrollView>
   );
 }

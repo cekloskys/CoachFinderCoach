@@ -1,4 +1,4 @@
-import { TextInput, Pressable, Text, ScrollView } from 'react-native';
+import { TextInput, Pressable, Text, ScrollView, ActivityIndicator } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useState } from 'react';
 import styles from './styles';
@@ -7,12 +7,16 @@ import React, { useRef } from 'react';
 import { Profile } from '../../../models';
 import { Auth, DataStore } from 'aws-amplify';
 import { useAuthContext } from '../../../context/AuthContext';
+import { useEffect } from 'react';
+import { useSportContext } from '../../../context/SportContext';
 
 const validator = require('validator');
 
 const UsaStates = require('usa-states').UsaStates;
 
 const ProfileScreen = () => {
+
+  const { sports } = useSportContext();
 
   const [formattedValue, setFormattedValue] = useState('');
 
@@ -21,7 +25,7 @@ const ProfileScreen = () => {
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const { sub, dbUser, setDbUser, authUser } = useAuthContext();
+  const {sub, dbUser, setDBUser, authUser} = useAuthContext();
 
   const [fullName, setFullName] = useState(dbUser?.fullName || "");
   const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email || "");
@@ -32,6 +36,27 @@ const ProfileScreen = () => {
   const [zip, setZip] = useState(dbUser?.zip || "");
   const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
   const [newProfile, setNewProfile] = useState();
+
+  useEffect(() => {
+    if (dbUser?.fullName) {
+      setFullName(dbUser?.fullName);
+    }
+    if (dbUser?.streetAddress) {
+      setStreet(dbUser?.streetAddress);
+    }
+    if (dbUser?.city) {
+      setCity(dbUser?.city);
+    }
+    if (dbUser?.state) {
+      setState(dbUser?.state);
+    }
+    if (dbUser?.zip) {
+      setZip(dbUser?.zip);
+    }
+    if (dbUser?.phoneNbr) {
+      setPhonenumber(dbUser?.phoneNbr);
+    }
+  }, [dbUser]);
 
   const createNewProfile = async () => {
     const newProfile = await DataStore.save(new Profile({
@@ -47,10 +72,25 @@ const ProfileScreen = () => {
     );
     setNewProfile(newProfile);
     alert('Profile Approved')
-
   };
 
-  const Validation = () => {
+  const updateProfile = async () => {
+    const profile = await DataStore.save(
+      Profile.copyOf(dbUser, (updated) => {
+        updated.fullName = fullName;
+        updated.email = email;
+        updated.streetAddress = street;
+        updated.city = city;
+        updated.state = state;
+        updated.zip = zip;
+        updated.phoneNbr = phonenumber;
+      })
+    );
+    setDBUser(profile);
+    alert('Profile Updated')
+  };
+
+  const Validation = async () => {
     if (!fullName) {
       alert('Please enter your fullname.');
       return
@@ -79,13 +119,24 @@ const ProfileScreen = () => {
       alert('Please enter a valid phone number.');
       return;
     }
-    createNewProfile()
+    if (dbUser) {
+      await updateProfile();
+    } else {
+      await createNewProfile();
+    }
+
   }
 
   const signOut = async () => {
     DataStore.clear();
     Auth.signOut()
   };
+
+  if (sports.length === 0) {
+    return (
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
+    )
+  }
 
   return (
     <ScrollView style={styles.page}>
@@ -117,7 +168,7 @@ const ProfileScreen = () => {
       <SelectDropdown
         data={statesNames}
         defaultValue={state}
-        defaultButtonText={'Select State'}
+        defaultButtonText={'SELECT STATE'}
         onSelect={(selectedItem, index) => {
           setState(selectedItem);
         }}
@@ -161,15 +212,16 @@ const ProfileScreen = () => {
         }}
 
         containerStyle={styles.dropdownBtnStyle}
-        textContainerStyle={styles.dropdownBtnTxtStyle}
+        textContainerStyle={{backgroundColor: 'white'}}
+        textInputStyle={{fontSize: 14}}
       />
       <Pressable
         style={styles.button} onPress={Validation}>
-        <Text style={styles.buttonText}>Submit</Text>
+        <Text style={styles.buttonText}>SAVE</Text>
       </Pressable>
       <Pressable
-        style={styles.button} onPress={signOut}>
-        <Text style={styles.buttonText}>Sign Out</Text>
+        style={styles.signOutButton} onPress={signOut}>
+        <Text style={styles.buttonText}>SIGN OUT</Text>
       </Pressable>
     </ScrollView>
   );

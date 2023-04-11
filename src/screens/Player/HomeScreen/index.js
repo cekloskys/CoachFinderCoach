@@ -1,34 +1,21 @@
-import { View, FlatList } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useState, useEffect } from 'react';
 import CoachComponent from '../../../components/Coach';
 import SelectDropdown from 'react-native-select-dropdown';
-import { DataStore, Hub } from 'aws-amplify';
-import { Coach, Sport, Rating } from '../../../models';
+import { DataStore } from 'aws-amplify';
+import { Coach } from '../../../models';
 import styles from './styles';
+import { useSportContext } from '../../../context/SportContext';
 
 let selectedSport = '';
 let selectedSportId = '';
 
 const HomeScreen = () => {
 
-  const [sports, setSports] = useState([]);
+  const { sports } = useSportContext();
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
-
-  useEffect(() => {
-    DataStore.query(Sport).then(setSports);
-    const removeListener = Hub.listen('datastore', async ({ payload }) => {
-      console.log(payload.event);
-      if (payload.event === 'syncQueriesReady') {
-        DataStore.query(Sport).then(setSports);
-      }
-    });
-
-    DataStore.start();
-
-    return () => removeListener();
-  }, []);
-
+  
   useEffect(() => {
     if (!sports) {
       return;
@@ -46,11 +33,17 @@ const HomeScreen = () => {
     setCoaches(results);
   };
 
+  if (sports.length === 0) {
+    return (
+        <ActivityIndicator size="large" color="#db4f40" style={{flex: 1}}/>
+    )
+  }
+
   return (
     <View style={styles.page}>
       <SelectDropdown
         data={displaySports}
-        defaultButtonText={'Select a Sport'}
+        defaultButtonText={'SELECT A SPORT'}
         onSelect={(selectedItem) => {
           selectedSport = selectedItem;
           for (let i = 0; i < sports.length; i++) {

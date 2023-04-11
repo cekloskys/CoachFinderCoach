@@ -16,6 +16,7 @@ const AuthContextProvider = ({ children }) => {
     const getDbUser = () => {
         DataStore.query(Profile, (user) => user.sub.eq(sub)).then((users) =>
             setDBUser(users[0]));
+            console.log(dbUser);
     };
 
     useEffect(() => {
@@ -24,7 +25,6 @@ const AuthContextProvider = ({ children }) => {
         }
         
         const removeListener = Hub.listen('datastore', async ({ payload }) => {
-            console.log(payload.event);
             if (payload.event === 'syncQueriesReady') {
                 getDbUser();
             }

@@ -1,17 +1,24 @@
-import { View, FlatList } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
-import BookingComponent from '../../../components/Booking';
+import BookingComponent from '../../../components/PlayerBooking';
 import { DataStore } from 'aws-amplify';
 import { Booking, Coach } from '../../../models';
+import {useAuthContext} from '../../../context/AuthContext';
 
 const BookingsScreen = () => {
   const [bookings, setBookings] = useState([]);
   const [finalBookings, setFinalBookings] = useState([]);
 
+  const { dbUser } = useAuthContext();
+
   useEffect(() => {
-    DataStore.query(Booking).then(setBookings);
-  }, [])
+    if (!dbUser){
+      return;
+    }
+    DataStore.query(Booking, (b) => b.profileID.eq(dbUser.id)).then(setBookings);
+  }, [dbUser])
+  console.log(dbUser);
   
   useEffect(() => {
     if (!bookings) {
@@ -29,6 +36,12 @@ const BookingsScreen = () => {
     fetchCoaches();
   }, [bookings]);
 
+  if (dbUser && bookings.length === 0) {
+    return (
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
+    )
+  }
+  
   return (
     <View style={styles.page}>
       <FlatList

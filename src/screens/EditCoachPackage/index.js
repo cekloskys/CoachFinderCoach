@@ -90,7 +90,7 @@ const EditCoachPackageScreen = () => {
                 maxLength={50}
             />
             <View style={styles.row}>
-                <Text style={{ textAlign: 'right', color: 'grey' }}>
+                <Text style={{ textAlign: 'right', color: 'black' }}>
                     {shortDesc.length} characters (maximum 50 characters)
                 </Text>
             </View>
@@ -105,7 +105,7 @@ const EditCoachPackageScreen = () => {
                 maxLength={100}
             />
             <View style={styles.row}>
-                <Text style={{ textAlign: 'right', color: 'grey' }}>
+                <Text style={{ textAlign: 'right', color: 'black' }}>
                     {longDesc .length} characters (maximum 100 characters)
                 </Text>
             </View>
@@ -120,7 +120,7 @@ const EditCoachPackageScreen = () => {
             />
             <View style={styles.bottom}>
                 <Pressable style={styles.button} onPress={onCreatePackage}>
-                    <Text style={styles.buttonText}>Edit</Text>
+                    <Text style={styles.buttonText}>EDIT</Text>
                 </Pressable>
             </View>
         </ScrollView>

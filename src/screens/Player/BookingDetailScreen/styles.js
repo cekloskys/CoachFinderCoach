@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
+    //backgroundColor: '#dce7fa',
+    backgroundColor: '#dfe3eb',
   },
   iconContainer: {
     position: 'absolute',
@@ -40,22 +42,23 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   subtitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'white',
   },
   details: {
-    color:'grey',
-    fontSize: 16,
+    color:'white',
+    fontSize: 14,
     marginTop: 2,
   },
   subtitledetail: {
-    color: 'grey',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 14,
     marginLeft: 'auto',
   },
   subtitledetail2: {
-    color: 'grey',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 14,
   },
   button: {
     borderColor: 'black',
@@ -66,18 +69,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   bookbutton: {
-    borderColor: 'black',
+    borderColor: '#556a8a',
     marginToop: 5,
     marginHorizontal: 10,
     marginBottom: 10,
     padding: 15,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#556a8a',
     alignItems: 'center',
     borderRadius: 5,
   },
   buttonText: {
-    color: 'black',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 14,
   },
 });
 

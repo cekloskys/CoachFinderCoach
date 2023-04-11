@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
+    //backgroundColor: '#dce7fa',
+    backgroundColor: '#dfe3eb',
   },
   iconContainer: {
     position: 'absolute',
@@ -36,25 +38,45 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   subtitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'white',
   },
   details: {
-    color:'grey',
-    fontSize: 16,
+    color:'white',
+    fontSize: 14,
     marginTop: 2,
   },
   subtitledetail: {
-    color: 'grey',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 14,
     marginLeft: 'auto',
   },
   subtitledetail2: {
-    color: 'grey',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 14,
   },
   button: {
-    backgroundColor: 'lightgrey',
+    //backgroundColor: '#4287f5',
+    backgroundColor: '#db4f40',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  }, 
+  acceptButton: {
+    //backgroundColor: '#4287f5',
+    backgroundColor: '#366e1a',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  }, 
+  completeButton: {
+    //backgroundColor: '#4287f5',
+    backgroundColor: '#556a8a',
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
@@ -62,8 +84,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   }, 
   buttonText: {
-    fontSize: 16,
-    color: '#444',
+    fontSize: 14,
+    color: 'white',
   },
 });
 

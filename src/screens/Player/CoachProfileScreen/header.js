@@ -14,10 +14,10 @@ const Header = ({ coach }) => {
         <Text style={styles.subtitle}>
           {coach.shortDesc}
         </Text>
-        <Text style={{fontSize: 16, fontWeight: '600',}}>Details</Text>
+        <Text style={{fontSize: 16, fontWeight: '600', }}>Details</Text>
         <View style={{ 
           flexDirection: 'row', 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,
@@ -27,7 +27,7 @@ const Header = ({ coach }) => {
         </View>
         <View style={{ 
           flexDirection: 'row', 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,
@@ -36,7 +36,7 @@ const Header = ({ coach }) => {
           <Text style={styles.subtitledetail}>{coach.city}, {coach.state}</Text>
         </View>
         <View style={{ 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,
@@ -46,7 +46,7 @@ const Header = ({ coach }) => {
         </View>
         <View style={{ 
           flexDirection: 'row',
-          backgroundColor: 'white',
+          backgroundColor: '#909bad',
           padding: 10,
           borderTopLeftRadius: 5,
           borderTopRightRadius: 5,
@@ -57,7 +57,7 @@ const Header = ({ coach }) => {
         </View>
         <View style={{ 
           flexDirection: 'row',
-          backgroundColor: 'white',
+          backgroundColor: '#909bad',
           padding: 10,
           borderBottomLeftRadius: 5,
           borderBottomRightRadius: 5,
@@ -67,7 +67,7 @@ const Header = ({ coach }) => {
           <Text style={styles.subtitledetail}>{coach.yearsCoaching}</Text>
         </View> 
         <View style={{ 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,
@@ -76,7 +76,7 @@ const Header = ({ coach }) => {
           <Text style={styles.subtitledetail2}>{coach.sessionPlan}</Text>
         </View>
         <View style={{ 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,
@@ -85,7 +85,7 @@ const Header = ({ coach }) => {
           <Text style={styles.subtitledetail2}>{coach.highlights}</Text>
         </View>
         <View style={{ 
-          backgroundColor: 'white', 
+          backgroundColor: '#909bad', 
           padding: 10, 
           borderRadius: 5, 
           marginVertical: 5,

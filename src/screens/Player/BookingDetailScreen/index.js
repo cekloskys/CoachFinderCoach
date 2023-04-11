@@ -31,8 +31,6 @@ const BookingDetailScreen = () => {
     navigation.navigate('Your Bookings');
   };
 
-
-
   return (
     <ScrollView style={styles.page}>
       <Image
@@ -42,74 +40,11 @@ const BookingDetailScreen = () => {
         style={styles.image} />
       <View style={{ margin: 10 }}>
         <Text style={styles.title}>{book.Coach.fullName}</Text>
-        <Text style={{ fontSize: 18, fontWeight: '500', }}>Booking Details</Text>
+        <Text style={{ fontSize: 18, fontWeight: '500', marginBottom: 10, }}>Booking Details</Text>
+        <Text style={{ fontSize: 14, fontWeight: '600' }}>Coach Contact Information</Text>
         <View style={{
           flexDirection: 'row',
-          backgroundColor: 'white',
-          padding: 10,
-          borderRadius: 5,
-          marginVertical: 5,
-        }}>
-          <Text style={styles.subtitle}>Athlete</Text>
-          <Text style={styles.subtitledetail}>{book.athleteName}</Text>
-        </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Starting Session</Text>
-        <View style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          padding: 10,
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
-          marginTop: 5,
-        }}>
-          <Text style={styles.subtitle}>Date</Text>
-          <Text style={styles.subtitledetail}>{book.startDate}</Text>
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          padding: 10,
-          borderBottomLeftRadius: 5,
-          borderBottomRightRadius: 5,
-          marginBottom: 5,
-        }}>
-          <Text style={styles.subtitle}>Time</Text>
-          <Text style={styles.subtitledetail}>{book.startTime}</Text>
-        </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Package Details</Text>
-        <View style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          padding: 10,
-          marginTop: 5,
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
-        }}>
-          <Text style={styles.subtitle}>Name</Text>
-          <Text style={styles.subtitledetail}>{packages.name}</Text>
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          padding: 10,
-        }}>
-          <Text style={styles.subtitle}>Price</Text>
-          <Text style={styles.subtitledetail}>$ {packages.price}</Text>
-        </View>
-        <View style={{
-          backgroundColor: 'white',
-          padding: 10,
-          marginBottom: 5,
-          borderBottomLeftRadius: 5,
-          borderBottomRightRadius: 5,
-        }}>
-          <Text style={styles.subtitle}>Details</Text>
-          <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
-        </View>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Coach Contact Information</Text>
-        <View style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
+          backgroundColor: '#909bad',
           padding: 10,
           borderTopLeftRadius: 5,
           borderTopRightRadius: 5,
@@ -120,7 +55,7 @@ const BookingDetailScreen = () => {
         </View>
         <View style={{
           flexDirection: 'row',
-          backgroundColor: 'white',
+          backgroundColor: '#909bad',
           padding: 10,
           marginBottom: 5,
           borderBottomLeftRadius: 5,
@@ -129,10 +64,63 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitle}>Email</Text>
           <Text style={styles.subtitledetail}>{book.Coach.email}</Text>
         </View>
+        <Text style={{ fontSize: 14, fontWeight: '600', marginTop: 10 }}>Starting Session</Text>
+        <View style={{
+          flexDirection: 'row',
+          backgroundColor: '#909bad',
+          padding: 10,
+          borderTopLeftRadius: 5,
+          borderTopRightRadius: 5,
+          marginTop: 5,
+        }}>
+          <Text style={styles.subtitle}>Date</Text>
+          <Text style={styles.subtitledetail}>{book.startDate}</Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          backgroundColor: '#909bad',
+          padding: 10,
+          borderBottomLeftRadius: 5,
+          borderBottomRightRadius: 5,
+          marginBottom: 5,
+        }}>
+          <Text style={styles.subtitle}>Time</Text>
+          <Text style={styles.subtitledetail}>{book.startTime}</Text>
+        </View>
+        <Text style={{ fontSize: 14, fontWeight: '600', marginTop: 10 }}>Package Details</Text>
+        <View style={{
+          flexDirection: 'row',
+          backgroundColor: '#909bad',
+          padding: 10,
+          marginTop: 5,
+          borderTopLeftRadius: 5,
+          borderTopRightRadius: 5,
+        }}>
+          <Text style={styles.subtitle}>Name</Text>
+          <Text style={styles.subtitledetail}>{packages.name}</Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          backgroundColor: '#909bad',
+          padding: 10,
+        }}>
+          <Text style={styles.subtitle}>Price</Text>
+          <Text style={styles.subtitledetail}>$ {packages.price}</Text>
+        </View>
+        <View style={{
+          backgroundColor: '#909bad',
+          padding: 10,
+          marginBottom: 5,
+          borderBottomLeftRadius: 5,
+          borderBottomRightRadius: 5,
+        }}>
+          <Text style={styles.subtitle}>Details</Text>
+          <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
+        </View>
       </View>
       <Pressable
         style={styles.bookbutton} onPress={goToReview} >
-        <Text style={styles.buttonText}>Leave a Review</Text>
+        <Text style={styles.buttonText}>LEAVE A REVIEW</Text>
       </Pressable>
       <Ionicons
         name='arrow-back-circle'

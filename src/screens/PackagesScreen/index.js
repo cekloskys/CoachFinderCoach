@@ -1,4 +1,4 @@
-import { View, FlatList, Pressable, Text, RefreshControl } from 'react-native';
+import { View, FlatList, Pressable, Text, RefreshControl, ActivityIndicator } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
 import { DataStore, Predicates, SortDirection } from 'aws-amplify';
 import { Package } from '../../models';
@@ -44,6 +44,12 @@ const PackagesScreen = () => {
     }
   }, [refreshing]);
 
+  if (coachDBUser && packages.length === 0) {
+    return (
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
+    )
+  }
+
   return (
     <View style={styles.page}>
       <FlatList
@@ -54,7 +60,7 @@ const PackagesScreen = () => {
       />
       <View style={styles.bottom}>
         <Pressable style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Create Package</Text>
+          <Text style={styles.buttonText}>CREATE PACKAGE</Text>
         </Pressable>
       </View>
     </View>

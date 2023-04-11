@@ -1,47 +1,45 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     page: {
         padding: 10,
-    },
-    text: {
-        fontSize: 25,
-        color: 'red',
-        padding: 3,
-        marginBottom: 10,
-        textAlign: 'center'
+        backgroundColor: 'white',
+        flex: 1,
     },
     input: {
         height: 50,
-        backgroundColor: 'white',
+        backgroundColor: '#dfe3eb',
         padding: 5,
-        marginVertical: 5,
+        marginVertical: 10,
         borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderColor: '#dfe3eb',
         borderRadius: 5,
-        fontSize: 16,
+        fontSize: 14,
+        padding: 10,
     },
     button: {
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#556a8a', 
         height: 50,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 5,
+        marginTop: 10,
+        marginBottom: 50,
     },
     multilineinput: {
         height: 75,
-        backgroundColor: 'white',
+        backgroundColor: '#dfe3eb',
         padding: 5,
-        marginVertical: 5,
+        marginVertical: 10,
         borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderColor: '#dfe3eb',
         borderRadius: 5,
-        fontSize: 16,
-      },
+        fontSize: 14,
+        padding: 10,
+    },
     buttonText: {
-        fontSize: 16,
-        color: '#444',
+        fontSize: 14,
+        color: 'white',
     },
 });
 

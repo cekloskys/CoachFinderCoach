@@ -36,7 +36,7 @@ const AvailabilityScreen = () => {
 
   const formatAvailability = (dayStr) => {
     let dayArr = [];
-    for(let i = 0; i < availability.length; i++ ) {
+    for (let i = 0; i < availability.length; i++) {
       if (availability[i].day === dayStr) {
         dayArr.push(availability[i]);
       }
@@ -44,7 +44,7 @@ const AvailabilityScreen = () => {
     var timeStr = dayArr.map((item) => {
       return item.time;
     }).join(", ");
-    let timeObj = {time: timeStr};
+    let timeObj = { time: timeStr };
     let displayArr = [];
     displayArr.push(timeObj);
     return displayArr;
@@ -58,7 +58,7 @@ const AvailabilityScreen = () => {
         return a.day < b.day ? -1 : 1
       }
     });
-    
+
     setMonday(formatAvailability('Monday'));
     setTuesday(formatAvailability('Tuesday'));
     setWednesday(formatAvailability('Wednesday'));
@@ -66,50 +66,50 @@ const AvailabilityScreen = () => {
     setFriday(formatAvailability('Friday'));
     setSaturday(formatAvailability('Saturday'));
     setSunday(formatAvailability('Sunday'));
-    
+
   }, [availability]);
-  
+
   return (
     <View style={styles.page}>
       <SectionList
         ListHeaderComponent={() => <Header coach={coach} />}
         ListFooterComponent={() =>
           <Pressable
-            style={styles.button} onPress={() => navigation.navigate('Packages', {coach : coach})}>
+            style={styles.button} onPress={() => navigation.navigate('Packages', { coach: coach })}>
             <Text style={styles.buttonText}>
-              View {coach.fullName}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s"} Packages
+              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} PACKAGES
             </Text>
           </Pressable>
         }
         sections={[
-          {title: 'Monday', data: monday},
-          {title: 'Tuesday', data: tuesday},
-          {title: 'Wednesday', data: wednesday},
-          {title: 'Thursday', data: thursday},
-          {title: 'Friday', data: friday},
-          {title: 'Saturday', data: saturday},
-          {title: 'Sunday', data: sunday},
+          { title: 'Monday', data: monday },
+          { title: 'Tuesday', data: tuesday },
+          { title: 'Wednesday', data: wednesday },
+          { title: 'Thursday', data: thursday },
+          { title: 'Friday', data: friday },
+          { title: 'Saturday', data: saturday },
+          { title: 'Sunday', data: sunday },
         ]}
         renderItem={({ item }) => (
-            <View style={styles.sectionContent}>
-            <View style={{width: '100%'}}>
+          <View style={styles.sectionContent}>
+            <View style={{ width: '100%' }}>
               <Text style={{
-              flexDirection: 'row',
-              color: 'grey',
-              fontSize: 16,
-              backgroundColor: 'white',
-              padding: 10,
-              borderRadius: 5,
-              marginRight: 10,
-              marginVertical: 2,
-            }}>{item.time !== "" ? item.time : "Not Available"}</Text>
+                flexDirection: 'row',
+                color: 'white',
+                fontSize: 14,
+                backgroundColor: '#909bad',
+                padding: 10,
+                borderRadius: 5,
+                marginRight: 10,
+                marginVertical: 2,
+              }}>{item.time !== "" ? item.time : "Not Available"}</Text>
             </View>
-          </View>  
+          </View>
         )}
         renderSectionHeader={({ section }) => (
           <View style={styles.completeContainer}>
             <View style={{ width: '100%' }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{section.title}</Text>
+              <Text style={{ fontSize: 14, fontWeight: 'bold' }}>{section.title}</Text>
             </View>
           </View>
         )}

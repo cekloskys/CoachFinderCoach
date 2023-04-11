@@ -1,54 +1,57 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useNavigation } from '@react-navigation/native';
-import PhoneInput from 'react-native-phone-number-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Auth, DataStore, Hub } from 'aws-amplify';
+import { Auth, DataStore } from 'aws-amplify';
 import { useEffect } from 'react';
-import { Sport, Position } from '../../models';
 import { useCoachContext } from '../../context/CoachContext';
+import { useSportContext } from '../../context/SportContext';
 
 const HomeScreen = () => {
 
-  const { createdCoach, createdCoachPosition } = useCoachContext();
+  const { createdCoach, createdCoachPosition, coachDBUser, coachDBPosition } = useCoachContext();
+  const { sports, positions } = useSportContext();
 
   const navigation = useNavigation();
 
-  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || '');
-  const [image, setImage] = useState(createdCoach?.image || '');
-  const [formattedValue, setFormattedValue] = useState("");
+  const [image, setImage] = useState(createdCoach?.image || coachDBUser?.image || '');
   const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(createdCoach?.dob ? new Date(createdCoach?.dob) : new Date());
+  const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState('');
-  const [name, setName] = useState(createdCoach?.fullName || '');
-
-  const phoneInput = useRef(null);
+  const [name, setName] = useState(createdCoach?.fullName || coachDBUser?.fullName || '');
 
   const [sport, setSport] = useState('');
-  const [sports, setSports] = useState([]);
   const [displaySports, setDisplaySports] = useState([]);
   const [coachSport, setCoachSport] = useState('');
 
   const [position, setPosition] = useState('');
-  const [positions, setPositions] = useState([]);
   const [displayPositions, setDisplayPositions] = useState([]);
   const [coachPosition, setCoachPosition] = useState('');
 
   useEffect(() => {
-    DataStore.query(Sport).then(setSports);
-    const removeListener = Hub.listen('datastore', async ({ payload }) => {
-      if (payload.event === 'syncQueriesReady') {
-        DataStore.query(Sport).then(setSports);
-      }
-    });
-
-    DataStore.start();
-
-    return () => removeListener();
-
-  }, []);
+    if (createdCoach?.dob) {
+      setDate(new Date(createdCoach?.dob));
+      setSelectedDate(createdCoach?.dob);
+    }
+    if (coachDBUser?.dob) {
+      setDate(new Date(coachDBUser?.dob));
+      setSelectedDate(coachDBUser?.dob);
+    }
+    if (createdCoach?.fullName) {
+      setName(createdCoach?.fullName);
+    }
+    if (coachDBUser?.fullName) {
+      setName(coachDBUser?.fullName);
+    }
+    if (createdCoach?.image) {
+      setImage(createdCoach?.image);
+    }
+    if (coachDBUser?.image) {
+      setImage(coachDBUser?.image);
+    }
+  }, [createdCoach, coachDBUser]);
 
   useEffect(() => {
     if (createdCoach && sports.length != 0) {
@@ -56,7 +59,12 @@ const HomeScreen = () => {
       setCoachSport(result.name);
       setSport(result.name);
     }
-  }, [createdCoach, sports]);
+    if (coachDBUser && sports.length != 0) {
+      const result = sports.find(s => s.id == coachDBUser.sportID);
+      setCoachSport(result.name);
+      setSport(result.name);
+    }
+  }, [createdCoach, sports, coachDBUser]);
 
   useEffect(() => {
     if (!sports) {
@@ -71,16 +79,18 @@ const HomeScreen = () => {
   }, [sports]);
 
   useEffect(() => {
-    DataStore.query(Position).then(setPositions);
-  }, []);
-
-  useEffect(() => {
     if (createdCoachPosition && positions.length != 0) {
       const result = positions.find(p => p.id == createdCoachPosition.positionCoachPositionId);
       setCoachPosition(result.name);
       setPosition(result.name);
     }
-  }, [createdCoachPosition, positions]);
+    if (coachDBPosition && positions.length != 0) {
+      const result = positions.find(p => p.id == coachDBPosition.positionCoachPositionId);
+      setCoachPosition(result.name);
+      setPosition(result.name);
+    }
+
+  }, [createdCoachPosition, positions, coachDBPosition]);
 
   useEffect(() => {
     if (!positions) {
@@ -117,11 +127,7 @@ const HomeScreen = () => {
       return;
     }
     if (!name) {
-      alert('Please enter your name.');
-      return;
-    }
-    if (!phoneInput.current?.isValidNumber(phonenumber)) {
-      alert('Please enter a valid phone number.');
+      alert('Please enter your full name.');
       return;
     }
     const today = new Date(Date.now());
@@ -129,10 +135,6 @@ const HomeScreen = () => {
       alert('Please select your date of birth.');
       return;
     }
-    /* if (!image) {
-      alert('Please enter an image link of you.');
-      return;
-    } */
 
     const sportID = sports.find(s => s.name == sport);
     const positionID = positions.find(p => p.name == position);
@@ -141,9 +143,8 @@ const HomeScreen = () => {
       sport: sportID.id,
       position: positionID.id,
       name: name,
-      phoneInput: phonenumber,
       date: selectedDate,
-      image: image,
+      image: (image ? image : 'https://giftoflifechc.s3.amazonaws.com/coach-finder-logo.png'),
     });
   }
 
@@ -151,13 +152,19 @@ const HomeScreen = () => {
     DataStore.clear();
     Auth.signOut()
   };
+  
+  if (displaySports.length === 0 || displayPositions.length === 0) {
+    return (
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
+    )
+  }
 
   return (
     <ScrollView style={styles.page}>
       <SelectDropdown
         data={displaySports}
         defaultValue={coachSport}
-        defaultButtonText={'Select Sport'}
+        defaultButtonText={'SELECT SPORT'}
         onSelect={(selectedItem, index) => {
           setSport(selectedItem);
         }}
@@ -176,7 +183,7 @@ const HomeScreen = () => {
       <SelectDropdown
         data={displayPositions}
         defaultValue={coachPosition}
-        defaultButtonText={'Select Position'}
+        defaultButtonText={'SELECT POSITION'}
         onSelect={(selectedItem, index) => {
           setPosition(selectedItem);
         }}
@@ -200,17 +207,6 @@ const HomeScreen = () => {
           setName(text);
         }}
       />
-      <PhoneInput
-        ref={phoneInput}
-        defaultValue={phonenumber}
-        defaultCode='US'
-        onChangeText={text => setPhonenumber(text)}
-        onChangeFormattedText={(text) => {
-          setFormattedValue(text);
-        }}
-        containerStyle={styles.dropdownBtnStyle}
-        textContainerStyle={styles.dropdownBtnTxtStyle}
-      />
       {datePicker && (
         <DateTimePicker
           value={date}
@@ -218,21 +214,18 @@ const HomeScreen = () => {
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           is24Hour={true}
           onChange={onDateSelected}
+          maximumDate={new Date(Date.now())}
         />
       )}
       {!datePicker && (
-        <View>
-          <Pressable style={styles.button} onPress={showDatePicker}>
-            <Text style={styles.buttonText}>Select Date of Birth</Text>
-          </Pressable>
-        </View>
-      )}
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          value={date.toLocaleDateString()}
-        />
-      </View>
+        <Pressable style={styles.button} onPress={showDatePicker}>
+          <Text style={styles.buttonText}>SELECT DATE OF BIRTH</Text>
+        </Pressable>)}
+      <TextInput
+        style={styles.input}
+        value={date.toLocaleDateString()}
+        editable={false}
+      />
       <TextInput
         style={styles.input}
         placeholder='Enter Image Link'
@@ -241,14 +234,12 @@ const HomeScreen = () => {
           setImage(text);
         }}
       />
-      <View style={styles.bottom}>
-        <Pressable style={styles.button} onPress={onSelectSport}>
-          <Text style={styles.buttonText}>Next</Text>
-        </Pressable>
-        <Pressable style={styles.signOutButton} onPress={signOut}>
-          <Text style={styles.buttonText}>Sign Out</Text>
-        </Pressable>
-      </View>
+      <Pressable style={styles.button} onPress={onSelectSport}>
+        <Text style={styles.buttonText}>NEXT</Text>
+      </Pressable>
+      <Pressable style={styles.signOutButton} onPress={signOut}>
+        <Text style={styles.buttonText}>SIGN OUT</Text>
+      </Pressable>
     </ScrollView>
   );
 }
