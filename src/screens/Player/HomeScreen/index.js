@@ -9,12 +9,16 @@ import { useSportContext } from '../../../context/SportContext';
 
 let selectedSport = '';
 let selectedSportId = '';
+let selectedState = '';
 
 const HomeScreen = () => {
 
   const { sports } = useSportContext();
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
+  const [state,setState] = useState([]);
+  const [finalCoach, setFinalCoach]= useState([]);
+  const statesNames = [ 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
   
   useEffect(() => {
     if (!sports) {
@@ -30,9 +34,25 @@ const HomeScreen = () => {
 
   const fetchCoaches = async () => {
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
-    setCoaches(results);
+    setCoaches(results)
   };
-
+/*const fetchFinalCoaches = async () => {
+  const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
+  const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
+  console.log("r");
+  console.log(results);
+  console.log("s");
+  console.log(states);
+  setFinalCoach(
+    results.map(result => ({
+      ...result,
+       State: states.find(s => s.state == result.state),
+    })))
+    setCoaches(finalCoach);
+};
+console.log("fc");
+console.log(finalCoach);
+*/
   if (sports.length === 0) {
     return (
         <ActivityIndicator size="large" color="#db4f40" style={{flex: 1}}/>
@@ -57,6 +77,26 @@ const HomeScreen = () => {
           return selectedItem;
         }}
         rowTextForSelection={(item) => {
+          return item;
+        }}
+        buttonStyle={styles.dropdownBtnStyle}
+        buttonTextStyle={styles.dropdownBtnTxtStyle}
+        dropdownStyle={styles.dropdownDropdownStyle}
+        rowStyle={styles.dropdownRowStyle}
+        rowTextStyle={styles.dropdownRowTxtStyle}
+      />
+      <SelectDropdown
+        data={statesNames}
+        defaultValue={state}
+        defaultButtonText={'SELECT COUNTY'}
+        onSelect={(selectedItem) => {
+          selectedState = selectedItem;
+          //fetchFinalCoaches();
+        }}
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item, index) => {
           return item;
         }}
         buttonStyle={styles.dropdownBtnStyle}

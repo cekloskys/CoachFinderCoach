@@ -35,10 +35,16 @@ const PackagesScreen = () => {
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
+      
       DataStore.query(Package, (p) => p.coachID.eq(coachDBUser.id), Predicates.ALL, {
         sort: s => s.price(SortDirection.ASCENDING)
       }).then(setPackages);
       setRefreshing(false);
+      const sorted = packages.sort((a,b) => a.price - b.price);
+      setPackages(sorted);
+      console.log(sorted);
+      console.log("p");
+      console.log(packages);
     } catch (error) {
       console.error(error);
     }
