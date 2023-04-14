@@ -33,6 +33,9 @@ const PackagesScreen = () => {
   }, [coachDBUser]);
 
   const onRefresh = useCallback(async () => {
+    if (!coachDBUser) {
+      return;
+    }
     setRefreshing(true);
     try {
       DataStore.query(Package, (p) => p.coachID.eq(coachDBUser.id), Predicates.ALL, {
@@ -42,7 +45,7 @@ const PackagesScreen = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [refreshing]);
+  }, [refreshing, coachDBUser]);
 
   if (coachDBUser && packages.length === 0) {
     return (
