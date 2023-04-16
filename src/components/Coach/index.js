@@ -42,8 +42,6 @@ const Coach = ({ coach }) => {
     navigation.navigate('Coach Profile', { id: coach.id })
   };
 
-  console.log(avgRating);
-
   return (
     <Pressable style={styles.restaurantContainer} onPress={onPress}>
       <Image
@@ -70,12 +68,8 @@ const Coach = ({ coach }) => {
             {coach.shortDesc}
           </Text>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.subtitle}>Starting Price &#8226; </Text>
-            <Text style={styles.subtitle}>$ {coach.startPrice}</Text>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
             <Text style={styles.subtitle}>Location &#8226; </Text>
-            <Text style={styles.subtitle}>{coach.city}, {coach.state}</Text>
+            <Text style={styles.subtitle}>{coach.state}</Text>
           </View>
         </View>
       </View>

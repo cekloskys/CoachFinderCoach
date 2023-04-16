@@ -13,8 +13,9 @@ const PackagesScreen = () => {
 
   const { packages, setPackages, fetchPackages } = usePackageContext();
   const { coachDBUser } = useCoachContext();
-  
+
   const [refreshing, setRefreshing] = useState(false);
+  const [displayPackages, setDisplayPackages] = useState([]);
 
   const onPress = () => {
     if (!coachDBUser) {
@@ -32,16 +33,24 @@ const PackagesScreen = () => {
     fetchPackages(coachDBUser.id);
   }, [coachDBUser]);
 
+  useEffect(() => {
+    if (!packages) {
+      return;
+    }
+    const sorted = packages.sort((a, b) => b.price - a.price);
+    setDisplayPackages(sorted);
+  }, [packages]);
+
   const onRefresh = useCallback(async () => {
     if (!coachDBUser) {
       return;
     }
     setRefreshing(true);
     try {
-      DataStore.query(Package, (p) => p.coachID.eq(coachDBUser.id), Predicates.ALL, {
-        sort: s => s.price(SortDirection.ASCENDING)
-      }).then(setPackages);
+      DataStore.query(Package, (p) => p.coachID.eq(coachDBUser.id)).then(setPackages);
       setRefreshing(false);
+      const sorted = packages.sort((a, b) => b.price - a.price);
+      setDisplayPackages(sorted);
     } catch (error) {
       console.error(error);
     }
@@ -56,7 +65,7 @@ const PackagesScreen = () => {
   return (
     <View style={styles.page}>
       <FlatList
-        data={packages}
+        data={displayPackages}
         renderItem={({ item, index }) => <CoachPackage pack={item} />}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         keyExtractor={(item, index) => index}

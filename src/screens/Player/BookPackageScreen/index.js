@@ -73,6 +73,7 @@ const BookPackageScreen = () => {
       packageID: pack.id,
       profileID: dbUser.id,
       athleteName: name,
+      athleteAge: age,
       status: 'PENDING',
       startDate: date.toLocaleDateString(),
       startTime: selectedTime,

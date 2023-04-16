@@ -10,7 +10,10 @@ import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react-native';
 import AuthContextProvider from './src/context/AuthContext';
 import SportContextProvider from './src/context/SportContext';
 import { DefaultTheme, Provider } from 'react-native-paper';
-Amplify.configure({ ...awsconfig, Analytics: { disabled: true } });
+Amplify.configure({ ...awsconfig, 
+  Analytics: { disabled: true } 
+});
+
 
 function App() {
   return (

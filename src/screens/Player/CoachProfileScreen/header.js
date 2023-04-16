@@ -22,18 +22,8 @@ const Header = ({ coach }) => {
           borderRadius: 5, 
           marginVertical: 5,
         }}>
-          <Text style={styles.subtitle2}>Starting Price</Text>
-          <Text style={styles.subtitledetail}>$ {coach.startPrice}</Text>
-        </View>
-        <View style={{ 
-          flexDirection: 'row', 
-          backgroundColor: '#909bad', 
-          padding: 10, 
-          borderRadius: 5, 
-          marginVertical: 5,
-        }}>
           <Text style={styles.subtitle2}>Location</Text>
-          <Text style={styles.subtitledetail}>{coach.city}, {coach.state}</Text>
+          <Text style={styles.subtitledetail}>{coach.state}</Text>
         </View>
         <View style={{ 
           backgroundColor: '#909bad', 

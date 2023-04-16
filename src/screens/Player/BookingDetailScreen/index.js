@@ -24,7 +24,7 @@ const BookingDetailScreen = () => {
   }, [book]);
 
   const goToReview = () => {
-    navigation.navigate('Review Booking', {book : book});
+    navigation.navigate('Review Booking', { book: book });
   };
 
   const onPress = () => {
@@ -118,10 +118,12 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
         </View>
       </View>
-      <Pressable
-        style={styles.bookbutton} onPress={goToReview} >
-        <Text style={styles.buttonText}>LEAVE A REVIEW</Text>
-      </Pressable>
+      {book.status === 'COMPLETED' &&
+        <Pressable
+          style={styles.bookbutton} onPress={goToReview} >
+          <Text style={styles.buttonText}>LEAVE A REVIEW</Text>
+        </Pressable>
+      }
       <Ionicons
         name='arrow-back-circle'
         size={45}

@@ -92,18 +92,6 @@ const ProfileScreen = () => {
 
   const updateProfile = async () => {
     const original = await DataStore.query(Profile, dbUser.id);
-    /* const profile = await DataStore.save(
-      Profile.copyOf(dbUser, (updated) => {
-        updated.fullName = fullName;
-        updated.email = email;
-        updated.streetAddress = street;
-        updated.city = city;
-        updated.state = state;
-        updated.zip = zip;
-        updated.phoneNbr = phonenumber;
-      })
-    );
-    setDBUser(profile); */
     const profile = await DataStore.save(
       Profile.copyOf(original, (updated) => {
         updated.fullName = fullName;
