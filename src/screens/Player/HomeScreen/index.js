@@ -18,13 +18,14 @@ const HomeScreen = () => {
   const [coaches, setCoaches] = useState([]);
   const [state,setState] = useState([]);
   const [finalCoach, setFinalCoach]= useState([]);
-  const statesNames = [ 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
+  const statesNames = [ '','Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
   
   useEffect(() => {
     if (!sports) {
       return;
     }
     const display = [];
+    display.push("")
     for (let i = 0; i < sports.length; i++) {
       display.push(sports[i].name);
     }
@@ -32,9 +33,36 @@ const HomeScreen = () => {
     setDisplaySports(display);
   }, [sports]);
 
-  const fetchCoaches = async () => {
+  const fetchCoaches = async (selectedSport,selectedState) => {
+    if((selectedSport == [sports.name]) && (selectedState == ''||selectedState==null)){
     const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
     setCoaches(results)
+    console.log("results")
+      console.log(results)
+    } else if((selectedSport==''||selectedSport==null) && (selectedState == [statesNames])){
+      const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
+      setCoaches(states);
+      console.log("states")
+      console.log(state)
+    }else if ((selectedSport==[sports.name])&&(selectedState==[statesNames])){
+      const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
+      const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
+      console.log("r");
+      console.log(results);
+      console.log("s");
+      console.log(states);
+      setFinalCoach(
+        results.map(result => ({
+          ...result,
+           State: states.find(s => s.state == result.state),
+        })))
+        setCoaches(finalCoach);
+
+
+    }else{
+      console.log('WRONG')
+    }
+
   };
 /*const fetchFinalCoaches = async () => {
   const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
@@ -91,7 +119,7 @@ console.log(finalCoach);
         defaultButtonText={'SELECT COUNTY'}
         onSelect={(selectedItem) => {
           selectedState = selectedItem;
-          //fetchFinalCoaches();
+          fetchCoaches();
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
