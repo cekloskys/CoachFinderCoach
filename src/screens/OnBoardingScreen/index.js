@@ -49,7 +49,7 @@ const OnBoardingScreen = () => {
     const ref = React.useRef(null);
     const Footer = () => {
         return (
-            <View style={{ height: height * 0.25, }}>
+            <View style={{ height: height * 0.2, }}>
                 <TouchableOpacity style={[styles.btn]} onPress={() => navigation.navigate('CoachHomeTabs', { screen: 'Profile' })} >
                     <Text style={{ fontSize: 14, }}>
                         APPLY TO COACH

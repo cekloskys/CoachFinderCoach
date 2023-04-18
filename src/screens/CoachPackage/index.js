@@ -52,7 +52,7 @@ const CoachPackageScreen = () => {
         alert('Package Created.');
         navigation.navigate('Your Packages');
     }
-    
+
     return (
         <ScrollView style={styles.page}>
             <TextInput
@@ -99,7 +99,7 @@ const CoachPackageScreen = () => {
             />
             <View style={styles.row}>
                 <Text style={{ textAlign: 'right', color: 'black' }}>
-                    {longDesc .length} characters (maximum 100 characters)
+                    {longDesc.length} characters (maximum 100 characters)
                 </Text>
             </View>
             <TextInput

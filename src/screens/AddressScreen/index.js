@@ -21,7 +21,7 @@ const AddressScreen = () => {
  // const usStates = new UsaStates();
  // const statesNames = usStates.arrayOf('names');
   
-  const statesNames = [ 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
+  const statesNames = [ 'Bucks', 'Chester', 'Delaware', 'Montgomery', 'Philadelphia'];
 
   const [address, setAddress] = useState(createdCoach?.streetAddress || coachDBUser?.streetAddress || '');
   const [city, setCity] = useState(createdCoach?.city || coachDBUser?.city || '');
