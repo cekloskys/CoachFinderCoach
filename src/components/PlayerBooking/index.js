@@ -9,7 +9,6 @@ const Booking = ({ book }) => {
     navigation.navigate('Booking', { book : book });
   };
 
-
   return (
     <Pressable style={{flexDirection: 'row', margin: 10, alignItems: 'center',}} onPress={onPress}>
         <Image

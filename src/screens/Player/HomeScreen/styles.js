@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#556a8a',
     backgroundColor: '#556a8a',
-    marginVertical: 10,
+    marginVertical: 5,
     fontSize: 16,
   },
   dropdownBtnTxtStyle: { 
@@ -31,6 +31,18 @@ const styles = StyleSheet.create({
     color: '#444',
     textAlign: 'left',
     fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#556a8a',
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
   },
 });
 

@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator, Pressable, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import CoachComponent from '../../../components/Coach';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -6,6 +6,7 @@ import { DataStore } from 'aws-amplify';
 import { Coach } from '../../../models';
 import styles from './styles';
 import { useSportContext } from '../../../context/SportContext';
+import 'localstorage-polyfill';
 
 const HomeScreen = () => {
 
@@ -13,12 +14,18 @@ const HomeScreen = () => {
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
   const [state, setState] = useState([]);
-  //const [finalCoach, setFinalCoach] = useState([]);
-  const statesNames = ['', 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
+  const statesNames = ['', 'Bucks', 'Chester', 'Delaware', 'Montgomery', 'Philadelphia'];
+  const [selectedSportId, setSelectedSportId] = useState('');
+  const [selectedState, setSelectedState] = useState('');
 
-  let selectedSport = '';
-  let selectedSportId = '';
-  let selectedState = '';
+  //let selectedSportId = '';
+  //let selectedState = '';
+
+  localStorage.setItem('sportId', selectedSportId);
+  localStorage.setItem('state', selectedState);
+
+  const sportId = localStorage.getItem('sportId');
+  const st = localStorage.getItem('state');
 
   useEffect(() => {
     if (!sports) {
@@ -34,18 +41,20 @@ const HomeScreen = () => {
   }, [sports]);
 
   const fetchCoaches = async () => {
-    //console.log(selectedSportId);
-    //console.log(selectedState);
+    console.log(sportId);
+    console.log(st);
     let results;
-    if (selectedSportId !== '' && selectedState === '') {
-      results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
-    } else if (selectedState !== '' && selectedSportId === '') {
-      results = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
-    } else if (selectedState !== '' && selectedSportId !== '') {
+    if (sportId !== '' && st === '') {
+      results = await DataStore.query(Coach, (c) => c.sportID.eq(sportId));
+    } else if (st !== '' && sportId === '') {
+      results = await DataStore.query(Coach, (c) => c.state.eq(st));
+    } else if (st !== '' && sportId !== '') {
       results = await DataStore.query(Coach, (c) => c.and(c => [
-        c.sportID.eq(selectedSportId),
-        c.state.eq(selectedState)
+        c.sportID.eq(sportId),
+        c.state.eq(st)
       ]));
+    } else if (sportId === '' && st === '') {
+      results = await DataStore.query(Coach);
     }
     setCoaches(results)
   };
@@ -61,21 +70,22 @@ const HomeScreen = () => {
       <SelectDropdown
         data={displaySports}
         defaultButtonText={'SELECT A SPORT'}
-        onSelect={(selectedItem) => {
-          if (selectedItem === '' || selectedItem === 'SELECT A SPORT') {
-            selectedSportId = '';
+        onSelect={(selectedSport) => {
+          if (selectedSport === '' || selectedSport === 'SELECT A SPORT') {
+            //selectedSportId = '';
+            setSelectedSportId('')
           } else {
-            selectedSport = selectedItem;
             for (let i = 0; i < sports.length; i++) {
               if (sports[i].name === selectedSport) {
-                selectedSportId = sports[i].id
+                //selectedSportId = sports[i].id
+                setSelectedSportId(sports[i].id)
               }
             }
           }
-          fetchCoaches();
+          //fetchCoaches();
         }}
-        buttonTextAfterSelection={(selectedItem) => {
-          return selectedItem;
+        buttonTextAfterSelection={(selectedSport) => {
+          return selectedSport;
         }}
         rowTextForSelection={(item) => {
           return item;
@@ -91,11 +101,14 @@ const HomeScreen = () => {
         defaultValue={state}
         defaultButtonText={'SELECT A COUNTY'}
         onSelect={(selectedItem) => {
-          if (selectedItem === 'SELECT A COUNTY') {
-            selectedState = '';
+          if (selectedItem === '' || selectedItem === 'SELECT A COUNTY') {
+            //selectedState = '';
+            setSelectedState('')
           }
-          selectedState = selectedItem;
-          fetchCoaches();
+          //selectedState = selectedItem;
+          setSelectedState(selectedItem)
+
+          //fetchCoaches();
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
@@ -109,6 +122,10 @@ const HomeScreen = () => {
         rowStyle={styles.dropdownRowStyle}
         rowTextStyle={styles.dropdownRowTxtStyle}
       />
+      <Pressable
+        style={styles.button} onPress={fetchCoaches}>
+        <Text style={styles.buttonText}>SEARCH</Text>
+      </Pressable>
       <FlatList
         data={coaches}
         renderItem={({ item, index }) => <CoachComponent coach={item} />}

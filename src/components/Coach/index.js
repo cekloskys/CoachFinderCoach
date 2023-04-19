@@ -43,35 +43,30 @@ const Coach = ({ coach }) => {
   };
 
   return (
-    <Pressable style={styles.restaurantContainer} onPress={onPress}>
+    <Pressable style={{ flexDirection: 'row', alignItems: 'center', }} onPress={onPress}>
       <Image
         source={{ uri: coach.image }}
-        style={styles.image} />
-      <View>
-        <View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.title}>
-              {coach.fullName}
-            </Text>
-            <RatingComponent
-              type='star'
-              ratingCount={5}
-              imageSize={25}
-              showRating={false}
-              fractions={1}
-              startingValue={avgRating === 0.0 ? 0.0 : avgRating}
-              readonly={true}
-              style={styles.rating}
-            />
-          </View>
-          <Text style={styles.subtitle}>
-            {coach.shortDesc}
-          </Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.subtitle}>Location &#8226; </Text>
-            <Text style={styles.subtitle}>{coach.state}</Text>
-          </View>
+        style={{ width: 80, height: 80, marginRight: 10, borderRadius: 5 }} />
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ fontWeight: '600', fontSize: 18, }}>{coach.fullName}</Text>
+          <RatingComponent
+            type='star'
+            ratingCount={5}
+            imageSize={15}
+            showRating={false}
+            fractions={1}
+            startingValue={avgRating === 0.0 ? 0.0 : avgRating}
+            readonly={true}
+            style={styles.rating}
+          />
         </View>
+        <Text style={{ color: 'grey', fontSize: 14, }}>
+          {coach.shortDesc}
+        </Text>
+        <Text style={{ color: 'grey', fontSize: 14, }}>
+          Location &#8226; {coach.state}
+        </Text>
       </View>
     </Pressable>
   );
