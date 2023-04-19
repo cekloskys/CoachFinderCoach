@@ -73,12 +73,13 @@ const BookPackageScreen = () => {
       packageID: pack.id,
       profileID: dbUser.id,
       athleteName: name,
+      athleteAge: age,
       status: 'PENDING',
       startDate: date.toLocaleDateString(),
       startTime: selectedTime,
     }));
     setNewBooking(newBooking);
-    alert('Booking Approved')
+    alert('Booking Requested')
     navigation.navigate('Search Coaches');
   }
 
@@ -217,7 +218,7 @@ const BookPackageScreen = () => {
       />
       <Pressable
         style={styles.bookbutton} onPress={validation}>
-        <Text style={styles.buttonText}>BOOK PACKAGE</Text>
+        <Text style={styles.buttonText}>REQUEST BOOKING</Text>
       </Pressable>
     </View>
   );

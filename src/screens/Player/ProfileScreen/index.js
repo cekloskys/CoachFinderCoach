@@ -25,7 +25,7 @@ const ProfileScreen = () => {
   const usStates = new UsaStates();
   const statesNames = usStates.arrayOf('names');
 
-  const {sub, dbUser, setDBUser, authUser} = useAuthContext();
+  const { sub, dbUser, setDBUser, authUser } = useAuthContext();
 
   const [fullName, setFullName] = useState(dbUser?.fullName || "");
   const [email, setEmail] = useState(dbUser?.email || authUser?.attributes?.email || "");
@@ -36,6 +36,22 @@ const ProfileScreen = () => {
   const [zip, setZip] = useState(dbUser?.zip || "");
   const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
   const [newProfile, setNewProfile] = useState();
+
+  /* useEffect(() => {
+    if (!dbUser) {
+      return;
+    }
+    const sub = DataStore.observeQuery(Profile, (p) =>
+      p.id.eq(dbUser.id)
+    ).subscribe(({ items }) => {
+      //setDBUser(items[0]);
+      console.log(items[0]);
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
+  }, [dbUser]);*/
 
   useEffect(() => {
     if (dbUser?.fullName) {
@@ -75,8 +91,9 @@ const ProfileScreen = () => {
   };
 
   const updateProfile = async () => {
+    const original = await DataStore.query(Profile, dbUser.id);
     const profile = await DataStore.save(
-      Profile.copyOf(dbUser, (updated) => {
+      Profile.copyOf(original, (updated) => {
         updated.fullName = fullName;
         updated.email = email;
         updated.streetAddress = street;
@@ -212,8 +229,8 @@ const ProfileScreen = () => {
         }}
 
         containerStyle={styles.dropdownBtnStyle}
-        textContainerStyle={{backgroundColor: 'white'}}
-        textInputStyle={{fontSize: 14}}
+        textContainerStyle={{ backgroundColor: 'white' }}
+        textInputStyle={{ fontSize: 14 }}
       />
       <Pressable
         style={styles.button} onPress={Validation}>

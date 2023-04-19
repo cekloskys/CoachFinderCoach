@@ -9,11 +9,7 @@ const PackageContextProvider = ({ children }) => {
     const [packages, setPackages] = useState([]);
 
     const fetchPackages = async (coach) => {
-        DataStore.query(Package, (p) => p.coachID.eq(coach), Predicates.ALL, {
-            sort: s => s.price(SortDirection.ASCENDING)
-          }).then(setPackages);
-          const sorted = packages.sort((a,b) => a.price - b.price);
-        setPackages(sorted);
+        DataStore.query(Package, (p) => p.coachID.eq(coach)).then(setPackages);
     };
 
     return (<PackageContext.Provider value={{ packages, setPackages, fetchPackages }}>

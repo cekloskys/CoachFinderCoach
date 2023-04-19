@@ -24,9 +24,12 @@ const BookingDetailScreen = () => {
   }, [book]);
 
   const goToReview = () => {
-    navigation.navigate('Review Booking', {book : book});
+    navigation.navigate('Review Booking', { book: book });
   };
 
+  const payment = () => {
+    console.log("payment")
+  };
   const onPress = () => {
     navigation.navigate('Your Bookings');
   };
@@ -118,10 +121,18 @@ const BookingDetailScreen = () => {
           <Text style={styles.subtitledetail2}>{packages.shortDesc} {packages.longDesc}</Text>
         </View>
       </View>
-      <Pressable
-        style={styles.bookbutton} onPress={goToReview} >
-        <Text style={styles.buttonText}>LEAVE A REVIEW</Text>
-      </Pressable>
+      {book.status === 'COMPLETED' &&
+        <Pressable
+          style={styles.bookbutton} onPress={goToReview} >
+          <Text style={styles.buttonText}>LEAVE A REVIEW</Text>
+        </Pressable>
+      }
+      {book.status === 'IN_PROGRESS' &&
+        <Pressable
+          style={styles.bookbutton} onPress={payment}>
+          <Text style={styles.buttonText}>MAKE A PAYMENT</Text>
+        </Pressable>
+      }
       <Ionicons
         name='arrow-back-circle'
         size={45}

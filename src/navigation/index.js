@@ -21,6 +21,7 @@ import { Foundation, FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector
 import CoachPackageScreen from "../screens/CoachPackage";
 import BookingReviewScreen from "../screens/Player/BookingReviewScreen";
 import EditCoachPackageScreen from "../screens/EditCoachPackage";
+import PlayerReviewScreen from "../screens/Player/ReviewScreen";
 
 const Stack = createStackNavigator();
 
@@ -159,6 +160,7 @@ const HomeStackNavigator = () => {
         <HomeStack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#ebd4be' } }}>
             <HomeStack.Screen name="Search Coaches" component={PlayerHomeScreen} />
             <HomeStack.Screen name="Availability" component={PlayerAvailabilityScreen} options={{ headerShown: false }} />
+            <HomeStack.Screen name="Reviews" component={PlayerReviewScreen}options={{ headerShown: false }} />
             <HomeStack.Screen name={'Coach Profile'} component={PlayerCoachProfileScreen} options={{ headerShown: false }} />
             <HomeStack.Screen name="Packages" component={PlayerPackagesScreen} />
             <HomeStack.Screen name="Book Package" component={PlayerBookPackageScreen} />

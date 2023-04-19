@@ -36,7 +36,7 @@ const BookingDetailScreen = () => {
     const booking = await DataStore.query(Booking, book.id);
     await DataStore.save(
       Booking.copyOf(booking, (updated) => {
-        updated.status = 'PENDING';
+        updated.status = 'IN_PROGRESS';
       })
     );
     alert('Booking accepted.')
@@ -54,7 +54,7 @@ const BookingDetailScreen = () => {
     navigation.navigate('Your Bookings');
   }; */
 
-  const cancel = async () => {
+ /* const cancel = async () => {
     const booking = await DataStore.query(Booking, book.id);
     await DataStore.save(
       Booking.copyOf(booking,(updated)=>{
@@ -63,7 +63,7 @@ const BookingDetailScreen = () => {
     );
     alert('Booking cancelled.')
     navigation.navigate('Your Bookings');
-  };
+  };*/
 
   const complete = async () => {
     const booking = await DataStore.query(Booking, book.id);
@@ -165,9 +165,6 @@ const BookingDetailScreen = () => {
         </View>
         <Pressable style={styles.acceptButton} onPress={accept}>
           <Text style={styles.buttonText}>ACCEPT</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={cancel}>
-          <Text style={styles.buttonText}>CANCEL</Text>
         </Pressable>
         <Pressable style={styles.completeButton} onPress={complete}>
           <Text style={styles.buttonText}>COMPLETED</Text>

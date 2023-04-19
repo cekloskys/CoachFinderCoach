@@ -7,25 +7,25 @@ import { Coach } from '../../../models';
 import styles from './styles';
 import { useSportContext } from '../../../context/SportContext';
 
-let selectedSport = '';
-let selectedSportId = '';
-let selectedState = '';
-
 const HomeScreen = () => {
 
   const { sports } = useSportContext();
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
-  const [state,setState] = useState([]);
-  const [finalCoach, setFinalCoach]= useState([]);
-  const statesNames = [ '','Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
-  
+  const [state, setState] = useState([]);
+  //const [finalCoach, setFinalCoach] = useState([]);
+  const statesNames = ['', 'Bucks', 'Chester', 'Deleware', 'Montgomery', 'Philadelphia'];
+
+  let selectedSport = '';
+  let selectedSportId = '';
+  let selectedState = '';
+
   useEffect(() => {
     if (!sports) {
       return;
     }
     const display = [];
-    display.push("")
+    display.push('');
     for (let i = 0; i < sports.length; i++) {
       display.push(sports[i].name);
     }
@@ -33,57 +33,26 @@ const HomeScreen = () => {
     setDisplaySports(display);
   }, [sports]);
 
-  const fetchCoaches = async (selectedSport,selectedState) => {
-    if((selectedSport == [sports.name]) && (selectedState == ''||selectedState==null)){
-    const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
-    setCoaches(results)
-    console.log("results")
-      console.log(results)
-    } else if((selectedSport==''||selectedSport==null) && (selectedState == [statesNames])){
-      const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
-      setCoaches(states);
-      console.log("states")
-      console.log(state)
-    }else if ((selectedSport==[sports.name])&&(selectedState==[statesNames])){
-      const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
-      const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
-      console.log("r");
-      console.log(results);
-      console.log("s");
-      console.log(states);
-      setFinalCoach(
-        results.map(result => ({
-          ...result,
-           State: states.find(s => s.state == result.state),
-        })))
-        setCoaches(finalCoach);
-
-
-    }else{
-      console.log('WRONG')
+  const fetchCoaches = async () => {
+    //console.log(selectedSportId);
+    //console.log(selectedState);
+    let results;
+    if (selectedSportId !== '' && selectedState === '') {
+      results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
+    } else if (selectedState !== '' && selectedSportId === '') {
+      results = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
+    } else if (selectedState !== '' && selectedSportId !== '') {
+      results = await DataStore.query(Coach, (c) => c.and(c => [
+        c.sportID.eq(selectedSportId),
+        c.state.eq(selectedState)
+      ]));
     }
-
+    setCoaches(results)
   };
-/*const fetchFinalCoaches = async () => {
-  const results = await DataStore.query(Coach, (c) => c.sportID.eq(selectedSportId));
-  const states = await DataStore.query(Coach, (c) => c.state.eq(selectedState));
-  console.log("r");
-  console.log(results);
-  console.log("s");
-  console.log(states);
-  setFinalCoach(
-    results.map(result => ({
-      ...result,
-       State: states.find(s => s.state == result.state),
-    })))
-    setCoaches(finalCoach);
-};
-console.log("fc");
-console.log(finalCoach);
-*/
+
   if (sports.length === 0) {
     return (
-        <ActivityIndicator size="large" color="#db4f40" style={{flex: 1}}/>
+      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
     )
   }
 
@@ -93,10 +62,14 @@ console.log(finalCoach);
         data={displaySports}
         defaultButtonText={'SELECT A SPORT'}
         onSelect={(selectedItem) => {
-          selectedSport = selectedItem;
-          for (let i = 0; i < sports.length; i++) {
-            if (sports[i].name === selectedSport) {
-              selectedSportId = sports[i].id
+          if (selectedItem === '' || selectedItem === 'SELECT A SPORT') {
+            selectedSportId = '';
+          } else {
+            selectedSport = selectedItem;
+            for (let i = 0; i < sports.length; i++) {
+              if (sports[i].name === selectedSport) {
+                selectedSportId = sports[i].id
+              }
             }
           }
           fetchCoaches();
@@ -116,8 +89,11 @@ console.log(finalCoach);
       <SelectDropdown
         data={statesNames}
         defaultValue={state}
-        defaultButtonText={'SELECT COUNTY'}
+        defaultButtonText={'SELECT A COUNTY'}
         onSelect={(selectedItem) => {
+          if (selectedItem === 'SELECT A COUNTY') {
+            selectedState = '';
+          }
           selectedState = selectedItem;
           fetchCoaches();
         }}

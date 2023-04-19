@@ -22,7 +22,7 @@ const AvailabilityScreen = () => {
   const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate('Coach Profile');
+    navigation.navigate('Coach Profile', {coach : coach});
   };
 
   const coach = route.params?.coach;
@@ -33,6 +33,7 @@ const AvailabilityScreen = () => {
     }
     DataStore.query(Availability, (a) => a.coachID.eq(coach.id)).then(setAvailability);
   }, [coach]);
+
 
   const formatAvailability = (dayStr) => {
     let dayArr = [];
@@ -75,9 +76,9 @@ const AvailabilityScreen = () => {
         ListHeaderComponent={() => <Header coach={coach} />}
         ListFooterComponent={() =>
           <Pressable
-            style={styles.button} onPress={() => navigation.navigate('Packages', { coach: coach })}>
+            style={styles.button} onPress={() => navigation.navigate('Reviews', { coach: coach })}>
             <Text style={styles.buttonText}>
-              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} PACKAGES
+              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} REVIEWS
             </Text>
           </Pressable>
         }

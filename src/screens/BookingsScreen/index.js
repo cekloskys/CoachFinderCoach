@@ -40,12 +40,13 @@ const BookingsScreen = () => {
   }, [bookings]);
 
   const onRefresh = useCallback(async () => {
-    if(!bookings){
+    if (!bookings){
       return;
     }
-    if(!coachDBUser){
+    if (!coachDBUser){
       return;
     }
+    console.log('Refreshing');
     setRefreshing(true);
     try {
       DataStore.query(Booking, (b) => b.coachID.eq(coachDBUser.id)).then(setBookings);
@@ -60,7 +61,7 @@ const BookingsScreen = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [refreshing,bookings, coachDBUser]);
+  }, [refreshing, bookings, coachDBUser]);
 
   if (coachDBUser && bookings.length === 0) {
     return (

@@ -6,7 +6,7 @@ import {
     FlatList,
     View,
     Text,
-    TouchableOpacity, Image
+    TouchableOpacity, Image, Linking,
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,16 +19,25 @@ const slides = [
         id: '1',
         image: require('../../../assets/logo.png'),
         title: 'Welcome to Coach Finder.',
-        subtitle: 'Would you like to find a coach or apply to coach?' 
+        subtitle: 'Would you like to find a coach or apply to coach?'
     },
 ];
 
 const Slide = ({ item }) => {
+
+    const onPress = () =>
+        Linking.canOpenURL('https://giftoflifechc.s3.amazonaws.com/coach-finder-logo.png').then(() => {
+            Linking.openURL('https://giftoflifechc.s3.amazonaws.com/coach-finder-logo.png');
+        });
+
     return (
         <View style={{ alignItems: 'center', flex: 1 }}>
             <Image source={item.image} style={{ height: '60%', width }} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.subtitle}>{item.subtitle}</Text>
+            <TouchableOpacity onPress={onPress}>
+                <Text style={styles.visittitle}>Visit us on our website <Text style={{fontWeight: 'bold',}}>www.coachfinder.com</Text></Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -84,6 +93,15 @@ const styles = StyleSheet.create({
         //color: COLORS.white,
         color: '#f5ece4',
         fontSize: 20,
+        maxWidth: '80%',
+        marginVertical: 10,
+        textAlign: 'center',
+        width: 350,
+    },
+    visittitle: {
+        //color: COLORS.white,
+        color: '#f5ece4',
+        fontSize: 14,
         maxWidth: '80%',
         marginVertical: 10,
         textAlign: 'center',
