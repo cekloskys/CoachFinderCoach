@@ -41,8 +41,6 @@ const HomeScreen = () => {
   }, [sports]);
 
   const fetchCoaches = async () => {
-    console.log(sportId);
-    console.log(st);
     let results;
     if (sportId !== '' && st === '') {
       results = await DataStore.query(Coach, (c) => c.sportID.eq(sportId));

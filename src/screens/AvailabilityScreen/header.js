@@ -23,6 +23,8 @@ const Header = ({ coach }) => {
   let selectedTimes = [];
   let availability = [];
 
+  console.log(coach);
+
   const dayOptions = [
     {
       id: '1',
@@ -192,10 +194,9 @@ const Header = ({ coach }) => {
         });
       }
     }
-
-    if (coachDBAvailability) {
+    
+    if (coachDBUser) {
       updateCoach(coachDBUser, coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
-      console.log(coach.accreditation);
       alert('Coach updated.');
     } else {
       createCoach(coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);

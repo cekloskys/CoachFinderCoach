@@ -127,6 +127,7 @@ const CoachContextProvider = ({ children }) => {
             image: coach.image,
             sportID: coach.sport,
             startPrice: 100.0,
+            sub: sub,
         }));
         setCreatedCoach(newCoach);
         createCoachPosition(position, newCoach.id);
