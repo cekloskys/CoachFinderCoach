@@ -6,10 +6,12 @@ import styles from './styles';
 import PackageComponent from '../../../components/Package';
 import { useRoute } from '@react-navigation/native';
 
+
 const PackagesScreen = () => {
   const [packages, setPackages] = useState([]);
   const [displayPackages, setDisplayPackages] = useState([]);
 
+ 
   const route = useRoute();
   const coach = route.params?.coach;
 
@@ -21,7 +23,7 @@ const PackagesScreen = () => {
     if (!packages) {
       return;
     }
-    const sorted = packages.sort((a, b) => b.price - a.price);
+    const sorted = packages.sort((a, b) => a.price - b.price);
     setDisplayPackages(sorted);
   }, [packages]);
 

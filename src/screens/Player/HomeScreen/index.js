@@ -7,10 +7,12 @@ import { Coach } from '../../../models';
 import styles from './styles';
 import { useSportContext } from '../../../context/SportContext';
 import 'localstorage-polyfill';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const HomeScreen = () => {
 
   const { sports } = useSportContext();
+  const {dbUser} =useAuthContext();
   const [displaySports, setDisplaySports] = useState([]);
   const [coaches, setCoaches] = useState([]);
   const [state, setState] = useState([]);
@@ -43,6 +45,10 @@ const HomeScreen = () => {
   const fetchCoaches = async () => {
     console.log(sportId);
     console.log(st);
+    
+      if (!dbUser) {
+        alert('You must create a profile before you may search for a coach.')
+      } else {
     let results;
     if (sportId !== '' && st === '') {
       results = await DataStore.query(Coach, (c) => c.sportID.eq(sportId));
@@ -57,7 +63,7 @@ const HomeScreen = () => {
       results = await DataStore.query(Coach);
     }
     setCoaches(results)
-  };
+  }};
 
   if (sports.length === 0) {
     return (

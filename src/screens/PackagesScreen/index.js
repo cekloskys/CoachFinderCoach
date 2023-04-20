@@ -37,7 +37,7 @@ const PackagesScreen = () => {
     if (!packages) {
       return;
     }
-    const sorted = packages.sort((a, b) => b.price - a.price);
+    const sorted = packages.sort((a, b) => a.price - b.price);
     setDisplayPackages(sorted);
   }, [packages]);
 
