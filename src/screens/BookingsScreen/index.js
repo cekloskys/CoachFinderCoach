@@ -63,11 +63,11 @@ const BookingsScreen = () => {
     }
   }, [refreshing, bookings, coachDBUser]);
 
-  if (coachDBUser && bookings.length === 0) {
+  /* if (coachDBUser && bookings.length === 0) {
     return (
       <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
     )
-  }
+  } */
 
   return (
     <View style={styles.page}>

@@ -45,10 +45,9 @@ const HomeScreen = () => {
   const fetchCoaches = async () => {
     console.log(sportId);
     console.log(st);
-    
-      if (!dbUser) {
-        alert('You must create a profile before you may search for a coach.')
-      } else {
+    if (!dbUser) {
+      alert('You must create a profile before you may search for a coach.')
+    } else {
     let results;
     if (sportId !== '' && st === '') {
       results = await DataStore.query(Coach, (c) => c.sportID.eq(sportId));
