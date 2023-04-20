@@ -56,11 +56,11 @@ const PackagesScreen = () => {
     }
   }, [refreshing, coachDBUser]);
 
-  if (coachDBUser && packages.length === 0) {
+  /* if (coachDBUser && packages.length === 0) {
     return (
       <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
     )
-  }
+  } */
 
   return (
     <View style={styles.page}>

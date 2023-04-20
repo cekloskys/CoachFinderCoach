@@ -79,7 +79,7 @@ const BookPackageScreen = () => {
       startTime: selectedTime,
     }));
     setNewBooking(newBooking);
-    alert('Booking Approved')
+    alert('Booking Created.')
     navigation.navigate('Search Coaches');
   }
 
