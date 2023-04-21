@@ -35,7 +35,7 @@ const ProfileScreen = () => {
   const [state, setState] = useState(dbUser?.state || "");
   const [zip, setZip] = useState(dbUser?.zip || "");
   const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
-  const [newProfile, setNewProfile] = useState();
+  
 
   /* useEffect(() => {
     if (!dbUser) {
@@ -86,7 +86,7 @@ const ProfileScreen = () => {
       sub
     })
     );
-    setNewProfile(newProfile);
+    setDBUser(newProfile);
     alert('Profile Approved')
   };
 
@@ -106,7 +106,7 @@ const ProfileScreen = () => {
     setDBUser(profile);
     alert('Profile Updated')
   };
-
+console.log(dbUser);
   const Validation = async () => {
     if (!fullName) {
       alert('Please enter your fullname.');
@@ -233,7 +233,7 @@ const ProfileScreen = () => {
         textInputStyle={{ fontSize: 14 }}
       />
       <Pressable
-        style={styles.button} onPress={Validation}>
+        style={styles.button} onPress={Validation} >
         <Text style={styles.buttonText}>SAVE</Text>
       </Pressable>
       <Pressable
