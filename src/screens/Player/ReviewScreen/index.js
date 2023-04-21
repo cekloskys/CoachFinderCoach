@@ -54,7 +54,7 @@ const ReviewsScreen = () => {
           <Pressable
             style={styles.button} onPress={() => navigation.navigate('Packages', { coach: coach })}>
             <Text style={styles.buttonText}>
-              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} PCKAGES
+              VIEW {coach.fullName?.toUpperCase()}{coach.fullName?.charAt(coach.fullName?.length - 1) === 's' ? "'" : "'s".toUpperCase()} PACKAGES
             </Text>
           </Pressable>
         }

@@ -130,7 +130,7 @@ const BookingDetailScreen = () => {
       {book.status === 'IN_PROGRESS' &&
         <Pressable
           style={styles.bookbutton} onPress={payment}>
-          <Text style={styles.buttonText}>MAKE A PAYMENT</Text>
+          <Text style={styles.buttonText}>MAKE PAYMENT</Text>
         </Pressable>
       }
       <Ionicons
