@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Booking, Availability, Coach } from '../../../models';
 import { DataStore } from 'aws-amplify';
 import { useAuthContext } from '../../../context/AuthContext';
+import { ScrollView } from 'react-native';
 
 const BookPackageScreen = () => {
   const route = useRoute();
@@ -152,7 +153,7 @@ const BookPackageScreen = () => {
   }
 
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
       <TextInput
         value={name}
         onChangeText={value => setName(value)}
@@ -220,7 +221,7 @@ const BookPackageScreen = () => {
         style={styles.bookbutton} onPress={validation}>
         <Text style={styles.buttonText}>REQUEST BOOKING</Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
