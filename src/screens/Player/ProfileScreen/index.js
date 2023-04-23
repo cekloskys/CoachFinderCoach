@@ -9,6 +9,7 @@ import { Auth, DataStore } from 'aws-amplify';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useEffect } from 'react';
 import { useSportContext } from '../../../context/SportContext';
+import { useNavigation } from '@react-navigation/native';
 
 const validator = require('validator');
 
@@ -17,6 +18,8 @@ const UsaStates = require('usa-states').UsaStates;
 const ProfileScreen = () => {
 
   const { sports } = useSportContext();
+
+  const navigation = useNavigation();
 
   const [formattedValue, setFormattedValue] = useState('');
 
@@ -35,23 +38,6 @@ const ProfileScreen = () => {
   const [state, setState] = useState(dbUser?.state || "");
   const [zip, setZip] = useState(dbUser?.zip || "");
   const [phonenumber, setPhonenumber] = useState(dbUser?.phoneNbr || "");
-  
-
-  /* useEffect(() => {
-    if (!dbUser) {
-      return;
-    }
-    const sub = DataStore.observeQuery(Profile, (p) =>
-      p.id.eq(dbUser.id)
-    ).subscribe(({ items }) => {
-      //setDBUser(items[0]);
-      console.log(items[0]);
-    });
-
-    return () => {
-      sub.unsubscribe();
-    };
-  }, [dbUser]);*/
 
   useEffect(() => {
     if (dbUser?.fullName) {
@@ -87,7 +73,8 @@ const ProfileScreen = () => {
     })
     );
     setDBUser(newProfile);
-    alert('Profile Approved')
+    alert('Profile Saved.')
+    navigation.navigate('Search Coaches');
   };
 
   const updateProfile = async () => {
@@ -104,9 +91,9 @@ const ProfileScreen = () => {
       })
     );
     setDBUser(profile);
-    alert('Profile Updated')
+    alert('Profile Updated.')
   };
-console.log(dbUser);
+
   const Validation = async () => {
     if (!fullName) {
       alert('Please enter your fullname.');

@@ -24,6 +24,7 @@ const BookingReviewScreen = () => {
             ratingBookingId: book.id
         }));
         setNewRating(newRating);
+        alert('Review submitted.')
         navigation.navigate('Your Bookings');
     };
 
