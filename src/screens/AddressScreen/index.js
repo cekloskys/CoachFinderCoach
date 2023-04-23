@@ -18,17 +18,15 @@ const AddressScreen = () => {
   const { authUser } = useAuthContext();
 
   const navigation = useNavigation();
- // const usStates = new UsaStates();
- // const statesNames = usStates.arrayOf('names');
   
   const statesNames = [ 'Bucks', 'Chester', 'Delaware', 'Montgomery', 'Philadelphia'];
 
-  const [address, setAddress] = useState(createdCoach?.streetAddress || coachDBUser?.streetAddress || '');
-  const [city, setCity] = useState(createdCoach?.city || coachDBUser?.city || '');
-  const [zip, setZip] = useState(createdCoach?.zip || coachDBUser?.zip || '');
-  const [state, setState] = useState(createdCoach?.state || coachDBUser?.state || '');
-  const [email, setEmail] = useState(authUser?.attributes?.email || createdCoach?.email || coachDBUser?.email || '');
-  const [phonenumber, setPhonenumber] = useState(createdCoach?.phoneNbr || coachDBUser?.phoneNbr || '');
+  const [address, setAddress] = useState( coachDBUser?.streetAddress || createdCoach?.streetAddress || '');
+  const [city, setCity] = useState(coachDBUser?.city || createdCoach?.city || '');
+  const [zip, setZip] = useState(coachDBUser?.zip || createdCoach?.zip || '');
+  const [state, setState] = useState(coachDBUser?.state || createdCoach?.state || '');
+  const [email, setEmail] = useState(authUser?.attributes?.email || coachDBUser?.email || createdCoach?.email || '');
+  const [phonenumber, setPhonenumber] = useState(coachDBUser?.phoneNbr || createdCoach?.phoneNbr || '');
   const [formattedValue, setFormattedValue] = useState("");
 
   const phoneInput = useRef(null);

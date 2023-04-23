@@ -3,13 +3,14 @@ import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify';
-import { Rating } from '../../models';
+import { Rating, Sport } from '../../models';
 import { Rating as RatingComponent } from 'react-native-ratings';
 
 const Coach = ({ coach }) => {
   const navigation = useNavigation();
   const [coachRatings, setCoachRatings] = useState([]);
   const [avgRating, setAvgRating] = useState(0.0);
+  const [coachSport, setCoachSport] = useState('');
 
   useEffect(() => {
     if (!coach) {
@@ -22,6 +23,18 @@ const Coach = ({ coach }) => {
     }
 
     fetchRatings(coach);
+  }, [coach]);
+
+  useEffect(() => {
+    if (!coach) {
+      return;
+    }
+
+    const fetchSport = async (coach) => {
+      const result = await DataStore.query(Sport, coach.sportID);
+      setCoachSport(result.name);
+    }
+    fetchSport(coach);
   }, [coach]);
 
   const getAvgRating = async () => {
@@ -43,7 +56,7 @@ const Coach = ({ coach }) => {
   };
 
   return (
-    <Pressable style={{ flexDirection: 'row', alignItems: 'center', }} onPress={onPress}>
+    <Pressable style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 5,}} onPress={onPress}>
       <Image
         source={{ uri: coach.image }}
         style={{ width: 80, height: 80, marginRight: 10, borderRadius: 5 }} />
@@ -62,7 +75,7 @@ const Coach = ({ coach }) => {
           />
         </View>
         <Text style={{ color: 'grey', fontSize: 14, }}>
-          {coach.shortDesc}
+          Sport &#8226; {coachSport}
         </Text>
         <Text style={{ color: 'grey', fontSize: 14, }}>
           Location &#8226; {coach.state}

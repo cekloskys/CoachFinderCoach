@@ -4,26 +4,40 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import { useCoachContext } from '../../context/CoachContext';
+import { DataStore } from 'aws-amplify';
+import { Coach } from '../../models';
 
 const Header = ({ coach }) => {
 
-  const { createCoach, 
-    createdCoachAvailability, 
-    coachDBAvailability, 
-    coachDBUser, 
+  const { createCoach,
+    createdCoachAvailability,
+    coachDBAvailability,
+    coachDBUser,
     updateCoach,
-   } = useCoachContext();
-  
+    createdCoach,
+    sub,
+    setCoachDBUser,
+  } = useCoachContext();
+
   const navigation = useNavigation();
 
   const [days, setDays] = useState([]);
   const [times, setTimes] = useState([]);
-  
+
   let selectedDays = [];
   let selectedTimes = [];
   let availability = [];
 
-  console.log(coach);
+  useEffect(() => {
+    if (!createdCoach) {
+      return;
+    }
+    if (!sub) {
+      return;
+    }
+    DataStore.query(Coach, (coach) => coach.sub.eq(sub)).then((coaches) =>
+      setCoachDBUser(coaches[0]));
+  }, [createdCoach, sub]);
 
   const dayOptions = [
     {
@@ -112,51 +126,51 @@ const Header = ({ coach }) => {
   ];
 
   useEffect(() => {
-    if (createdCoachAvailability.length != 0) {
-      let result = [];
-      for (let i = 0; i < createdCoachAvailability.length; i++) {
-        var tempDay = dayOptions.find(d => d.name == createdCoachAvailability[i].day);
-        if (!result.includes(tempDay.id)){
-          result.push(tempDay.id);
-        }
-      }
-      setDays(result);
-    }
     if (coachDBAvailability.length != 0) {
       let result = [];
       for (let i = 0; i < coachDBAvailability.length; i++) {
         var tempDay = dayOptions.find(d => d.name == coachDBAvailability[i].day);
-        if (!result.includes(tempDay.id)){
+        if (!result.includes(tempDay.id)) {
+          result.push(tempDay.id);
+        }
+      }
+      setDays(result);
+    }
+    if (createdCoachAvailability.length != 0) {
+      let result = [];
+      for (let i = 0; i < createdCoachAvailability.length; i++) {
+        var tempDay = dayOptions.find(d => d.name == createdCoachAvailability[i].day);
+        if (!result.includes(tempDay.id)) {
           result.push(tempDay.id);
         }
       }
       setDays(result);
     }
   }, [createdCoachAvailability, coachDBAvailability]);
-  
+
   useEffect(() => {
-    if (createdCoachAvailability.length != 0) {
-      let result = [];
-      for (let i = 0; i < createdCoachAvailability.length; i++) {
-        var tempTime = timeOptions.find(d => d.name == createdCoachAvailability[i].time);
-        if (!result.includes(tempTime.id)){
-          result.push(tempTime.id);
-        }   
-      }
-      setTimes(result);
-    }
     if (coachDBAvailability.length != 0) {
       let result = [];
       for (let i = 0; i < coachDBAvailability.length; i++) {
         var tempTime = timeOptions.find(d => d.name == coachDBAvailability[i].time);
-        if (!result.includes(tempTime.id)){
+        if (!result.includes(tempTime.id)) {
           result.push(tempTime.id);
-        }   
+        }
+      }
+      setTimes(result);
+    }
+    if (createdCoachAvailability.length != 0) {
+      let result = [];
+      for (let i = 0; i < createdCoachAvailability.length; i++) {
+        var tempTime = timeOptions.find(d => d.name == createdCoachAvailability[i].time);
+        if (!result.includes(tempTime.id)) {
+          result.push(tempTime.id);
+        }
       }
       setTimes(result);
     }
   }, [createdCoachAvailability, coachDBAvailability]);
-  
+
   const onSelectedDaysChange = (days) => {
     setDays(days);
   };
@@ -194,18 +208,20 @@ const Header = ({ coach }) => {
         });
       }
     }
-    
+
     if (coachDBUser) {
+      updateCoach(coachDBUser, coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
+      alert('Coach updated.');
+    } else if (createdCoach) {
       updateCoach(coachDBUser, coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
       alert('Coach updated.');
     } else {
       createCoach(coach, coach.position, coach.accreditation, coach.age, coach.specialties, availability);
       alert('Coach created.');
     }
-    
     navigation.navigate('Basic Information');
   }
-  
+
   return (
     <View style={styles.page}>
       <View style={styles.row}>
@@ -222,7 +238,7 @@ const Header = ({ coach }) => {
           tagTextColor="#556a8a"
           selectedItemTextColor="#CCC"
           selectedItemIconColor="#CCC"
-          itemTextColor="#000" 
+          itemTextColor="#000"
           textColor='white'
           fontSize={14}
           searchInputStyle={{

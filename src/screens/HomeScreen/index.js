@@ -16,11 +16,11 @@ const HomeScreen = () => {
 
   const navigation = useNavigation();
 
-  const [image, setImage] = useState(createdCoach?.image || coachDBUser?.image || '');
+  const [image, setImage] = useState(coachDBUser?.image || createdCoach?.image || '');
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState('');
-  const [name, setName] = useState(createdCoach?.fullName || coachDBUser?.fullName || '');
+  const [name, setName] = useState(coachDBUser?.fullName || createdCoach?.fullName || '');
 
   const [sport, setSport] = useState('');
   const [displaySports, setDisplaySports] = useState([]);
@@ -31,39 +31,39 @@ const HomeScreen = () => {
   const [coachPosition, setCoachPosition] = useState('');
 
   useEffect(() => {
-    if (createdCoach?.dob) {
-      setDate(new Date(createdCoach?.dob));
-      setSelectedDate(createdCoach?.dob);
-    }
     if (coachDBUser?.dob) {
       setDate(new Date(coachDBUser?.dob));
       setSelectedDate(coachDBUser?.dob);
     }
-    if (createdCoach?.fullName) {
-      setName(createdCoach?.fullName);
-    }
     if (coachDBUser?.fullName) {
       setName(coachDBUser?.fullName);
-    }
-    if (createdCoach?.image) {
-      setImage(createdCoach?.image);
     }
     if (coachDBUser?.image) {
       setImage(coachDBUser?.image);
     }
+    if (createdCoach?.dob) {
+      setDate(new Date(createdCoach?.dob));
+      setSelectedDate(createdCoach?.dob);
+    }
+    if (createdCoach?.fullName) {
+      setName(createdCoach?.fullName);
+    }
+    if (createdCoach?.image) {
+      setImage(createdCoach?.image);
+    }
   }, [createdCoach, coachDBUser]);
 
   useEffect(() => {
-    if (createdCoach && sports.length != 0) {
-      const result = sports.find(s => s.id == createdCoach.sportID);
-      setCoachSport(result.name);
-      setSport(result.name);
-    }
     if (coachDBUser && sports.length != 0) {
       const result = sports.find(s => s.id == coachDBUser.sportID);
       setCoachSport(result.name);
       setSport(result.name);
     }
+    if (createdCoach && sports.length != 0) {
+      const result = sports.find(s => s.id == createdCoach.sportID);
+      setCoachSport(result.name);
+      setSport(result.name);
+    } 
   }, [createdCoach, sports, coachDBUser]);
 
   useEffect(() => {
@@ -79,17 +79,16 @@ const HomeScreen = () => {
   }, [sports]);
 
   useEffect(() => {
-    if (createdCoachPosition && positions.length != 0) {
-      const result = positions.find(p => p.id == createdCoachPosition.positionCoachPositionId);
-      setCoachPosition(result.name);
-      setPosition(result.name);
-    }
     if (coachDBPosition && positions.length != 0) {
       const result = positions.find(p => p.id == coachDBPosition.positionCoachPositionId);
       setCoachPosition(result.name);
       setPosition(result.name);
     }
-
+    if (createdCoachPosition && positions.length != 0) {
+      const result = positions.find(p => p.id == createdCoachPosition.positionCoachPositionId);
+      setCoachPosition(result.name);
+      setPosition(result.name);
+    }
   }, [createdCoachPosition, positions, coachDBPosition]);
 
   useEffect(() => {

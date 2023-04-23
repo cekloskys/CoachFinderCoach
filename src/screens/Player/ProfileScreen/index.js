@@ -141,7 +141,6 @@ const ProfileScreen = () => {
     } else {
       await createNewProfile();
     }
-
   }
 
   const signOut = async () => {
@@ -154,6 +153,8 @@ const ProfileScreen = () => {
       <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
     )
   }
+
+  console.log(dbUser);
 
   return (
     <ScrollView style={styles.page}>

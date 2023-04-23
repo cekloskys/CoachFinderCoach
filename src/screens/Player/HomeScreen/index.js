@@ -8,6 +8,7 @@ import styles from './styles';
 import { useSportContext } from '../../../context/SportContext';
 import 'localstorage-polyfill';
 import { useAuthContext } from '../../../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
 
@@ -18,16 +19,20 @@ const HomeScreen = () => {
   const [state, setState] = useState([]);
   const statesNames = ['', 'Bucks', 'Chester', 'Delaware', 'Montgomery', 'Philadelphia'];
   const [selectedSportId, setSelectedSportId] = useState('');
+  const [selectedSportName, setSelectedSportName] = useState('');
   const [selectedState, setSelectedState] = useState('');
+  const navigation = useNavigation();
 
-  //let selectedSportId = '';
-  //let selectedState = '';
 
   localStorage.setItem('sportId', selectedSportId);
+  localStorage.setItem('sportName', selectedSportName);
   localStorage.setItem('state', selectedState);
 
   const sportId = localStorage.getItem('sportId');
+  const sportName = localStorage.getItem('sportName');
   const st = localStorage.getItem('state');
+
+  console.log(dbUser);
 
   useEffect(() => {
     if (!sports) {
@@ -43,10 +48,10 @@ const HomeScreen = () => {
   }, [sports]);
 
   const fetchCoaches = async () => {
-    console.log(sportId);
-    console.log(st);
+    
     if (!dbUser) {
       alert('You must create a profile before you may search for a coach.')
+      navigation.navigate('Profile');
     } else {
     let results;
     if (sportId !== '' && st === '') {
@@ -62,6 +67,15 @@ const HomeScreen = () => {
       results = await DataStore.query(Coach);
     }
     setCoaches(results)
+    if (results.length === 0) {
+      if (st === '' || st === 'SELECT A COUNTY') {
+        alert('There are no ' + sportName + ' coaches available at the present time.');
+      } else if (sportName=== '' || sportName === 'SELECT A SPORT') {
+        alert('There are no coaches available in ' + st + ' county at the present time.');
+      }  else {
+        alert('There are no '+ sportName + ' coaches available in ' + st + ' county at the present time.');
+      }
+    }
   }};
 
   if (sports.length === 0) {
@@ -77,17 +91,15 @@ const HomeScreen = () => {
         defaultButtonText={'SELECT A SPORT'}
         onSelect={(selectedSport) => {
           if (selectedSport === '' || selectedSport === 'SELECT A SPORT') {
-            //selectedSportId = '';
             setSelectedSportId('')
           } else {
             for (let i = 0; i < sports.length; i++) {
               if (sports[i].name === selectedSport) {
-                //selectedSportId = sports[i].id
                 setSelectedSportId(sports[i].id)
+                setSelectedSportName(selectedSport)
               }
             }
           }
-          //fetchCoaches();
         }}
         buttonTextAfterSelection={(selectedSport) => {
           return selectedSport;
@@ -107,13 +119,9 @@ const HomeScreen = () => {
         defaultButtonText={'SELECT A COUNTY'}
         onSelect={(selectedItem) => {
           if (selectedItem === '' || selectedItem === 'SELECT A COUNTY') {
-            //selectedState = '';
             setSelectedState('')
           }
-          //selectedState = selectedItem;
           setSelectedState(selectedItem)
-
-          //fetchCoaches();
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;

@@ -11,11 +11,11 @@ const BiographyScreen = () => {
 
   const navigation = useNavigation();
 
-  const [highlights, setHighlights] = useState(createdCoach?.highlights || coachDBUser?.highlights || '');
-  const [sessionplan, setSessionplan] = useState(createdCoach?.sessionPlan || coachDBUser?.sessionPlan || '');
-  const [athleticbackground, setAthleticbackground] = useState(createdCoach?.background || coachDBUser?.background || '');
-  const [description, setDescription] = useState(createdCoach?.shortDesc || coachDBUser?.shortDesc || '');
-  const [college, setCollege] = useState(createdCoach?.college || coachDBUser?.college || '');
+  const [highlights, setHighlights] = useState(coachDBUser?.highlights || createdCoach?.highlights || '');
+  const [sessionplan, setSessionplan] = useState(coachDBUser?.sessionPlan || createdCoach?.sessionPlan || '');
+  const [athleticbackground, setAthleticbackground] = useState(coachDBUser?.background || createdCoach?.background || '');
+  const [description, setDescription] = useState(coachDBUser?.shortDesc || createdCoach?.shortDesc || '');
+  const [college, setCollege] = useState(coachDBUser?.college || createdCoach?.college || '');
 
   const route = useRoute();
 

@@ -106,7 +106,6 @@ const CoachContextProvider = ({ children }) => {
         getCoachDBAvailability();
     },[coachDBUser]);
 
-
     const createCoach = async (coach, position, accreditation, age, speciality, availability) => {
         const newCoach = await DataStore.save(new Coach({
             highlights: coach.highlights,
@@ -267,7 +266,7 @@ const CoachContextProvider = ({ children }) => {
             setCreatedCoachAvailability,
             createCoachAvailability,
             coachAuthUser, coachDBUser, sub, setCoachDBUser, coachDBPosition, coachDBAge, coachDBAccreditation, coachDBSpecialty, coachDBAvailability,
-            updateCoach,
+            updateCoach, getCoachDbUser,
         }}>
             {children}
         </CoachContext.Provider>
