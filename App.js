@@ -10,10 +10,16 @@ import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react-native';
 import AuthContextProvider from './src/context/AuthContext';
 import SportContextProvider from './src/context/SportContext';
 import { DefaultTheme, Provider } from 'react-native-paper';
-Amplify.configure({ ...awsconfig, 
-  Analytics: { disabled: true } 
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { LogBox } from 'react-native';
+
+Amplify.configure({
+  ...awsconfig,
+  Analytics: { disabled: true }
 });
 
+const STRIPE_KEY =
+  'pk_test_51MJf9jGbbj7dyMidAOniPN162ZuAduGXghFRgViAVWrMUR2i9tbqd9lM7PjlG32MnkZwWMZamhn1qQTrVVzIT2eT00aEnHZkCY'
 
 function App() {
   return (
@@ -23,7 +29,9 @@ function App() {
           <SportContextProvider>
             <CoachContextProvider>
               <PackageContextProvider>
-                <RootNavigator />
+                <StripeProvider publishableKey={STRIPE_KEY}>
+                  <RootNavigator />
+                </StripeProvider>
                 <StatusBar style="auto" />
               </PackageContextProvider>
             </CoachContextProvider>
@@ -104,5 +112,7 @@ const customTheme = {
     fontWeight: '400',
   },
 }
+
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 export default withAuthenticator(App, { signUpConfig, theme: customTheme });

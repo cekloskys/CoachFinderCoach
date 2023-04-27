@@ -1,6 +1,6 @@
 {
   "api": {
-    "CoachFinder": {
+    "CoachFinderCoach": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "CoachFinder": {
+    "CoachFinderCoach": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -51,6 +51,13 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "CreatePaymentIntent": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }

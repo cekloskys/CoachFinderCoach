@@ -6,6 +6,9 @@ import { DataStore } from 'aws-amplify';
 import { Package } from '../../../models';
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useStripe } from '@stripe/stripe-react-native';
+import { createPaymentIntent } from '../../../graphql/mutations'
+import { API, graphqlOperation } from 'aws-amplify';
 
 const BookingDetailScreen = () => {
 
@@ -15,6 +18,9 @@ const BookingDetailScreen = () => {
   const book = route.params?.book;
 
   const [packages, setPackages] = useState({});
+  const [clientSecret, setClientSecret] = useState('');
+
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
   useEffect(() => {
     if (!book) {
@@ -27,9 +33,58 @@ const BookingDetailScreen = () => {
     navigation.navigate('Review Booking', { book: book });
   };
 
-  const payment = () => {
-    console.log("payment")
+  useEffect(() => {
+    if (book.status === 'IN_PROGRESS' && packages.price){
+      fetchPaymentIntent();
+    }
+  }, [packages.price, book.status]);
+
+  useEffect(() => {
+    if (clientSecret) {
+      initializePaymentSheet();
+    }
+  }, [clientSecret]);
+
+  const fetchPaymentIntent = async () => {
+    const amount = Math.floor(packages.price * 100);
+    console.log(amount);
+    const response = await API.graphql(
+      graphqlOperation(createPaymentIntent, { amount }),
+    );
+    setClientSecret(response.data.createPaymentIntent.clientSecret);
   };
+
+  const initializePaymentSheet = async () => {
+    if (!clientSecret) {
+      return;
+    }
+    const { error } = await initPaymentSheet({
+      merchantDisplayName: 'CoachFinder',
+      paymentIntentClientSecret: clientSecret,
+    });
+
+    console.log(error);
+
+  };
+
+  const openPaymentSheet = async () => {
+    if (!clientSecret) {
+      return;
+    }
+    const { error } = await presentPaymentSheet({ clientSecret });
+
+    if (error) {
+      Alert.alert(`${error.code}`, error.message + '.');
+    } else {
+      alert('The payment has been confirmed.');
+    }
+  };
+
+  const payment = () => {
+    console.log("payment");
+    openPaymentSheet();
+  };
+
   const onPress = () => {
     navigation.navigate('Your Bookings');
   };

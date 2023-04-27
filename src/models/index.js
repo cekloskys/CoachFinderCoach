@@ -10,23 +10,24 @@ const BookingStatus = {
   "CANCELLED": "CANCELLED"
 };
 
-const { Rating, Booking, Availability, AccreditationCoach, Accreditation, SpecialityCoach, Speciality, AgeCoach, Age, PositionCoach, Position, Package, Profile, Coach, Sport } = initSchema(schema);
+const { PositionCoach, Position, AgeCoach, Age, SpecialityCoach, Speciality, AccreditationCoach, Accreditation, Sport, Coach, Rating, Booking, Availability, Profile, Package, PaymentIntent } = initSchema(schema);
 
 export {
+  PositionCoach,
+  Position,
+  AgeCoach,
+  Age,
+  SpecialityCoach,
+  Speciality,
+  AccreditationCoach,
+  Accreditation,
+  Sport,
+  Coach,
   Rating,
   Booking,
   Availability,
-  AccreditationCoach,
-  Accreditation,
-  SpecialityCoach,
-  Speciality,
-  AgeCoach,
-  Age,
-  PositionCoach,
-  Position,
-  Package,
   Profile,
-  Coach,
-  Sport,
-  BookingStatus
+  Package,
+  BookingStatus,
+  PaymentIntent
 };

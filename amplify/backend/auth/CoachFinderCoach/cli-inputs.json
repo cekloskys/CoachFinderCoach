@@ -3,8 +3,8 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "coachf4b6e14eb",
-    "userPoolName": "CoachFinder",
+    "resourceNameTruncated": "coachf0333ee38",
+    "userPoolName": "CoachFinderCoach",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -30,10 +30,10 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "CoachF4b6e14eb_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "CoachF0333ee38_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "4b6e14eb",
-    "resourceName": "CoachFinder",
+    "sharedId": "0333ee38",
+    "resourceName": "CoachFinderCoach",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
     "usernameAttributes": [

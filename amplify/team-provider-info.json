@@ -1,19 +1,28 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-coachfinder-staging-165903-authRole",
-      "UnauthRoleArn": "arn:aws:iam::601488025135:role/amplify-coachfinder-staging-165903-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::601488025135:role/amplify-coachfinder-staging-165903-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-coachfinder-staging-165903-deployment",
-      "UnauthRoleName": "amplify-coachfinder-staging-165903-unauthRole",
-      "StackName": "amplify-coachfinder-staging-165903",
-      "StackId": "arn:aws:cloudformation:us-east-1:601488025135:stack/amplify-coachfinder-staging-165903/b839c390-abbf-11ed-b038-12ea2fb7402b",
-      "AmplifyAppId": "dfoda7ptvtrr4"
+      "AuthRoleName": "amplify-coachfindercoach-staging-124152-authRole",
+      "UnauthRoleArn": "arn:aws:iam::601488025135:role/amplify-coachfindercoach-staging-124152-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::601488025135:role/amplify-coachfindercoach-staging-124152-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-coachfindercoach-staging-124152-deployment",
+      "UnauthRoleName": "amplify-coachfindercoach-staging-124152-unauthRole",
+      "StackName": "amplify-coachfindercoach-staging-124152",
+      "StackId": "arn:aws:cloudformation:us-east-2:601488025135:stack/amplify-coachfindercoach-staging-124152/b879cfa0-e42f-11ed-93ff-028e39d19a49",
+      "AmplifyAppId": "dx4rrjo0bcjpo"
     },
     "categories": {
       "auth": {
-        "CoachFinder": {}
+        "CoachFinderCoach": {}
+      },
+      "function": {
+        "CreatePaymentIntent": {
+          "deploymentBucketName": "amplify-coachfindercoach-staging-124152-deployment",
+          "s3Key": "amplify-builds/CreatePaymentIntent-6a672b73666839594c68-build.zip"
+        }
+      },
+      "api": {
+        "CoachFinderCoach": {}
       }
     }
   }
