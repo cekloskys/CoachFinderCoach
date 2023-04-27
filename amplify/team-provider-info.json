@@ -20,9 +20,6 @@
           "deploymentBucketName": "amplify-coachfindercoach-staging-124152-deployment",
           "s3Key": "amplify-builds/CreatePaymentIntent-6a672b73666839594c68-build.zip"
         }
-      },
-      "api": {
-        "CoachFinderCoach": {}
       }
     }
   }

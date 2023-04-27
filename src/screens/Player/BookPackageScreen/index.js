@@ -69,12 +69,13 @@ const BookPackageScreen = () => {
   };
 
   const createNewBooking = async () => {
+    console.log(age);
     const newBooking = await DataStore.save(new Booking({
       coachID: pack.coachID,
       packageID: pack.id,
       profileID: dbUser.id,
       athleteName: name,
-      athleteAge: age,
+      atheleteAge: age.toString(),
       status: 'PENDING',
       startDate: date.toLocaleDateString(),
       startTime: selectedTime,

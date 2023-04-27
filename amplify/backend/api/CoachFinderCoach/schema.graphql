@@ -116,6 +116,7 @@ enum BookingStatus {
   DECLINED
   COMPLETED
   CANCELLED
+  PAID
 }
 
 type Booking @model @auth(rules: [{allow: public}]) {

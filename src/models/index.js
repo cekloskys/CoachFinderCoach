@@ -7,7 +7,8 @@ const BookingStatus = {
   "IN_PROGRESS": "IN_PROGRESS",
   "DECLINED": "DECLINED",
   "COMPLETED": "COMPLETED",
-  "CANCELLED": "CANCELLED"
+  "CANCELLED": "CANCELLED",
+  "PAID": "PAID"
 };
 
 const { PositionCoach, Position, AgeCoach, Age, SpecialityCoach, Speciality, AccreditationCoach, Accreditation, Sport, Coach, Rating, Booking, Availability, Profile, Package, PaymentIntent } = initSchema(schema);

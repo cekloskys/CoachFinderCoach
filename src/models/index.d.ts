@@ -7,7 +7,8 @@ export enum BookingStatus {
   IN_PROGRESS = "IN_PROGRESS",
   DECLINED = "DECLINED",
   COMPLETED = "COMPLETED",
-  CANCELLED = "CANCELLED"
+  CANCELLED = "CANCELLED",
+  PAID = "PAID"
 }
 
 type EagerPaymentIntent = {

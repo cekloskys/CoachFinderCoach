@@ -3,7 +3,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState, useEffect } from 'react';
 import { DataStore } from 'aws-amplify';
-import { Package } from '../../../models';
+import { Package, Booking } from '../../../models';
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useStripe } from '@stripe/stripe-react-native';
@@ -74,9 +74,16 @@ const BookingDetailScreen = () => {
     const { error } = await presentPaymentSheet({ clientSecret });
 
     if (error) {
-      Alert.alert(`${error.code}`, error.message + '.');
+      alert(`${error.code}`, error.message + '.');
     } else {
+      const booking = await DataStore.query(Booking, book.id);
+      await DataStore.save(
+        Booking.copyOf(booking,(updated)=>{
+          updated.status = 'PAID';
+        })
+      );
       alert('The payment has been confirmed.');
+      navigation.navigate('Your Bookings');
     }
   };
 

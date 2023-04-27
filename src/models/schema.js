@@ -1558,7 +1558,8 @@ export const schema = {
                 "IN_PROGRESS",
                 "DECLINED",
                 "COMPLETED",
-                "CANCELLED"
+                "CANCELLED",
+                "PAID"
             ]
         }
     },
@@ -1576,6 +1577,6 @@ export const schema = {
             }
         }
     },
-    "codegenVersion": "3.3.2",
+    "codegenVersion": "3.3.4",
     "version": "e72d055b67caec05f19d35de94d36fca"
 };
