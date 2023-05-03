@@ -43,28 +43,6 @@ const BookingDetailScreen = () => {
     navigation.navigate('Your Bookings');
   };
 
-  /* const decline = async() => {
-    const booking = await DataStore.query(Booking, book.id);
-    await DataStore.save(
-      Booking.copyOf(booking,(updated)=>{
-        updated.status = 'DECLINED';
-      })
-    );
-    alert('Booking declined.')
-    navigation.navigate('Your Bookings');
-  }; */
-
- /* const cancel = async () => {
-    const booking = await DataStore.query(Booking, book.id);
-    await DataStore.save(
-      Booking.copyOf(booking,(updated)=>{
-        updated.status = 'CANCELLED';
-      })
-    );
-    alert('Booking cancelled.')
-    navigation.navigate('Your Bookings');
-  };*/
-
   const complete = async () => {
     const booking = await DataStore.query(Booking, book.id);
     await DataStore.save(

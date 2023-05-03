@@ -141,7 +141,7 @@ const ProfileScreen = () => {
     )
   }
 
-  console.log(dbUser);
+  
 
   return (
     <ScrollView style={styles.page}>

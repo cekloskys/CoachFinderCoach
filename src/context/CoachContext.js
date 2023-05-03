@@ -210,7 +210,7 @@ const CoachContextProvider = ({ children }) => {
         updateCoachAccreditation(coachDBAccreditation, accreditation);
         updateCoachAge(coachDBAge, age);
         updateCoachSpeciality(coachDBSpecialty, speciality);
-        //createCoachAvailability(availability, newCoach.id);
+        
     };
 
     const updateCoachPosition = async (dbPosition, position) => {

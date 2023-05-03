@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#556a8a',
-    //backgroundColor: '#4287f5',
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
   },
   bookbutton: {
     backgroundColor: '#556a8a',
-    //backgroundColor: '#4287f5',
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',

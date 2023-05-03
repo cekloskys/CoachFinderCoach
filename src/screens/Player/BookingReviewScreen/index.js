@@ -1,7 +1,7 @@
 import { View, Text, Pressable,TextInput } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { Rating as RatingComponent} from 'react-native-ratings';
 import { DataStore } from 'aws-amplify';
 import { Rating } from '../../../models';
@@ -14,7 +14,7 @@ const BookingReviewScreen = () => {
     const [newRating, setNewRating] = useState();
    
     const navigation = useNavigation();
-    console.log(book);
+    
     
     const createNewRating = async () => {
         const newRating = await DataStore.save(new Rating({

@@ -47,7 +47,6 @@ const BookingDetailScreen = () => {
 
   const fetchPaymentIntent = async () => {
     const amount = Math.floor(packages.price * 100);
-    console.log(amount);
     const response = await API.graphql(
       graphqlOperation(createPaymentIntent, { amount }),
     );
@@ -63,7 +62,7 @@ const BookingDetailScreen = () => {
       paymentIntentClientSecret: clientSecret,
     });
 
-    console.log(error);
+  
 
   };
 
@@ -88,7 +87,6 @@ const BookingDetailScreen = () => {
   };
 
   const payment = () => {
-    console.log("payment");
     openPaymentSheet();
   };
 

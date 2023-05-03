@@ -1,4 +1,4 @@
-import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, FlatList, RefreshControl } from 'react-native';
 import styles from './styles';
 import { useState, useEffect, useCallback } from 'react';
 import BookingComponent from '../../components/Booking';
@@ -46,7 +46,6 @@ const BookingsScreen = () => {
     if (!coachDBUser){
       return;
     }
-    console.log('Refreshing');
     setRefreshing(true);
     try {
       DataStore.query(Booking, (b) => b.coachID.eq(coachDBUser.id)).then(setBookings);
@@ -63,11 +62,7 @@ const BookingsScreen = () => {
     }
   }, [refreshing, bookings, coachDBUser]);
 
-  /* if (coachDBUser && bookings.length === 0) {
-    return (
-      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
-    )
-  } */
+ 
 
   return (
     <View style={styles.page}>

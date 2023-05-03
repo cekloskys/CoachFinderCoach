@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    //backgroundColor: '#dce7fa',
+    
     backgroundColor: '#dfe3eb',
   },
   iconContainer: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   button: {
-    //backgroundColor: '#4287f5',
+    
     backgroundColor: '#db4f40',
     height: 50,
     borderRadius: 5,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   }, 
   acceptButton: {
-    //backgroundColor: '#4287f5',
+    
     backgroundColor: '#366e1a',
     height: 50,
     borderRadius: 5,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   }, 
   completeButton: {
-    //backgroundColor: '#4287f5',
+   
     backgroundColor: '#556a8a',
     height: 50,
     borderRadius: 5,

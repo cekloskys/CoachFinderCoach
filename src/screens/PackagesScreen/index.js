@@ -1,6 +1,6 @@
-import { View, FlatList, Pressable, Text, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, FlatList, Pressable, Text, RefreshControl } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
-import { DataStore, Predicates, SortDirection } from 'aws-amplify';
+import { DataStore } from 'aws-amplify';
 import { Package } from '../../models';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -56,11 +56,6 @@ const PackagesScreen = () => {
     }
   }, [refreshing, coachDBUser]);
 
-  /* if (coachDBUser && packages.length === 0) {
-    return (
-      <ActivityIndicator size="large" color="#db4f40" style={{ flex: 1 }} />
-    )
-  } */
 
   return (
     <View style={styles.page}>

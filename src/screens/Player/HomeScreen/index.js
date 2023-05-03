@@ -32,8 +32,6 @@ const HomeScreen = () => {
   const sportName = localStorage.getItem('sportName');
   const st = localStorage.getItem('state');
 
-  console.log(dbUser);
-
   useEffect(() => {
     if (!sports) {
       return;

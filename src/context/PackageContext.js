@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { DataStore, Predicates } from "aws-amplify";
+import { createContext, useContext, useState } from "react";
+import { DataStore } from "aws-amplify";
 import { Package } from '../models';
 
 const PackageContext = createContext({});

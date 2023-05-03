@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get("window");
 
-const COLORS = { /*primary: '#4287f5', */ primary: '#556a8a', white: '#fff' };
+const COLORS = { primary: '#556a8a', white: '#fff' };
 
 const slides = [
     {
@@ -82,7 +82,7 @@ const OnBoardingScreen = () => {
 
 const styles = StyleSheet.create({
     title: {
-        //color: COLORS.white,
+        
         color: '#f5ece4',
         fontSize: 24,
         fontWeight: 'bold',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     subtitle: {
-        //color: COLORS.white,
+        
         color: '#f5ece4',
         fontSize: 20,
         maxWidth: '80%',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         width: 350,
     },
     visittitle: {
-        //color: COLORS.white,
+        
         color: '#f5ece4',
         fontSize: 14,
         maxWidth: '80%',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         margin: 5,
         height: 50,
         borderRadius: 5,
-        //backgroundColor: COLORS.white,
+        
         backgroundColor: '#f5ece4',
         justifyContent: 'center',
         alignItems: 'center',

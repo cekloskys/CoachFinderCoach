@@ -1,6 +1,6 @@
 import { View, Pressable, Text, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { DataStore } from 'aws-amplify';
 import { Package } from '../../models';

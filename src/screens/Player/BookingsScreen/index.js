@@ -2,7 +2,7 @@ import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native'
 import styles from './styles';
 import { useState, useEffect, useCallback } from 'react';
 import BookingComponent from '../../../components/PlayerBooking';
-import { DataStore, Predicates, SortDirection } from 'aws-amplify';
+import { DataStore } from 'aws-amplify';
 import { Booking, Coach } from '../../../models';
 import { useAuthContext } from '../../../context/AuthContext';
 
@@ -21,7 +21,7 @@ const BookingsScreen = () => {
     }
     DataStore.query(Booking, (b) => b.profileID.eq(dbUser.id)).then(setBookings);
   }, [dbUser])
-  console.log(dbUser);
+  
 
   useEffect(() => {
     if (!bookings) {

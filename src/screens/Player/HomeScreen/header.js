@@ -24,7 +24,6 @@ const Header = () => {
     DataStore.start();
     
     return () => removeListener();
-      DataStore.query(Sport).then(setSports);
   }, []);
 
   useEffect(() => {

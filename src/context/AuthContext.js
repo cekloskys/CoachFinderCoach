@@ -16,7 +16,6 @@ const AuthContextProvider = ({ children }) => {
     const getDbUser = () => {
         DataStore.query(Profile, (user) => user.sub.eq(sub)).then((users) =>
             setDBUser(users[0]));
-            console.log(dbUser);
     };
 
     useEffect(() => {
