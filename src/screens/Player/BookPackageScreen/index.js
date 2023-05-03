@@ -69,7 +69,6 @@ const BookPackageScreen = () => {
   };
 
   const createNewBooking = async () => {
-    console.log(age);
     const newBooking = await DataStore.save(new Booking({
       coachID: pack.coachID,
       packageID: pack.id,
@@ -102,7 +101,6 @@ const BookPackageScreen = () => {
     let hour = time[0];
     let ampm = time[1].split(' ');
     let concatTime = hour + ' ' + ampm[1];
-    console.log(concatTime);
     let isValid = false;
     for (let i = 0; i < availability.length; i++) {
       if (availability[i].time === concatTime) {
